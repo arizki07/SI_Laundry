@@ -3,9 +3,13 @@
 use App\Http\Controllers\_00_Datatables\CategoryList;
 use App\Http\Controllers\_00_Datatables\CustomerList;
 use App\Http\Controllers\_00_Datatables\ProductList;
+use App\Http\Controllers\_00_Datatables\ReferensiList;
+use App\Http\Controllers\_00_Datatables\StatusList;
 use App\Http\Controllers\_01_Produk\ProductController;
 use App\Http\Controllers\_02_Penjualan\CustomerController;
 use App\Http\Controllers\_04_SetData\CategoryController;
+use App\Http\Controllers\_04_SetData\ReferensiController;
+use App\Http\Controllers\_04_SetData\StatusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingController;
@@ -36,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('getCategories', CategoryList::class);
     Route::resource('getProduk', ProductList::class);
     Route::resource('getCustomer', CustomerList::class);
+    Route::resource('getReferensi', ReferensiList::class);
+    Route::resource('getStatus', StatusList::class);
 
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard', 'index');
@@ -60,5 +66,19 @@ Route::middleware(['auth'])->group(function () {
         Route::post('categories', 'store')->name('categories.store');
         Route::post('categories/update/{id}', 'update')->name('categories.update');
         Route::delete('categories/destroy/{id}', 'destroy');
+    });
+
+    Route::controller(ReferensiController::class)->group(function () {
+        Route::get('referensi', 'referensi');
+        Route::post('referensi/store', 'store')->name('referensi.store');
+        Route::post('referensi/update/{id}', 'update')->name('referensi.update');
+        Route::delete('referensi/destroy/{id}', 'destroy');
+    });
+
+    Route::controller(StatusController::class)->group(function () {
+        Route::get('status', 'status');
+        Route::post('status/store', 'store')->name('status.store');
+        Route::post('status/update/{id}', 'update')->name('status.update');
+        Route::delete('status/destroy/{id}', 'destroy');
     });
 });

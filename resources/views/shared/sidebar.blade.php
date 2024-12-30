@@ -396,8 +396,35 @@
                 <div class="custom-hr">
                     <span>Set Data</span>
                 </div>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('categories') }}">
+                <li class="nav-item {{ $active == 'Referensi' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('referensi') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-chart-candle">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M4 6m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+                                <path d="M6 4l0 2" />
+                                <path d="M6 11l0 9" />
+                                <path
+                                    d="M10 14m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+                                <path d="M12 4l0 10" />
+                                <path d="M12 19l0 1" />
+                                <path
+                                    d="M16 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+                                <path d="M18 4l0 1" />
+                                <path d="M18 11l0 9" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Referensi
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item {{ $active == 'Status' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('status') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
