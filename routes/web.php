@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\_00_Datatables\CategoryList;
+use App\Http\Controllers\_01_Master\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingController;
@@ -27,7 +29,16 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::resource('getCategories', CategoryList::class);
+
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard', 'index');
+    });
+
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('categories', 'Categories');
+        Route::post('categories', 'store')->name('categories.store');
+        Route::post('categories/update/{id}', 'update')->name('categories.update');
+        Route::delete('categories/destroy/{id}', 'destroy');
     });
 });
