@@ -1,11 +1,12 @@
 <meta charset="utf-8">
-<title>Gardener - Gardening Website Template</title>
+<title>{{ $title }} - Epon Laundry</title>
+<meta name="robots" content="noindex">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="keywords">
 <meta content="" name="description">
 
 <!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
+<link href="{{ asset('assets/landing/img/favicon.png') }}" rel="icon">
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">

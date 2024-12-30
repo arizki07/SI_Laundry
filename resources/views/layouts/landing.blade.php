@@ -27,6 +27,10 @@
     @include('shared.landing.footer')
     <!-- Footer End -->
 
+    <a href="javascript:void(0)" class="whatsapp-btn">
+        <i class="fab fa-whatsapp" style="font-size: 25px;"></i>
+    </a>
+
     <!-- JavaScript Libraries -->
     @yield('scripts')
     @include('shared.landing.script')

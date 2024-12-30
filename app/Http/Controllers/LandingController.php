@@ -8,6 +8,6 @@ class LandingController extends Controller
 {
     public function index()
     {
-        return view('landing.index');
+        return view('landing.index', ['title' => 'Laundry Instan dan Cepat', 'act' => 'home']);
     }
 }

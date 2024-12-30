@@ -102,6 +102,25 @@ h6,
     height: 80px
 }
 
+.navbar img {
+    width: 13%;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .navbar img {
+        width: 25%;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar img {
+        width: 35%;
+    }
+}
+
+
 .navbar .navbar-nav .nav-link {
     margin-right: 35px;
     padding: 25px 0;
@@ -518,3 +537,42 @@ h6,
 .copyright a:hover {
     color: var(--primary);
 }
+
+.whatsapp-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background-color: rgba(37, 211, 102, 0.5);
+    color: #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .whatsapp-btn i {
+    color: #fff;
+    }
+    
+    .whatsapp-btn:focus,
+    .whatsapp-btn:active {
+    background-color: rgba(30, 190, 87, 0.8);
+    outline: none;
+    }
+    
+    .whatsapp-btn i:focus,
+    .whatsapp-btn i:active {
+    color: #fff;
+    }
+    
+    .whatsapp-btn:hover {
+    background-color: rgba(30, 190, 87, 0.8);
+    text-decoration: none;
+    }

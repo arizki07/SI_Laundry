@@ -1,8 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-    <a href="javascript:void(0)" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-        <h1 class="m-0">L - Dry</h1>
-    </a>
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <img class="img-fluid m-0 px-4 px-lg-5" src="{{ asset('assets/landing/img/logo.png') }}" alt="Logo-Website">
+    <button type="button" class="navbar-toggler me-2" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -23,6 +21,7 @@
             </div>
             <a href="javascript:void(0)" class="nav-item nav-link">Contact</a>
         </div>
-        <a href="javascript:void(0)" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Get A Quote<i class="fa fa-arrow-right ms-3"></i></a>
+        <a href="javascript:void(0)" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Get A Quote<i
+                class="fa fa-arrow-right ms-3"></i></a>
     </div>
 </nav>
