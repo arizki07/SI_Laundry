@@ -200,8 +200,8 @@
                                     <div class="form-label">Peruntukan</div>
                                     <select class="form-select" name="for">
                                         <option selected disabled>--Pilih Peruntukan--</option>
-                                        <option value="1">Products</option>
-                                        <option value="2">Pengeluaran</option>
+                                        <option value="produk">Products</option>
+                                        <option value="pengeluaran">Pengeluaran</option>
                                     </select>
                                 </div>
                             </div>
@@ -242,7 +242,8 @@
                                             <option disabled>--Pilih Peruntukan--</option>
                                             <option value="1" {{ $item->for == 1 ? 'selected' : '' }}>Products
                                             </option>
-                                            <option value="2" {{ $item->for == 2 ? 'selected' : '' }}>Pengeluaran
+                                            <option value="2" {{ $item->for == 2 ? 'selected' : '' }}>
+                                                Pengeluaran
                                             </option>
                                         </select>
                                     </div>

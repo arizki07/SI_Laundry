@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\_01_Master;
+namespace App\Http\Controllers\_04_SetData;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoriesModel;
@@ -12,8 +12,9 @@ class CategoryController extends Controller
     public function Categories()
     {
         $cat = CategoriesModel::all();
-        return view('products._01_Master.category', [
+        return view('products._04_SetData.category', [
             'judul' => 'Categories',
+            'active' => 'Kategori',
             'cat' => $cat,
         ]);
     }

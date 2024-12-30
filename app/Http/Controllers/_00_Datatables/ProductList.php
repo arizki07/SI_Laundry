@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\_00_Datatables;
 
 use App\Http\Controllers\Controller;
-use App\Models\CategoriesModel;
+use App\Models\ProductModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoryList extends Controller
+class ProductList extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = CategoriesModel::all();
+            $data = ProductModel::all();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -37,6 +37,6 @@ class CategoryList extends Controller
                 ->make(true);
         }
 
-        return view('products._04_SetData.category');
+        return view('products._01_produk.produk');
     }
 }

@@ -11,7 +11,10 @@ class DashboardController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return view('products.dashboard');
+            return view('products.dashboard', [
+                'judul' => 'Dashboard',
+                'active' => 'Home',
+            ]);
         }
 
         return redirect('/')->withSuccess('Opps! You do not have access');

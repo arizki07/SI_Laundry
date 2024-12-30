@@ -14,4 +14,9 @@ class CategoriesModel extends Model
         'deskripsi',
         'for',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(ProductModel::class, 'category');
+    }
 }

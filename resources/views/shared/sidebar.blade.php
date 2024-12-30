@@ -1,3 +1,25 @@
+<style>
+    .custom-hr {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        border: none;
+    }
+
+    .custom-hr::after {
+        content: "";
+        flex: 1;
+        border-top: 1px solid #ccc;
+        margin-left: 10px;
+    }
+
+    .custom-hr span {
+        font-size: 14px;
+        color: #888;
+        line-height: 24px;
+        display: inline-block;
+    }
+</style>
 <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu"
@@ -206,7 +228,7 @@
         </div>
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
-                <li class="nav-item">
+                <li class="nav-item {{ $active == 'Home' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('dashboard') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -224,17 +246,23 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+
+                <div class="custom-hr">
+                    <span>Product</span>
+                </div>
+
+                <li class="nav-item {{ $active == 'Product' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('produk') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M17 17h-11v-14h-2" />
+                                <path d="M6 5l14 1l-1 7h-13" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
@@ -244,15 +272,18 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-map-discount">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                <path d="M13 19l-4 -2l-6 3v-13l6 -3l6 3l6 -3v8.5" />
+                                <path d="M9 4v13" />
+                                <path d="M15 7v5.5" />
+                                <path d="M16 21l5 -5" />
+                                <path d="M21 21v.01" />
+                                <path d="M16 16v.01" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
@@ -260,18 +291,131 @@
                         </span>
                     </a>
                 </li>
-                <hr>
+
+                <div class="custom-hr">
+                    <span>Penjualan</span>
+                </div>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-square-rounded">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
+                                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Customer
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('categories') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                <path d="M15 19l2 2l4 -4" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Sales
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('categories') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-history">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 8l0 4l2 2" />
+                                <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Resi History
+                        </span>
+                    </a>
+                </li>
+                <div class="custom-hr">
+                    <span>Keuangan</span>
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('categories') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-credit-card-pay">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 19h-6a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5" />
+                                <path d="M3 10h18" />
+                                <path d="M16 19h6" />
+                                <path d="M19 16l3 3l-3 3" />
+                                <path d="M7.005 15h.005" />
+                                <path d="M11 15h2" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Pemasukan
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('categories') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-dollar">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M13 21h-7a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3" />
+                                <path d="M16 3v4" />
+                                <path d="M8 3v4" />
+                                <path d="M4 11h12.5" />
+                                <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                <path d="M19 21v1m0 -8v1" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Pengeluaran
+                        </span>
+                    </a>
+                </li>
+                <div class="custom-hr">
+                    <span>Set Data</span>
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('categories') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-chart-candle">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M4 6m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+                                <path d="M6 4l0 2" />
+                                <path d="M6 11l0 9" />
+                                <path
+                                    d="M10 14m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+                                <path d="M12 4l0 10" />
+                                <path d="M12 19l0 1" />
+                                <path
+                                    d="M16 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+                                <path d="M18 4l0 1" />
+                                <path d="M18 11l0 9" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
@@ -283,31 +427,32 @@
                     <a class="nav-link" href="{{ url('categories') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-brand-cashapp">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                <path
+                                    d="M17.1 8.648a.568 .568 0 0 1 -.761 .011a5.682 5.682 0 0 0 -3.659 -1.34c-1.102 0 -2.205 .363 -2.205 1.374c0 1.023 1.182 1.364 2.546 1.875c2.386 .796 4.363 1.796 4.363 4.137c0 2.545 -1.977 4.295 -5.204 4.488l-.295 1.364a.557 .557 0 0 1 -.546 .443h-2.034l-.102 -.011a.568 .568 0 0 1 -.432 -.67l.318 -1.444a7.432 7.432 0 0 1 -3.273 -1.784v-.011a.545 .545 0 0 1 0 -.773l1.137 -1.102c.214 -.2 .547 -.2 .761 0a5.495 5.495 0 0 0 3.852 1.5c1.478 0 2.466 -.625 2.466 -1.614c0 -.989 -1 -1.25 -2.886 -1.954c-2 -.716 -3.898 -1.728 -3.898 -4.091c0 -2.75 2.284 -4.091 4.989 -4.216l.284 -1.398a.545 .545 0 0 1 .545 -.432h2.023l.114 .012a.544 .544 0 0 1 .42 .647l-.307 1.557a8.528 8.528 0 0 1 2.818 1.58l.023 .022c.216 .228 .216 .569 0 .773l-1.057 1.057z" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Payemnt methods
+                            Payment Methods
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ $active == 'Kategori' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-category">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                <path d="M4 4h6v6h-6z" />
+                                <path d="M14 4h6v6h-6z" />
+                                <path d="M4 14h6v6h-6z" />
+                                <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
@@ -315,110 +460,23 @@
                         </span>
                     </a>
                 </li>
-                <hr>
+                <div class="custom-hr">
+                    <span>Settings</span>
+                </div>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Customer
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Sales
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Resi History
-                        </span>
-                    </a>
-                </li>
-                <hr>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Pemasukan
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Pengeluaran
-                        </span>
-                    </a>
-                </li>
-                <hr>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+                                <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+                                <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
@@ -428,15 +486,13 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-activity">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                <path d="M3 12h4l3 8l4 -16l3 8h4" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
@@ -446,15 +502,19 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-address-book">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                <path
+                                    d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" />
+                                <path d="M10 16h6" />
+                                <path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M4 8h3" />
+                                <path d="M4 12h3" />
+                                <path d="M4 16h3" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
@@ -464,15 +524,17 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('categories') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-mail-fast">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                <path d="M3 7h3" />
+                                <path d="M3 11h2" />
+                                <path
+                                    d="M9.02 8.801l-.6 6a2 2 0 0 0 1.99 2.199h7.98a2 2 0 0 0 1.99 -1.801l.6 -6a2 2 0 0 0 -1.99 -2.199h-7.98a2 2 0 0 0 -1.99 1.801z" />
+                                <path d="M9.8 7.5l2.982 3.28a3 3 0 0 0 4.238 .202l3.28 -2.982" />
                             </svg>
                         </span>
                         <span class="nav-link-title">

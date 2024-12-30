@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\_00_Datatables\CategoryList;
-use App\Http\Controllers\_01_Master\CategoryController;
+use App\Http\Controllers\_00_Datatables\ProductList;
+use App\Http\Controllers\_01_Produk\ProductController;
+use App\Http\Controllers\_04_SetData\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingController;
@@ -30,9 +32,17 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('getCategories', CategoryList::class);
+    Route::resource('getProduk', ProductList::class);
 
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard', 'index');
+    });
+
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('produk', 'produk');
+        Route::post('produk/store', 'store')->name('produk.store');
+        Route::post('produk/update/{id}', 'update')->name('produk.update');
+        Route::delete('produk/destroy/{id}', 'destroy');
     });
 
     Route::controller(CategoryController::class)->group(function () {
