@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\_00_Datatables\CategoryList;
+use App\Http\Controllers\_00_Datatables\CustomerList;
 use App\Http\Controllers\_00_Datatables\ProductList;
 use App\Http\Controllers\_01_Produk\ProductController;
+use App\Http\Controllers\_02_Penjualan\CustomerController;
 use App\Http\Controllers\_04_SetData\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -33,6 +35,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('getCategories', CategoryList::class);
     Route::resource('getProduk', ProductList::class);
+    Route::resource('getCustomer', CustomerList::class);
 
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard', 'index');
@@ -43,6 +46,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('produk/store', 'store')->name('produk.store');
         Route::post('produk/update/{id}', 'update')->name('produk.update');
         Route::delete('produk/destroy/{id}', 'destroy');
+    });
+
+    Route::controller(CustomerController::class)->group(function () {
+        Route::get('customer', 'customer');
+        Route::post('customer/store', 'store')->name('customer.store');
+        Route::post('customer/update/{id}', 'update')->name('customer.update');
+        Route::delete('customer/destroy/{id}', 'destroy');
     });
 
     Route::controller(CategoryController::class)->group(function () {
