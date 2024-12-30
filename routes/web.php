@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::controller(LandingController::class)->group(function () {
+    Route::get('/', 'index')->name('home.pages');
+});
+
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/', 'index')->name('login');
+    Route::get('login', 'index')->name('login');
     Route::post('postlogin', 'postLogin')->name('post.login');
     Route::get('logout', 'logout');
 });
