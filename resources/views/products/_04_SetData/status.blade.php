@@ -197,7 +197,7 @@
                                     <select class="form-select" name="kode">
                                         <option selected disabled>--Pilih Kode--</option>
                                         @foreach ($referensi as $item)
-                                            <option value="{{ $item->kode }}">{{ $item->kode }}-{{ $item->nama }}
+                                            <option value="{{ $item->nama }}">{{ $item->kode }}-{{ $item->nama }}
                                             </option>
                                         @endforeach
                                     </select>

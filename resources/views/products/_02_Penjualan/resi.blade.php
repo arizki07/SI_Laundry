@@ -156,7 +156,7 @@
                                 </div>
                                 <div class="table-responsive">
                                     <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                        class="table table-sm table-bordered table-striped table-vcenter card-table table-hover text-nowrap datatable datatable-product">
+                                        class="table table-sm table-bordered table-striped table-vcenter card-table table-hover text-nowrap datatable datatable-resi">
                                     </table>
                                 </div>
                             </div>
@@ -165,19 +165,31 @@
                 </div>
             </div>
         @section('modals')
-            @foreach ($sales as $item)
+            @foreach ($resi as $item)
                 <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header" style="background: blue;">
-                                <h5 class="modal-title text-white">Edit Status dan Catatan</h5>
+                                <h5 class="modal-title text-white">Edit Resi History</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form action="{{ route('sales.update', $item->id) }}" method="POST">
+                            <form action="{{ route('resi.update', $item->id) }}" method="POST">
                                 @csrf
                                 <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">No Cust</label>
+                                        <input type="text" name="no_cust" class="form-control cursor-not-allowed"
+                                            required placeholder="Masukkan nama produk" value="{{ $item->no_cust }}"
+                                            readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">No Resi</label>
+                                        <input type="text" name="no_resi" class="form-control cursor-not-allowed"
+                                            required placeholder="Masukkan nama produk" value="{{ $item->no_resi }}"
+                                            readonly>
+                                    </div>
                                     <div class="mb-3">
                                         <label class="form-label">Status</label>
                                         <select class="form-select" name="status" required>
@@ -209,7 +221,8 @@
                 <div class="modal modal-blur fade" id="modal-hapus" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                             <div class="modal-status bg-danger"></div>
                             <div class="modal-body text-center py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg"
@@ -247,7 +260,7 @@
             @endforeach
         @endsection
         <script type="text/javascript">
-            var tableProduct;
+            var tableResi;
 
             function newexportaction(e, dt, button, config) {
                 var self = this;
@@ -292,7 +305,7 @@
             }
 
             $(function() {
-                tableProduct = $('.datatable-product').DataTable({
+                tableResi = $('.datatable-resi').DataTable({
                     "processing": true, //Feature control the processing indicator.
                     "serverSide": false, //Feature control DataTables' server-side processing mode.
                     "scrollX": false,
@@ -374,6 +387,18 @@
                             title: 'no resi',
                             data: 'no_resi',
                             name: 'no_resi',
+                            className: "cuspad0 cuspad1 text-center"
+                        },
+                        {
+                            title: 'catatan',
+                            data: 'catatan',
+                            name: 'catatan',
+                            className: "cuspad0 cuspad1 text-center"
+                        },
+                        {
+                            title: 'status',
+                            data: 'status',
+                            name: 'status',
                             className: "cuspad0 cuspad1 text-center"
                         },
 

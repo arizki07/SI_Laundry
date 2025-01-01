@@ -197,6 +197,30 @@
                                     <input type="text" name="harga" class="form-control" required
                                         placeholder="Masukkan harga produk">
                                 </div>
+                                <div class="row">
+                                    <div class="col lg-6">
+                                        <div class="mb-3">
+                                            <div class="form-label">Type</div>
+                                            <select class="form-select" name="type">
+                                                <option selected disabled>--Pilih Type--</option>
+                                                <option value="Paket A">Paket A</option>
+                                                <option value="Paket B">Paket B</option>
+                                                <option value="Paket C">Paket C</option>
+                                                <option value="Paket D">Paket D</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col lg-6">
+                                        <div class="mb-3">
+                                            <div class="form-label">Flag</div>
+                                            <select class="form-select" name="flag" required>
+                                                <option selected disabled>--Pilih Flag--</option>
+                                                <option value="0">InActive</option>
+                                                <option value="1">Active</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="mb-3">
                                     <div class="form-label">Foto Produk</div>
                                     <input type="file" class="form-control" name="foto_produk" />
@@ -211,6 +235,7 @@
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\_04_SetData;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoriesModel;
+use App\Models\ReferensiModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -11,26 +12,30 @@ class CategoryController extends Controller
 {
     public function Categories()
     {
+        $ref = ReferensiModel::all();
         $cat = CategoriesModel::all();
+        // dd($ref);
         return view('products._04_SetData.category', [
             'judul' => 'Categories',
             'active' => 'Kategori',
             'cat' => $cat,
+            'ref' => $ref,
         ]);
     }
+
 
     public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required',
             'deskripsi' => 'required',
-            'for' => 'required',
+            'kode' => 'required',
         ]);
 
         $cat = CategoriesModel::create([
             'nama' => $request->nama,
             'deskripsi' => $request->deskripsi,
-            'for' => $request->for,
+            'kode' => $request->kode,
             'created_at' => Carbon::now(),
         ]);
 
@@ -46,7 +51,7 @@ class CategoryController extends Controller
         $request->validate([
             'nama' => 'required',
             'deskripsi' => 'required',
-            'for' => 'required',
+            'kode' => 'required',
         ]);
 
         $cat = CategoriesModel::findOrFail($id);
@@ -54,7 +59,7 @@ class CategoryController extends Controller
         $update = $cat->update([
             'nama' => $request->nama,
             'deskripsi' => $request->deskripsi,
-            'for' => $request->for,
+            'kode' => $request->kode,
         ]);
 
         if ($update) {

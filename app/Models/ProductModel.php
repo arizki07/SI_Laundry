@@ -14,7 +14,9 @@ class ProductModel extends Model
         'nama_produk',
         'harga',
         'foto_produk',
-        'deskripsi'
+        'deskripsi',
+        'type',
+        'flag'
     ];
 
     public function category()

@@ -14,6 +14,7 @@ use App\Http\Controllers\_02_Penjualan\SalesController;
 use App\Http\Controllers\_04_SetData\CategoryController;
 use App\Http\Controllers\_04_SetData\ReferensiController;
 use App\Http\Controllers\_04_SetData\StatusController;
+use App\Http\Controllers\_05_Setting\UsersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LandingController;
@@ -59,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard', 'index');
     });
 
+    //PRODUK
     Route::controller(ProductController::class)->group(function () {
         Route::get('produk', 'produk');
         Route::post('produk/store', 'store')->name('produk.store');
@@ -66,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('produk/destroy/{id}', 'destroy');
     });
 
+    //PENJUALAN
     Route::controller(CustomerController::class)->group(function () {
         Route::get('customer', 'customer');
         Route::post('customer/store', 'store')->name('customer.store');
@@ -84,9 +87,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::controller(ResiController::class)->group(function () {
         Route::get('resi', 'resi');
-        Route::post('/editResi/{no_cust}', 'EditResi')->name('edit.resi');
+        Route::post('update/resi/{id}', 'updateResi')->name('resi.update');
     });
 
+    //SET DATA
     Route::controller(CategoryController::class)->group(function () {
         Route::get('categories', 'Categories');
         Route::post('categories', 'store')->name('categories.store');
@@ -106,5 +110,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('status/store', 'store')->name('status.store');
         Route::post('status/update/{id}', 'update')->name('status.update');
         Route::delete('status/destroy/{id}', 'destroy');
+    });
+
+    //SETTING
+    Route::controller(UsersController::class)->group(function () {
+        Route::get('user', 'users');
+        Route::post('user/store', 'store')->name('user.store');
+        Route::post('user/update/{id}', 'update')->name('user.update');
+        Route::post('user/destroy/{id}', 'destroy');
     });
 });

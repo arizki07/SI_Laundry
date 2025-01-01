@@ -27,6 +27,8 @@ class ProductController extends Controller
             'category' => 'required',
             'nama_produk' => 'required',
             'harga' => 'required',
+            'type' => 'nullable',
+            'flag' => 'required',
             'foto_produk' => 'nullable|mimes:png,jpg,jpeg|max:2048',
             'deskripsi' => 'required',
         ]);
@@ -42,6 +44,8 @@ class ProductController extends Controller
             'category' => $request->category,
             'nama_produk' => $request->nama_produk,
             'harga' => $request->harga,
+            'type' => $request->type,
+            'flag' => $request->flag,
             'foto_produk' => $fotoPath,
             'deskripsi' => $request->deskripsi
         ]);
@@ -59,6 +63,8 @@ class ProductController extends Controller
             'category' => 'required',
             'nama_produk' => 'required',
             'harga' => 'required',
+            'type' => 'nullable',
+            'flag' => 'required',
             'foto_produk' => 'nullable|mimes:png,jpg,jpeg|max:2048',
             'deskripsi' => 'required',
         ]);
@@ -82,6 +88,8 @@ class ProductController extends Controller
             'category' => $request->category,
             'nama_produk' => $request->nama_produk,
             'harga' => $request->harga,
+            'type' => $request->type,
+            'flag' => $request->flag,
             'foto_produk' => $fotoPath,
             'deskripsi' => $request->deskripsi
         ]);

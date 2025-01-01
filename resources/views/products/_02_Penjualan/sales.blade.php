@@ -95,6 +95,9 @@
 
         /* END Loader style */
     </style>
+    <link
+        href="{{ asset('assets/landing/css/invoice.css') }}?v={{ hash('sha512', filemtime(public_path('assets/landing/css/invoice.css'))) }}"
+        rel="stylesheet">
     <div class="page">
         <div class="page-wrapper">
             <div class="page-header d-print-none">
@@ -178,111 +181,171 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <!-- Customer Form Card -->
-                                <div class="card mb-3 bg-primary text-white">
-                                    <div class="card-header">
-                                        <strong>Customer Information</strong>
-                                    </div>
-                                    <div class="card-body">
-                                        <form>
-                                            <div class="mb-3">
-                                                <label for="customer_name" class="form-label">Customer Name</label>
-                                                <input type="text" class="form-control" id="customer_name"
-                                                    value="{{ $item->customer->nama ?? 'N/A' }}" disabled>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="customer_email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="customer_email"
-                                                    value="{{ $item->customer->email ?? 'N/A' }}" disabled>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="customer_phone" class="form-label">Phone</label>
-                                                <input type="text" class="form-control" id="customer_phone"
-                                                    value="{{ $item->customer->no_hp ?? 'N/A' }}" disabled>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                                <div class="invoice-1 invoice-content" style="background-color: white;">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="invoice-inner clearfix shadow">
+                                                    <div class="invoice-info clearfix" id="invoice_wrapper">
+                                                        <div class="invoice-headar">
+                                                            <div class="row g-0">
+                                                                <div class="col-sm-6">
+                                                                    <div class="invoice-logo">
+                                                                        <div class="logo">
+                                                                            <img src="assets/landing/img/logo.png"
+                                                                                alt="logo">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 invoice-id">
+                                                                    <div class="info">
+                                                                        <h1 class="color-white inv-header-1">Invoice</h1>
+                                                                        <p class="color-white mb-1">Invoice
+                                                                            <span>{{ $item->no_invoice }}</span>
+                                                                        </p>
+                                                                        <p class="color-white mb-0">Invoice Date
+                                                                            <span>{{ $item->created_at->format('d M Y') }}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="invoice-top">
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="invoice-number mb-30">
+                                                                        <h4 class="inv-title-1">Invoice To</h4>
+                                                                        <h2 class="name mb-10">{{ Auth::user()->username }}
+                                                                        </h2>
+                                                                        <p class="invo-addr-1">
+                                                                            {{ Auth::user()->name }} <br />
+                                                                            {{ Auth::user()->email }} <br />
+                                                                            21-12 Green Street, Meherpur, Bangladesh <br />
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="invoice-number mb-30">
+                                                                        <div class="invoice-number-inner">
+                                                                            <h4 class="inv-title-1">Invoice From</h4>
+                                                                            <h2 class="name mb-10">
+                                                                                {{ $item->customer->nama }}</h2>
+                                                                            <p class="invo-addr-1">
+                                                                                {{ $item->customer->no_hp }} <br />
+                                                                                {{ $item->customer->email }} <br />
+                                                                                {{ $item->customer->alamat }} <br />
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="invoice-center">
+                                                            <div class="table-responsive">
+                                                                <table class="table mb-0 table-striped invoice-table">
+                                                                    <thead class="bg-active">
+                                                                        <tr class="tr">
+                                                                            <th>No.</th>
+                                                                            <th class="pl0 text-start">Item Description
+                                                                            </th>
+                                                                            <th class="text-center">Price</th>
+                                                                            <th class="text-center">Quantity</th>
+                                                                            <th class="text-end">Amount</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($sales as $sale)
+                                                                            @foreach ($sale->items as $index => $item)
+                                                                                <tr>
+                                                                                    <td>{{ $index + 1 }}</td>
+                                                                                    <td>{{ $item->product->nama_produk }}
+                                                                                    </td>
+                                                                                    <td class="text-center">
+                                                                                        Rp.
+                                                                                        {{ number_format($item->harga_per_qty, 2) }}
+                                                                                    </td>
+                                                                                    <td class="text-center">
+                                                                                        {{ $item->qty }}</td>
+                                                                                    <td class="text-end">
+                                                                                        Rp.
+                                                                                        {{ number_format($item->total, 2) }}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                            <tr>
+                                                                                <td colspan="4" class="text-center">
+                                                                                    <strong>SubTotal</strong>
+                                                                                </td>
+                                                                                <td class="text-end">
+                                                                                    Rp.
+                                                                                    {{ number_format($sale->total_harga, 2) }}
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
 
-                                <!-- Sales Table Card -->
-                                <div class="card mb-3 bg-success text-white">
-                                    <div class="card-header">
-                                        <strong>Sales Information</strong>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table table-bordered table-responsive">
-                                            <tbody>
-                                                <tr>
-                                                    <th>No Resi</th>
-                                                    <td>{{ $item->no_resi }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>No Invoice</th>
-                                                    <td>{{ $item->no_invoice }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Status Pembayaran</th>
-                                                    <td>{{ $item->status_pembayaran }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Metode Pembayaran</th>
-                                                    <td>{{ $item->metode_pembayaran }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Total Harga</th>
-                                                    <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                                <!-- Sales Items Table Card -->
-                                <div class="card mb-3 bg-warning text-dark">
-                                    <div class="card-header">
-                                        <strong>Sales Items</strong>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Product</th>
-                                                        <th>Quantity</th>
-                                                        <th>Price</th>
-                                                        <th>Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($item->items as $salesItem)
-                                                        <tr>
-                                                            <td>{{ $salesItem->product->nama_produk ?? 'N/A' }}</td>
-                                                            <td>{{ $salesItem->qty }}</td>
-                                                            <td>Rp.
-                                                                {{ number_format($salesItem->harga_per_qty, 0, ',', '.') }}
-                                                            </td>
-                                                            <td>Rp. {{ number_format($salesItem->total, 0, ',', '.') }}
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="invoice-bottom">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-md-8 col-sm-7">
+                                                                    <div class="mb-30 dear-client">
+                                                                        <h3 class="inv-title-1">Terms & Conditions</h3>
+                                                                        <p>Dengan menggunakan layanan kami, Anda setuju
+                                                                            bahwa kami tidak bertanggung jawab atas
+                                                                            kerusakan atau kehilangan barang selama proses
+                                                                            pencucian dan pengiriman. Pembayaran wajib
+                                                                            dilakukan sesuai harga yang tertera.</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-4 col-sm-5">
+                                                                    <div class="mb-30 payment-method">
+                                                                        <h3 class="inv-title-1">Payment Method</h3>
+                                                                        <ul class="payment-method-list-1 text-14">
+                                                                            <li><strong>Account No:</strong> 00 123 647 840
+                                                                            </li>
+                                                                            <li><strong>Account Name:</strong> Jhon Doe</li>
+                                                                            <li><strong>Branch Name:</strong> xyz</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="invoice-contact clearfix">
+                                                            <div class="row g-0">
+                                                                <div class="col-lg-9 col-md-11 col-sm-12">
+                                                                    <div class="contact-info">
+                                                                        <a href="tel:+55-4XX-634-7071"><i
+                                                                                class="fa fa-phone"></i> +00 123 647
+                                                                            840</a>
+                                                                        <a href="tel:info@themevessel.com"><i
+                                                                                class="fa fa-envelope"></i>
+                                                                            info@themevessel.com</a>
+                                                                        <a href="tel:info@themevessel.com"
+                                                                            class="mr-0 d-none-580"><i
+                                                                                class="fa fa-map-marker"></i> 169
+                                                                            Teroghoria, Bangladesh</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="invoice-btn-section clearfix d-print-none">
+                                                        <a href="javascript:window.print()"
+                                                            class="btn btn-lg btn-print mb-3">
+                                                            <i class="fa fa-print"></i> Print Invoice
+                                                        </a>
+                                                        <a id="invoice_download_btn"
+                                                            class="btn btn-lg btn-download btn-theme mb-3">
+                                                            <i class="fa fa-download"></i> Download Invoice
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- File Bukti Card -->
-                                @if ($item->file_bukti)
-                                    <div class="card mb-3 bg-info text-white">
-                                        <div class="card-header">
-                                            <strong>File Bukti</strong>
-                                        </div>
-                                        <div class="card-body">
-                                            <img src="{{ asset('storage/sales/bukti/' . $item->file_bukti) }}"
-                                                alt="Foto Bukti" width="100%" height="400px">
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>

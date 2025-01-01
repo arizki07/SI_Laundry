@@ -64,7 +64,6 @@
                                     <form method="POST" action="{{ route('update.sales', $sales->id) }}"
                                         enctype="multipart/form-data">
                                         @csrf
-
                                         <div class="row g-5">
                                             <div class="col-xl-4">
                                                 <div class="row">
@@ -75,26 +74,54 @@
                                                                     <label class="form-label">Customer</label>
                                                                     <select class="form-select" name="customer_id">
                                                                         <option disabled>--Pilih Customer--</option>
-                                                                        @foreach ($cust as $cus)
-                                                                            <option value="{{ $cus->id }}"
-                                                                                {{ $cus->id == $sales->customer_id ? 'selected' : '' }}>
-                                                                                {{ $cus->nama }}
+                                                                        @foreach ($customers as $customer)
+                                                                            <option value="{{ $customer->id }}"
+                                                                                {{ $sales->customer_id == $customer->id ? 'selected' : '' }}>
+                                                                                {{ $customer->nama }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
                                                             </div>
-
                                                             <div class="col-lg-8">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">File Bukti</label>
                                                                     <input type="file" class="form-control"
                                                                         name="file_bukti">
                                                                     @if ($sales->file_bukti)
-                                                                        <p>Current File: <a
-                                                                                href="{{ asset('storage/sales/bukti/' . $sales->file_bukti) }}"
-                                                                                target="_blank">View</a></p>
+                                                                        <a href="{{ asset('storage/sales/bukti/' . $sales->file_bukti) }}"
+                                                                            target="_blank">Lihat File</a>
                                                                     @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Metode Pembayaran</label>
+                                                                    <select class="form-select" name="metode_pembayaran">
+                                                                        <option disabled>--Pilih Metode Pembayaran--
+                                                                        </option>
+                                                                        <option value="cash"
+                                                                            {{ $sales->metode_pembayaran == 'cash' ? 'selected' : '' }}>
+                                                                            Cash</option>
+                                                                        <option value="transfer"
+                                                                            {{ $sales->metode_pembayaran == 'transfer' ? 'selected' : '' }}>
+                                                                            Transfer</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-8">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Status Pembayaran</label>
+                                                                    <select class="form-select" name="status_pembayaran">
+                                                                        <option disabled>--Pilih Status Pembayaran--
+                                                                        </option>
+                                                                        @foreach ($statuses as $status)
+                                                                            <option value="{{ $status->nama }}"
+                                                                                {{ $sales->status_pembayaran == $status->nama ? 'selected' : '' }}>
+                                                                                {{ ucfirst($status->nama) }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -102,23 +129,22 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="row g-5">
                                             <div class="col-xl-8">
                                                 <label class="form-label">Items</label>
                                                 <div id="sales-items-container">
-                                                    @foreach ($sales->items as $salesItem)
+                                                    @foreach ($sales->items as $item)
                                                         <div class="sales-item row mb-3">
                                                             <div class="col-md-4">
                                                                 <label class="form-label">Product</label>
                                                                 <select class="form-select product-select"
                                                                     name="products[]">
-                                                                    <option selected disabled>--Pilih Produk--</option>
-                                                                    @foreach ($product as $pro)
-                                                                        <option value="{{ $pro->id }}"
-                                                                            {{ $pro->id == $salesItem->product_id ? 'selected' : '' }}
-                                                                            data-price="{{ $pro->harga }}">
-                                                                            {{ $pro->nama_produk }}
+                                                                    <option disabled>--Pilih Produk--</option>
+                                                                    @foreach ($products as $product)
+                                                                        <option value="{{ $product->id }}"
+                                                                            data-price="{{ $product->harga }}"
+                                                                            {{ $item->product_id == $product->id ? 'selected' : '' }}>
+                                                                            {{ $product->nama_produk }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -126,23 +152,21 @@
                                                             <div class="col-md-2">
                                                                 <label class="form-label">Quantity</label>
                                                                 <input type="number" class="form-control qty-input"
-                                                                    name="qty[]" value="{{ $salesItem->qty }}"
-                                                                    min="1">
+                                                                    name="qty[]" min="0.1" step="0.1"
+                                                                    value="{{ $item->qty }}">
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label class="form-label">Price</label>
                                                                 <input type="number" class="form-control price-input"
                                                                     name="harga_per_qty[]"
-                                                                    value="{{ $salesItem->harga_per_qty }}" readonly>
+                                                                    value="{{ $item->harga_per_qty }}" readonly>
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <label class="form-label">Total</label>
                                                                 <input type="number" class="form-control total-input"
-                                                                    name="total[]" value="{{ $salesItem->total }}"
-                                                                    readonly>
+                                                                    name="total[]" value="{{ $item->total }}" readonly>
                                                             </div>
                                                             <div class="col-md-1">
-                                                                <label class="form-label d-block">&nbsp;</label>
                                                                 <button type="button"
                                                                     class="btn btn-danger btn-remove-item">X</button>
                                                             </div>
@@ -153,13 +177,13 @@
                                                     Item</button>
                                             </div>
                                         </div>
-
                                         <div class="row mt-4">
                                             <div class="col-xl-12 text-end">
                                                 <button type="submit" class="btn btn-primary">Update</button>
                                             </div>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>

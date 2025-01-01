@@ -198,10 +198,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-label">Peruntukan</div>
-                                    <select class="form-select" name="for">
+                                    <select class="form-select" name="kode">
                                         <option selected disabled>--Pilih Peruntukan--</option>
-                                        <option value="produk">Products</option>
-                                        <option value="pengeluaran">Pengeluaran</option>
+                                        @foreach ($ref as $item)
+                                            <option value="{{ $item->nama }}">{{ $item->nama }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -238,13 +239,14 @@
                                     </div>
                                     <div class="mb-3">
                                         <div class="form-label">Peruntukan</div>
-                                        <select class="form-select" name="for">
+                                        <select class="form-select" name="kode">
                                             <option disabled>--Pilih Peruntukan--</option>
-                                            <option value="1" {{ $item->for == 1 ? 'selected' : '' }}>Products
-                                            </option>
-                                            <option value="2" {{ $item->for == 2 ? 'selected' : '' }}>
-                                                Pengeluaran
-                                            </option>
+                                            @foreach ($ref as $item)
+                                                <option value="{{ $item->nama }}"
+                                                    {{ old('kode', $item->kode) == $item->nama ? 'selected' : '' }}>
+                                                    {{ $item->nama }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

@@ -76,8 +76,7 @@
                                                                         </option>
                                                                         @foreach ($cust as $cus)
                                                                             <option value="{{ $cus->id }}">
-                                                                                {{ $cus->nama }}
-                                                                            </option>
+                                                                                {{ $cus->nama }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -88,6 +87,33 @@
                                                                     <label class="form-label">File Bukti</label>
                                                                     <input type="file" class="form-control"
                                                                         name="file_bukti">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-8">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Metode Pembayaran</label>
+                                                                    <select class="form-select" name="metode_pembayaran">
+                                                                        <option selected disabled>--Pilih Metode
+                                                                            Pembayaran--</option>
+                                                                        <option value="cash">Cash</option>
+                                                                        <option value="transfer">Transfer</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-8">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Status Pembayaran</label>
+                                                                    <select class="form-select" name="status_pembayaran">
+                                                                        <option selected disabled>--Pilih Status
+                                                                            Pembayaran--</option>
+                                                                        @foreach ($status as $stat)
+                                                                            <option value="{{ $stat->nama }}">
+                                                                                {{ ucfirst($stat->nama) }}</option>
+                                                                        @endforeach
+
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -116,8 +142,8 @@
                                                         <div class="col-md-2">
                                                             <label class="form-label">Quantity</label>
                                                             <input type="number" class="form-control qty-input"
-                                                                name="qty[]" min="1" placeholder="Qty"
-                                                                value="1">
+                                                                name="qty[]" min="1" step="0.1"
+                                                                placeholder="Qty" value="1">
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label class="form-label">Price</label>
@@ -148,7 +174,6 @@
                                             </div>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -169,7 +194,8 @@
 
                     row.querySelector('.price-input').value = price;
                     const qty = row.querySelector('.qty-input').value || 0;
-                    row.querySelector('.total-input').value = price * qty;
+                    row.querySelector('.total-input').value = Math.round((price * qty) * 2) /
+                        2; // Round to nearest 0.5
                 }
             });
 
@@ -178,7 +204,8 @@
                     const row = event.target.closest('.sales-item');
                     const price = row.querySelector('.price-input').value || 0;
                     const qty = event.target.value || 0;
-                    row.querySelector('.total-input').value = price * qty;
+                    row.querySelector('.total-input').value = Math.round((price * qty) * 2) /
+                        2; // Round to nearest 0.5
                 }
             });
 

@@ -12,7 +12,7 @@ class CategoriesModel extends Model
     protected $fillable = [
         'nama',
         'deskripsi',
-        'for',
+        'kode',
     ];
 
     public function products()

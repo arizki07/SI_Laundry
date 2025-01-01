@@ -18,7 +18,7 @@ return new class extends Migration
             $table->double('harga');
             $table->string('foto_produk');
             $table->string('deskripsi');
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->boolean('flag');
             $table->timestamps();
         });

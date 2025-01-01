@@ -13,19 +13,9 @@ class ResiList extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = ResiHistoryModel::join('customers', 'resi_historys.no_cust', '=', 'customers.no_cust')
-                ->select('resi_historys.*', 'customers.nama', 'customers.no_hp', 'customers.email', 'customers.alamat');
+            $data = ResiHistoryModel::all();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('no_resi', function ($row) {
-                    return $row->no_resi;
-                })
-                ->addColumn('no_cust', function ($row) {
-                    return $row->no_cust;
-                })
-                ->addColumn('status', function ($row) {
-                    return $row->status;
-                })
                 ->addColumn('action', function ($row) {
                     $btn = '
                         <button class="btn btn-sm btn-link align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" aria-expanded="false">

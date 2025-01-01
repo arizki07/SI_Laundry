@@ -19,7 +19,7 @@ return new class extends Migration
             $table->double('total_harga');
             $table->string('status_pembayaran');
             $table->string('metode_pembayaran');
-            $table->string('file_bukti');
+            $table->string('file_bukti')->nullable();
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers');

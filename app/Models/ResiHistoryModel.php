@@ -15,10 +15,6 @@ class ResiHistoryModel extends Model
         'status',
         'catatan',
         'foto_final',
+        'created_by'
     ];
-
-    public function customer()
-    {
-        return $this->belongsTo(CustomerModel::class, 'no_cust', 'no_cust');
-    }
 }
