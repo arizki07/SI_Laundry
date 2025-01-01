@@ -106,12 +106,16 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-body-scan">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M17 17h-11v-14h-2" />
-                                    <path d="M6 5l14 1l-1 7h-13" />
+                                    <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+                                    <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+                                    <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+                                    <path d="M12 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                    <path d="M10 17v-1a2 2 0 1 1 4 0v1" />
+                                    <path d="M8 10c.666 .666 1.334 1 2 1h4c.666 0 1.334 -.334 2 -1" />
+                                    <path d="M12 11v3" />
                                 </svg>
                                 {{ $judul }}
                             </h2>
@@ -120,17 +124,10 @@
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-solid fa-cart-shopping"></i> {{ $judul }}</a></li>
+                                                class="fa-solid fa-virus"></i> {{ $judul }}</a></li>
                                 </ol>
                             </div>
                         </div>
-
-                        <div class="col-auto ms-auto d-print-none">
-                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
-                                <i class="fa-solid fa-cart-shopping"></i> Tambah Produk
-                            </a>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -168,104 +165,39 @@
                 </div>
             </div>
         @section('modals')
-            <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background: blue;">
-                            <h5 class="modal-title text-white">Tambah Produk</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <div class="form-label">Categori</div>
-                                    <select class="form-select" name="category" required>
-                                        <option selected disabled>--Pilih Categori--</option>
-                                        @foreach ($categori as $item)
-                                            <option value="{{ $item->nama }}">{{ ucfirst($item->kode) }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Nama Produk</label>
-                                    <input type="text" name="nama_produk" class="form-control" required
-                                        placeholder="Masukkan nama produk">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Harga</label>
-                                    <input type="text" name="harga" class="form-control" required
-                                        placeholder="Masukkan harga produk">
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-label">Foto Produk</div>
-                                    <input type="file" class="form-control" name="foto_produk" />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Deskripsi</label>
-                                    <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi produk"></textarea>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            @foreach ($products as $item)
+            @foreach ($sales as $item)
                 <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header" style="background: blue;">
-                                <h5 class="modal-title text-white">Edit Produk</h5>
+                                <h5 class="modal-title text-white">Edit Status dan Catatan</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form action="{{ route('produk.update', $item->id) }}" method="POST">
+                            <form action="{{ route('sales.update', $item->id) }}" method="POST">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="mb-3">
-                                        <div class="form-label">Categori</div>
-                                        <select class="form-select" name="category" required>
-                                            <option selected disabled>--Pilih Categori--</option>
-                                            @foreach ($categori as $cat)
-                                                <option value="{{ $cat->nama }}"
-                                                    {{ $cat->nama == $item->category ? 'selected' : '' }}>
-                                                    {{ ucfirst($cat->kode) }}
-                                                </option>
-                                            @endforeach
+                                        <label class="form-label">Status Pembayaran</label>
+                                        <select class="form-select" name="status_pembayaran" required>
+                                            <option value="success"
+                                                {{ $item->status_pembayaran == 'success' ? 'selected' : '' }}>
+                                                Success
+                                            </option>
+                                            <option value="pending"
+                                                {{ $item->status_pembayaran == 'pending' ? 'selected' : '' }}>
+                                                Pending
+                                            </option>
+                                            <option value="reject"
+                                                {{ $item->status_pembayaran == 'reject' ? 'selected' : '' }}>
+                                                Reject
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Nama Produk</label>
-                                        <input type="text" name="nama_produk" class="form-control" required
-                                            placeholder="Masukkan nama produk" value="{{ $item->nama_produk }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Harga</label>
-                                        <input type="text" name="harga" class="form-control" required
-                                            placeholder="Masukkan harga produk" value="{{ $item->harga }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="form-label">Foto Produk</div>
-                                        <input type="file" class="form-control" name="foto_produk" />
-                                    </div>
-                                    @if ($item->foto_produk)
-                                        <div class="mb-3">
-                                            <label class="form-label">Current Image</label>
-                                            <div>
-                                                <img src="{{ asset('storage/produk/' . $item->foto_produk) }}"
-                                                    alt="Current Image" width="150">
-                                            </div>
-                                        </div>
-                                    @endif
-                                    <div class="mb-3">
-                                        <label class="form-label">Deskripsi</label>
-                                        <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi produk">{{ $item->deskripsi }}</textarea>
+                                        <label class="form-label">Catatan</label>
+                                        <textarea class="form-control" name="catatan" rows="3" placeholder="Isi catatan">{{ $item->catatan }}</textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -277,12 +209,10 @@
                     </div>
                 </div>
 
-
                 <div class="modal modal-blur fade" id="modal-hapus" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             <div class="modal-status bg-danger"></div>
                             <div class="modal-body text-center py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg"
@@ -421,7 +351,7 @@
                         },
                     },
                     "ajax": {
-                        "url": "{{ route('getProduk.index') }}",
+                        "url": "{{ route('getResi.index') }}",
                         // "data": function(data) {
                         //     data._token = "{{ csrf_token() }}";
                         //     data.dari = $('#filterStart-all').val();
@@ -438,27 +368,21 @@
                             searchable: false,
                         },
                         {
-                            title: 'categori',
-                            data: 'category',
-                            name: 'category',
+                            title: 'no cust',
+                            data: 'no_cust',
+                            name: 'no_cust',
                             className: "cuspad0 cuspad1 text-center"
                         },
                         {
-                            title: 'nama',
-                            data: 'nama_produk',
-                            name: 'nama_produk',
+                            title: 'no resi',
+                            data: 'no_resi',
+                            name: 'no_resi',
                             className: "cuspad0 cuspad1 text-center"
                         },
                         {
-                            title: 'harga',
-                            data: 'harga',
-                            name: 'harga',
-                            className: "cuspad0 cuspad1 text-center"
-                        },
-                        {
-                            title: 'deskripsi',
-                            data: 'deskripsi',
-                            name: 'deskripsi',
+                            title: 'status',
+                            data: 'status',
+                            name: 'status',
                             className: "cuspad0 cuspad1 text-center"
                         },
                     ],

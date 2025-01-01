@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function produk()
     {
-        $categori = CategoriesModel::where('for', 'produk')->get();
+        $categori = CategoriesModel::where('kode', 'produk')->get();
         $products = ProductModel::all();
         return view('products._01_Produk.produk', [
             'judul' => 'Produk',

@@ -4,9 +4,13 @@ use App\Http\Controllers\_00_Datatables\CategoryList;
 use App\Http\Controllers\_00_Datatables\CustomerList;
 use App\Http\Controllers\_00_Datatables\ProductList;
 use App\Http\Controllers\_00_Datatables\ReferensiList;
+use App\Http\Controllers\_00_Datatables\ResiList;
+use App\Http\Controllers\_00_Datatables\SalesList;
 use App\Http\Controllers\_00_Datatables\StatusList;
 use App\Http\Controllers\_01_Produk\ProductController;
 use App\Http\Controllers\_02_Penjualan\CustomerController;
+use App\Http\Controllers\_02_Penjualan\ResiController;
+use App\Http\Controllers\_02_Penjualan\SalesController;
 use App\Http\Controllers\_04_SetData\CategoryController;
 use App\Http\Controllers\_04_SetData\ReferensiController;
 use App\Http\Controllers\_04_SetData\StatusController;
@@ -42,6 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('getCustomer', CustomerList::class);
     Route::resource('getReferensi', ReferensiList::class);
     Route::resource('getStatus', StatusList::class);
+    Route::resource('getSales', SalesList::class);
+    Route::resource('getResi', ResiList::class);
 
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard', 'index');
@@ -59,6 +65,20 @@ Route::middleware(['auth'])->group(function () {
         Route::post('customer/store', 'store')->name('customer.store');
         Route::post('customer/update/{id}', 'update')->name('customer.update');
         Route::delete('customer/destroy/{id}', 'destroy');
+    });
+
+    Route::controller(SalesController::class)->group(function () {
+        Route::get('sales', 'sales')->name('sales.index');
+        Route::get('sales/create', 'create');
+        Route::post('sales/store', 'store')->name('sales.store');
+        Route::get('sales/edit/{id}', 'edit')->name('edit.sales');
+        Route::post('sales/update/{id}', 'update')->name('update.sales');
+        Route::delete('sales/destroy/{id}', 'destroy');
+    });
+
+    Route::controller(ResiController::class)->group(function () {
+        Route::get('resi', 'resi');
+        Route::post('/editResi/{no_cust}', 'EditResi')->name('edit.resi');
     });
 
     Route::controller(CategoryController::class)->group(function () {

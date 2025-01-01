@@ -106,16 +106,11 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-body-scan">
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-square-rounded">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                                    <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                                    <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                                    <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                                    <path d="M12 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                                    <path d="M10 17v-1a2 2 0 1 1 4 0v1" />
-                                    <path d="M8 10c.666 .666 1.334 1 2 1h4c.666 0 1.334 -.334 2 -1" />
-                                    <path d="M12 11v3" />
+                                    <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
+                                    <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                    <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
                                 </svg>
                                 {{ $judul }}
                             </h2>
@@ -124,19 +119,15 @@
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-solid fa-virus"></i> {{ $judul }}</a></li>
+                                                class="fa-solid fa-user"></i> {{ $judul }}</a></li>
                                 </ol>
                             </div>
                         </div>
 
                         <div class="col-auto ms-auto d-print-none">
                             <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-hourglass">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M17 2a2 2 0 0 1 1.995 1.85l.005 .15v2a6.996 6.996 0 0 1 -3.393 6a6.994 6.994 0 0 1 3.388 5.728l.005 .272v2a2 2 0 0 1 -1.85 1.995l-.15 .005h-10a2 2 0 0 1 -1.995 -1.85l-.005 -.15v-2a6.996 6.996 0 0 1 3.393 -6a6.994 6.994 0 0 1 -3.388 -5.728l-.005 -.272v-2a2 2 0 0 1 1.85 -1.995l.15 -.005h10z" />
-                                </svg>Tambah Customer
+                                <i class="fa-solid fa-user"></i>
+                                Tambah Customer
                             </a>
                         </div>
 
@@ -222,7 +213,7 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header" style="background: blue;">
-                                <h5 class="modal-title text-white">Edit Produk</h5>
+                                <h5 class="modal-title text-white">Edit Customer</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>

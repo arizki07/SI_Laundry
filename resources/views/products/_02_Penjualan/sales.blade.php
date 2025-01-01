@@ -106,12 +106,11 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M17 17h-11v-14h-2" />
-                                    <path d="M6 5l14 1l-1 7h-13" />
+                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                    <path d="M15 19l2 2l4 -4" />
                                 </svg>
                                 {{ $judul }}
                             </h2>
@@ -120,14 +119,14 @@
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-solid fa-cart-shopping"></i> {{ $judul }}</a></li>
+                                                class="fa-solid fa-user-check"></i> {{ $judul }}</a></li>
                                 </ol>
                             </div>
                         </div>
 
                         <div class="col-auto ms-auto d-print-none">
-                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
-                                <i class="fa-solid fa-cart-shopping"></i> Tambah Produk
+                            <a href="{{ url('sales/create') }}" class="btn btn-primary">
+                                <i class="fa-solid fa-user-check"></i> Tambah Sales
                             </a>
                         </div>
 
@@ -159,7 +158,7 @@
                                 </div>
                                 <div class="table-responsive">
                                     <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                        class="table table-sm table-bordered table-striped table-vcenter card-table table-hover text-nowrap datatable datatable-product">
+                                        class="table table-sm table-bordered table-striped table-vcenter card-table table-hover text-nowrap datatable datatable-customer">
                                     </table>
                                 </div>
                             </div>
@@ -168,115 +167,129 @@
                 </div>
             </div>
         @section('modals')
-            <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background: blue;">
-                            <h5 class="modal-title text-white">Tambah Produk</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <div class="form-label">Categori</div>
-                                    <select class="form-select" name="category" required>
-                                        <option selected disabled>--Pilih Categori--</option>
-                                        @foreach ($categori as $item)
-                                            <option value="{{ $item->nama }}">{{ ucfirst($item->kode) }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Nama Produk</label>
-                                    <input type="text" name="nama_produk" class="form-control" required
-                                        placeholder="Masukkan nama produk">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Harga</label>
-                                    <input type="text" name="harga" class="form-control" required
-                                        placeholder="Masukkan harga produk">
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-label">Foto Produk</div>
-                                    <input type="file" class="form-control" name="foto_produk" />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Deskripsi</label>
-                                    <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi produk"></textarea>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            @foreach ($products as $item)
-                <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
+            @foreach ($sales as $item)
+                <div class="modal modal-blur fade" id="modal-view{{ $item->id }}" tabindex="-1" role="dialog"
                     aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 70%;">
                         <div class="modal-content">
                             <div class="modal-header" style="background: blue;">
-                                <h5 class="modal-title text-white">Edit Produk</h5>
+                                <h5 class="modal-title text-white">Detail Sales</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form action="{{ route('produk.update', $item->id) }}" method="POST">
-                                @csrf
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <div class="form-label">Categori</div>
-                                        <select class="form-select" name="category" required>
-                                            <option selected disabled>--Pilih Categori--</option>
-                                            @foreach ($categori as $cat)
-                                                <option value="{{ $cat->nama }}"
-                                                    {{ $cat->nama == $item->category ? 'selected' : '' }}>
-                                                    {{ ucfirst($cat->kode) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                            <div class="modal-body">
+                                <!-- Customer Form Card -->
+                                <div class="card mb-3 bg-primary text-white">
+                                    <div class="card-header">
+                                        <strong>Customer Information</strong>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Nama Produk</label>
-                                        <input type="text" name="nama_produk" class="form-control" required
-                                            placeholder="Masukkan nama produk" value="{{ $item->nama_produk }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Harga</label>
-                                        <input type="text" name="harga" class="form-control" required
-                                            placeholder="Masukkan harga produk" value="{{ $item->harga }}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="form-label">Foto Produk</div>
-                                        <input type="file" class="form-control" name="foto_produk" />
-                                    </div>
-                                    @if ($item->foto_produk)
-                                        <div class="mb-3">
-                                            <label class="form-label">Current Image</label>
-                                            <div>
-                                                <img src="{{ asset('storage/produk/' . $item->foto_produk) }}"
-                                                    alt="Current Image" width="150">
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="customer_name" class="form-label">Customer Name</label>
+                                                <input type="text" class="form-control" id="customer_name"
+                                                    value="{{ $item->customer->nama ?? 'N/A' }}" disabled>
                                             </div>
-                                        </div>
-                                    @endif
-                                    <div class="mb-3">
-                                        <label class="form-label">Deskripsi</label>
-                                        <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi produk">{{ $item->deskripsi }}</textarea>
+                                            <div class="mb-3">
+                                                <label for="customer_email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="customer_email"
+                                                    value="{{ $item->customer->email ?? 'N/A' }}" disabled>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="customer_phone" class="form-label">Phone</label>
+                                                <input type="text" class="form-control" id="customer_phone"
+                                                    value="{{ $item->customer->no_hp ?? 'N/A' }}" disabled>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
-                                    <button type="submit" class="btn btn-primary">Update</button>
+
+                                <!-- Sales Table Card -->
+                                <div class="card mb-3 bg-success text-white">
+                                    <div class="card-header">
+                                        <strong>Sales Information</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-bordered table-responsive">
+                                            <tbody>
+                                                <tr>
+                                                    <th>No Resi</th>
+                                                    <td>{{ $item->no_resi }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>No Invoice</th>
+                                                    <td>{{ $item->no_invoice }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Status Pembayaran</th>
+                                                    <td>{{ $item->status_pembayaran }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Metode Pembayaran</th>
+                                                    <td>{{ $item->metode_pembayaran }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Total Harga</th>
+                                                    <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </form>
+
+                                <!-- Sales Items Table Card -->
+                                <div class="card mb-3 bg-warning text-dark">
+                                    <div class="card-header">
+                                        <strong>Sales Items</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($item->items as $salesItem)
+                                                        <tr>
+                                                            <td>{{ $salesItem->product->nama_produk ?? 'N/A' }}</td>
+                                                            <td>{{ $salesItem->qty }}</td>
+                                                            <td>Rp.
+                                                                {{ number_format($salesItem->harga_per_qty, 0, ',', '.') }}
+                                                            </td>
+                                                            <td>Rp. {{ number_format($salesItem->total, 0, ',', '.') }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- File Bukti Card -->
+                                @if ($item->file_bukti)
+                                    <div class="card mb-3 bg-info text-white">
+                                        <div class="card-header">
+                                            <strong>File Bukti</strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <img src="{{ asset('storage/sales/bukti/' . $item->file_bukti) }}"
+                                                alt="Foto Bukti" width="100%" height="400px">
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
 
                 <div class="modal modal-blur fade" id="modal-hapus" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -320,7 +333,7 @@
             @endforeach
         @endsection
         <script type="text/javascript">
-            var tableProduct;
+            var tableCustomer;
 
             function newexportaction(e, dt, button, config) {
                 var self = this;
@@ -365,7 +378,7 @@
             }
 
             $(function() {
-                tableProduct = $('.datatable-product').DataTable({
+                tableCustomer = $('.datatable-customer').DataTable({
                     "processing": true, //Feature control the processing indicator.
                     "serverSide": false, //Feature control DataTables' server-side processing mode.
                     "scrollX": false,
@@ -421,7 +434,7 @@
                         },
                     },
                     "ajax": {
-                        "url": "{{ route('getProduk.index') }}",
+                        "url": "{{ route('getSales.index') }}",
                         // "data": function(data) {
                         //     data._token = "{{ csrf_token() }}";
                         //     data.dari = $('#filterStart-all').val();
@@ -438,27 +451,39 @@
                             searchable: false,
                         },
                         {
-                            title: 'categori',
-                            data: 'category',
-                            name: 'category',
+                            title: 'customer',
+                            data: 'customer_id',
+                            name: 'customer_id',
                             className: "cuspad0 cuspad1 text-center"
                         },
                         {
-                            title: 'nama',
-                            data: 'nama_produk',
-                            name: 'nama_produk',
+                            title: 'no resi',
+                            data: 'no_resi',
+                            name: 'no_resi',
                             className: "cuspad0 cuspad1 text-center"
                         },
                         {
-                            title: 'harga',
-                            data: 'harga',
-                            name: 'harga',
+                            title: 'no invoice',
+                            data: 'no_invoice',
+                            name: 'no_invoice',
                             className: "cuspad0 cuspad1 text-center"
                         },
                         {
-                            title: 'deskripsi',
-                            data: 'deskripsi',
-                            name: 'deskripsi',
+                            title: 'total harga',
+                            data: 'total_harga',
+                            name: 'total_harga',
+                            className: "cuspad0 cuspad1 text-center"
+                        },
+                        {
+                            title: 'pembayaran',
+                            data: 'metode_pembayaran',
+                            name: 'metode_pembayaran',
+                            className: "cuspad0 cuspad1 text-center"
+                        },
+                        {
+                            title: 'status',
+                            data: 'status_pembayaran',
+                            name: 'status_pembayaran',
                             className: "cuspad0 cuspad1 text-center"
                         },
                     ],
@@ -469,7 +494,7 @@
                 modal.addEventListener('show.bs.modal', function(event) {
                     const button = event.relatedTarget;
                     const recordId = button.getAttribute('data-id');
-                    deleteForm.action = `/produk/destroy/${recordId}`;
+                    deleteForm.action = `/sales/destroy/${recordId}`;
                 });
             });
         </script>

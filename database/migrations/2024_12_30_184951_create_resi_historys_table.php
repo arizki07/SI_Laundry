@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('no_resi');
             $table->string('status');
             $table->string('catatan');
-            $table->string('foto_final');
+            $table->string('foto_final')->nullable();
             $table->string('created_by');
             $table->timestamps();
         });

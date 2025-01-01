@@ -430,9 +430,9 @@
                             className: "cuspad0 cuspad1 text-center"
                         },
                         {
-                            title: 'for',
-                            data: 'for',
-                            name: 'for',
+                            title: 'kode',
+                            data: 'kode',
+                            name: 'kode',
                             className: "cuspad0 cuspad1 text-center"
                         },
                     ],
