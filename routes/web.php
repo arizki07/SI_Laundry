@@ -27,7 +27,13 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::controller(LandingController::class)->group(function () {
-    Route::get('/', 'index')->name('home.pages');
+    Route::get('/', 'index')->name('landing.home');
+    Route::get('hubungi-kami', 'contact')->name('landing.hubungi-kami');
+    Route::get('tentang-kami', 'about')->name('landing.tentang-kami');
+    Route::get('daftar-harga', 'list')->name('landing.daftar-harga');
+    Route::get('cek-resi', 'resi')->name('landing.cek-resi');
+    Route::get('bantuan', 'bantuan')->name('landing.bantuan');
+    Route::get('syarat-ketentuan', 'syarat_ketentuan')->name('landing.syarat-ketentuan');
 });
 
 Route::controller(AuthController::class)->group(function () {
