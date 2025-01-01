@@ -368,7 +368,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Pemasukan
+                            <i>Pemasukan</i>
                         </span>
                     </a>
                 </li>
@@ -389,7 +389,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Pengeluaran
+                            <i>Pengeluaran</i>
                         </span>
                     </a>
                 </li>
@@ -464,7 +464,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Payment Methods
+                            <i>Payment Methods</i>
                         </span>
                     </a>
                 </li>
@@ -507,7 +507,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Users
+                            <i>Users</i>
                         </span>
                     </a>
                 </li>
@@ -523,7 +523,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Log
+                            <i>Log</i>
                         </span>
                     </a>
                 </li>
@@ -545,7 +545,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Contact
+                            <i>Contact</i>
                         </span>
                     </a>
                 </li>
@@ -565,7 +565,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Faqs
+                            <i>Faqs</i>
                         </span>
                     </a>
                 </li>

@@ -11,9 +11,10 @@ class ResiController extends Controller
 {
     public function resi()
     {
-        $sales = SalesModel::join('customers', 'sales.customer_id', '=', 'customers.id')
-            ->select('sales.*', 'customers.no_cust', 'customers.nama');
+        $sales = ResiHistoryModel::join('customers', 'resi_historys.no_cust', '=', 'customers.no_cust')
+            ->select('resi_historys.*', 'customers.nama', 'customers.no_hp', 'customers.email', 'customers.alamat');
 
+        // dd($sales);
         return view('products._02_Penjualan.resi', [
             'judul' => 'Resi History',
             'active' => 'Resi',

@@ -179,18 +179,15 @@
                                 @csrf
                                 <div class="modal-body">
                                     <div class="mb-3">
-                                        <label class="form-label">Status Pembayaran</label>
-                                        <select class="form-select" name="status_pembayaran" required>
-                                            <option value="success"
-                                                {{ $item->status_pembayaran == 'success' ? 'selected' : '' }}>
+                                        <label class="form-label">Status</label>
+                                        <select class="form-select" name="status" required>
+                                            <option value="success" {{ $item->status == 'success' ? 'selected' : '' }}>
                                                 Success
                                             </option>
-                                            <option value="pending"
-                                                {{ $item->status_pembayaran == 'pending' ? 'selected' : '' }}>
+                                            <option value="pending" {{ $item->status == 'pending' ? 'selected' : '' }}>
                                                 Pending
                                             </option>
-                                            <option value="reject"
-                                                {{ $item->status_pembayaran == 'reject' ? 'selected' : '' }}>
+                                            <option value="reject" {{ $item->status == 'reject' ? 'selected' : '' }}>
                                                 Reject
                                             </option>
                                         </select>
@@ -379,12 +376,7 @@
                             name: 'no_resi',
                             className: "cuspad0 cuspad1 text-center"
                         },
-                        {
-                            title: 'status',
-                            data: 'status',
-                            name: 'status',
-                            className: "cuspad0 cuspad1 text-center"
-                        },
+
                     ],
                 });
                 const modal = document.getElementById('modal-hapus');

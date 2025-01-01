@@ -13,9 +13,8 @@ class ResiList extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = SalesModel::join('customers', 'sales.customer_id', '=', 'customers.id')
-                ->select('sales.*', 'customers.no_cust', 'customers.nama')
-                ->get();
+            $data = ResiHistoryModel::join('customers', 'resi_historys.no_cust', '=', 'customers.no_cust')
+                ->select('resi_historys.*', 'customers.nama', 'customers.no_hp', 'customers.email', 'customers.alamat');
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('no_resi', function ($row) {
@@ -25,7 +24,7 @@ class ResiList extends Controller
                     return $row->no_cust;
                 })
                 ->addColumn('status', function ($row) {
-                    return $row->status_pembayaran;
+                    return $row->status;
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '
@@ -33,7 +32,7 @@ class ResiList extends Controller
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end" style="">
-                                    <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-edit" data-id="' . $row->id . '" data-no_cust="' . $row->no_cust . '">
+                                    <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-edit' . $row->id . '" data-id="' . $row->id . '">
                                         <svg style="margin-right:5px;" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1.5"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                         Edit
                                     </a>
