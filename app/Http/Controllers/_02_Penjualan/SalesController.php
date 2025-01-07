@@ -19,7 +19,7 @@ class SalesController extends Controller
         $sales = SalesModel::with(['customer', 'items.product'])->get();
         return view('products._02_Penjualan.sales', [
             'judul' => 'Sales',
-            'active' => 'Sales',
+            'active' => 'sales',
             'sales' => $sales
         ]);
     }
@@ -32,7 +32,7 @@ class SalesController extends Controller
         // dd($status);
         return view('products._02_Penjualan.sales_create', [
             'judul' => 'Tambah Sales',
-            'active' => 'Sales',
+            'active' => 'sales',
             'cust' => $cust,
             'product' => $product,
             'status' => $status,

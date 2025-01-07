@@ -131,7 +131,7 @@
                         <div class="mb-3">
                             <label class="form-label">Username</label>
                             <input type="text" class="form-control" name="username" placeholder="Your username"
-                                autocomplete="off">
+                                autocomplete="off" autofocus>
                             @if ($errors->has('username'))
                                 <span class="text-danger">{{ $errors->first('username') }}</span>
                             @endif

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FaqsModel;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
@@ -33,11 +34,17 @@ class LandingController extends Controller
 
     public function bantuan()
     {
-        return view('landing.bantuan', ['title' => 'Perlu Bantuan', 'act' => 'bantuan']);
+        $faqs = FaqsModel::all();
+        return view('landing.bantuan', ['title' => 'Perlu Bantuan', 'act' => 'bantuan', 'faqs' => $faqs]);
     }
 
     public function syarat_ketentuan()
     {
         return view('landing.syarat-ketentuan', ['title' => 'Syarat dan Ketentuan', 'act' => 'syarat']);
+    }
+
+    public function testimoni()
+    {
+        return view('landing.testimoni', ['title' => 'Testimoni Pelanggan', 'act' => 'testimoni']);
     }
 }

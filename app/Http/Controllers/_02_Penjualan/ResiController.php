@@ -17,7 +17,7 @@ class ResiController extends Controller
         // dd($sales);
         return view('products._02_Penjualan.resi', [
             'judul' => 'Resi History',
-            'active' => 'Resi',
+            'active' => 'resi',
             'resi' => $resi,
         ]);
     }
