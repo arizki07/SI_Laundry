@@ -2,10 +2,10 @@
 <html lang="en">
 
 @include('shared.header')
+@yield('styles')
 
 <body>
     @include('shared.script')
-    <script src="{{ asset('assets/dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
         <!-- Sidebar -->
         @include('shared.sidebar')
@@ -18,6 +18,7 @@
     </div>
     @yield('modals')
     @include('components.alert')
+    @yield('scripts')
 </body>
 
 </html>

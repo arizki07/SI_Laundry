@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -46,6 +47,33 @@ class UsersController extends Controller
 
     public function update(Request $request, $id)
     {
+        $update = $request->query('update');
+        if ($update === 'pass') {
+            $validated = $request->validate([
+                'password_saat_ini' => 'required|string',
+                'password_baru' => [
+                    'required',
+                    'string',
+                    'min:8',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/',
+                    'confirmed',
+                ],
+            ]);
+    
+            if (Hash::check($request->password_saat_ini, Auth::user()->password)) {
+                if (Hash::check($request->password_baru, Auth::user()->password)) {
+                    return back()->withErrors(['password_baru' => 'Password baru tidak boleh sama dengan password lama.']);
+                }
+                Auth::user()->update([
+                    'password' => Hash::make($request->password_baru),
+                ]);
+    
+                return redirect()->back()->with('success', 'Password berhasil diperbarui');
+            } else {
+                return back()->withErrors(['password_saat_ini' => 'Password saat ini salah']);
+            }
+        }
+
         $request->validate([
             'name' => 'required',
             'username' => 'required',

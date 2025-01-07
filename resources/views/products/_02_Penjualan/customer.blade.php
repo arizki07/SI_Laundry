@@ -157,7 +157,7 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="table-responsive">
+                                <div class="table card-table table-vcenter text-nowrap table-responsive">
                                     <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
                                         class="table table-sm table-bordered table-striped table-vcenter card-table table-hover text-nowrap datatable datatable-customer">
                                     </table>
@@ -171,8 +171,8 @@
             <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header" style="background: blue;">
-                            <h5 class="modal-title text-white">Tambah Customer</h5>
+                        <div class="modal-header">
+                            <h5 class="modal-title">Tambah Customer</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form action="{{ route('customer.store') }}" method="POST">

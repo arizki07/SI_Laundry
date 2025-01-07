@@ -7,6 +7,17 @@
 </head>
 
 <body>
+    @php
+        // dd($kontak);
+        if ($kontak && !$kontak->logo) {
+            $logo = asset('assets/static/avatars/super.jpg');
+        } elseif ($kontak && $kontak->logo) {
+            $logo = Storage::url($kontak->logo);
+        } else {
+            $logo = asset('assets/static/avatars/super.jpg');
+        }
+    @endphp
+
     <!-- Spinner Start -->
     @include('shared.landing.loader')
     <!-- Spinner End -->
