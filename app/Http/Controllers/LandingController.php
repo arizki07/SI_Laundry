@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FaqsModel;
+use App\Models\RatingModel;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
@@ -45,6 +46,7 @@ class LandingController extends Controller
 
     public function testimoni()
     {
-        return view('landing.testimoni', ['title' => 'Testimoni Pelanggan', 'act' => 'testimoni']);
+        $testimoni = RatingModel::all();
+        return view('landing.testimoni', ['title' => 'Testimoni Pelanggan', 'act' => 'testimoni', 'testimoni' => $testimoni]);
     }
 }

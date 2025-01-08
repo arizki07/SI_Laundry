@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="en">
 
-@include('shared.header')
-@yield('styles')
+<head>
+    @include('shared.header')
+    @yield('styles')
+</head>
 
 <body>
-    @include('shared.script')
     <div class="page">
         <!-- Sidebar -->
         @include('shared.sidebar')
@@ -18,6 +19,7 @@
     </div>
     @yield('modals')
     @include('components.alert')
+    @include('shared.script')
     @yield('scripts')
 </body>
 

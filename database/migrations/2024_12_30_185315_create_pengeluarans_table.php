@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('pengeluarans', function (Blueprint $table) {
             $table->id();
-            $table->string('deskripsi');
-            $table->double('jumlah');
+            $table->string('no_pengeluaran')->unique(); 
             $table->dateTime('tanggal_pengeluaran');
             $table->string('kategori_pengeluaran');
             $table->string('metode_pembayaran');
-            $table->string('no_faktur');
-            $table->dateTime('tanggal_pembayaran');
-            $table->string('catatan');
+            $table->string('status');
+            $table->double('jumlah');
+            $table->string('bukti_pengeluaran')->nullable();
+            $table->string('deskripsi');
+            $table->string('created_by');
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>{{ !empty($judul) ? $judul : '' }} - INDAH LAUNDRY (Stand Alone).</title>
+    <link href="{{ asset('assets/landing/img/favicon.png') }}" rel="icon">
     <!-- CSS files -->
     <link href="assets/dist/css/tabler.min.css?1692870487" rel="stylesheet" />
     <link href="assets/dist/css/tabler-flags.min.css?1692870487" rel="stylesheet" />

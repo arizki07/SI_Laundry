@@ -15,9 +15,11 @@
         // SALES
         document.addEventListener("DOMContentLoaded", function() {
             const salesData = @json($sales);
+            const chartOut = @json($chart_out);
 
             const dates = salesData.map(sale => sale.date);
             const salesTotals = salesData.map(sale => sale.total_sales);
+            const chartOutTotal = chartOut.map(pengeluaran => pengeluaran.total_pengeluaran);
 
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-sales'), {
                 chart: {
@@ -26,10 +28,10 @@
                     height: 288,
                     parentHeightOffset: 0,
                     toolbar: {
-                        show: false,
+                        show: true,
                     },
                     animations: {
-                        enabled: false
+                        enabled: true
                     },
                 },
                 fill: {
@@ -41,9 +43,14 @@
                     curve: "smooth",
                 },
                 series: [{
-                    name: "Sales Income",
-                    data: salesTotals
-                }],
+                        name: "Sales",
+                        data: salesTotals
+                    },
+                    {
+                        name: "Pengeluaran",
+                        data: chartOutTotal
+                    }
+                ],
                 tooltip: {
                     theme: 'dark'
                 },
@@ -71,9 +78,18 @@
                         padding: 4
                     },
                 },
-                colors: [tabler.getColor("primary")],
+                colors: [tabler.getColor("primary"), tabler.getColor("danger")],
                 legend: {
                     show: false,
+                },
+                dataLabels: {
+                    enabled: true,
+                    style: {
+                        colors: ['#B5BFC7'],
+                        fontSize: '9px',
+                    },
+                    offsetX: 0,
+                    offsetY: -10,
                 },
             })).render();
         });
@@ -161,6 +177,15 @@
 
         setInterval(updateClock, 1000);
         updateClock();
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var tooltipTriggerList = document.querySelectorAll('[data-toggle="tooltip"]');
+            tooltipTriggerList.forEach(function(tooltipTriggerEl) {
+                new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
     </script>
 @endsection
 
@@ -280,38 +305,8 @@
                                         <div class="card-body">
                                             <div class="row align-items-center">
                                                 <div class="col-auto">
-                                                    <span
-                                                        class="bg-red-lt avatar"><!-- Download SVG icon from http://tabler-icons.io/i/arrow-down -->
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon"
-                                                            width="24" height="24" viewBox="0 0 24 24"
-                                                            stroke-width="2" stroke="currentColor" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M12 5l0 14" />
-                                                            <path d="M18 13l-6 6" />
-                                                            <path d="M6 13l6 6" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="font-weight-medium">
-                                                        342
-                                                        <span class="float-right font-weight-medium text-red">-4.3%</span>
-                                                    </div>
-                                                    <div class="text-secondary">
-                                                        Sales last 30 days
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-6">
-                                    <div class="card card-sm">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <span class="bg-green-lt avatar">
+                                                    <span class="bg-green-lt avatar" data-toggle="tooltip"
+                                                        title="Pengeluaran Bulan Lalu Rp. {{ number_format($sales_bulan_lalu, 0, ',', '.') }},00">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon"
                                                             width="24" height="24" viewBox="0 0 24 24"
                                                             stroke-width="2" stroke="currentColor" fill="none"
@@ -325,11 +320,48 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="font-weight-medium">
-                                                        $5,256.99
-                                                        <span class="float-right font-weight-medium text-green">+4%</span>
+                                                        Rp. {{ number_format($pemasukan, 0, ',', '.') }},00
+                                                        <span
+                                                            class="float-right font-weight-medium {{ $persentase < 0 ? 'text-red' : 'text-green' }}">
+                                                            {{ $persentase > 0 ? '+' : '' }}{{ number_format($persentase, 1) }}%
+                                                        </span>
                                                     </div>
                                                     <div class="text-secondary">
-                                                        Revenue last 30 days
+                                                        Pemasukan {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-6">
+                                    <div class="card card-sm">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col-auto">
+                                                    <span class="bg-red-lt avatar" data-toggle="tooltip"
+                                                        title="Pengeluaran Bulan Lalu Rp. {{ number_format($pengeluaran_bulan_lalu, 0, ',', '.') }},00">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon"
+                                                            width="24" height="24" viewBox="0 0 24 24"
+                                                            stroke-width="2" stroke="currentColor" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M12 5l0 14" />
+                                                            <path d="M18 13l-6 6" />
+                                                            <path d="M6 13l6 6" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="font-weight-medium">
+                                                        Rp. {{ number_format($pengeluaran, 0, ',', '.') }},00
+                                                        <span
+                                                            class="float-right font-weight-medium {{ $persentase_out < 0 ? 'text-red' : 'text-green' }}">
+                                                            {{ $persentase_out > 0 ? '+' : '' }}{{ number_format($persentase_out, 1) }}%
+                                                        </span>
+                                                    </div>
+                                                    <div class="text-secondary">
+                                                        Pengeluaran {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}
                                                     </div>
                                                 </div>
                                             </div>

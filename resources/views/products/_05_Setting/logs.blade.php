@@ -1,13 +1,16 @@
 @extends('layouts.app')
-@section('content') @include('shared.table') @endsection
+
+@section('content')
+    @include('shared.table')
+@endsection
 
 @section('modals')
     @foreach ($logs as $item)
         <div class="modal modal-blur fade" id="modal-view{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">View Log Activity</h5>
+                    <div class="modal-header bg-blue-lt">
+                        <h5 class="modal-title text-blue">View Log Activity</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="page-body">

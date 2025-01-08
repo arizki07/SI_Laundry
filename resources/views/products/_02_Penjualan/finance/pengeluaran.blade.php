@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     @include('shared.table')
 @endsection
@@ -8,63 +7,28 @@
     <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-blue-lt">
-                    <h5 class="modal-title text-blue">Tambah Produk</h5>
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Customer</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('customer.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <div class="form-label">Categori</div>
-                            <select class="form-select" name="category" required>
-                                <option selected disabled>--Pilih Categori--</option>
-                                @foreach ($categori as $item)
-                                    <option value="{{ $item->nama }}">{{ ucfirst($item->kode) }}</option>
-                                @endforeach
-                            </select>
+                            <label class="form-label">Nama</label>
+                            <input type="text" name="nama" class="form-control" required placeholder="Masukkan nama">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Nama Produk</label>
-                            <input type="text" name="nama_produk" class="form-control" required
-                                placeholder="Masukkan nama produk">
+                            <label class="form-label">No HP</label>
+                            <input type="text" name="no_hp" class="form-control" required placeholder="Masukkan no hp">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Harga</label>
-                            <input type="text" name="harga" class="form-control" required
-                                placeholder="Masukkan harga produk">
-                        </div>
-                        <div class="row">
-                            <div class="col lg-6">
-                                <div class="mb-3">
-                                    <div class="form-label">Type</div>
-                                    <select class="form-select" name="type">
-                                        <option selected disabled>--Pilih Type--</option>
-                                        <option value="Paket A">Paket A</option>
-                                        <option value="Paket B">Paket B</option>
-                                        <option value="Paket C">Paket C</option>
-                                        <option value="Paket D">Paket D</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col lg-6">
-                                <div class="mb-3">
-                                    <div class="form-label">Flag</div>
-                                    <select class="form-select" name="flag" required>
-                                        <option selected disabled>--Pilih Flag--</option>
-                                        <option value="0">InActive</option>
-                                        <option value="1">Active</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <label class="form-label">Email</label>
+                            <input type="text" name="email" class="form-control" required placeholder="Masukkan email">
                         </div>
                         <div class="mb-3">
-                            <div class="form-label">Foto Produk</div>
-                            <input type="file" class="form-control" name="foto_produk" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Deskripsi</label>
-                            <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi produk"></textarea>
+                            <label class="form-label">Alamat</label>
+                            <textarea class="form-control" name="alamat" rows="6" placeholder="Isi alamat"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -72,61 +36,45 @@
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 
-    @foreach ($products as $item)
+    @foreach ($customer as $item)
         <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header bg-blue-lt">
-                        <h5 class="modal-title text-blue">Edit Produk</h5>
+                    <div class="modal-header" style="background: blue;">
+                        <h5 class="modal-title text-white">Edit Customer</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('produk.update', $item->id) }}" method="POST">
+                    <form action="{{ route('customer.update', $item->id) }}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
-                                <div class="form-label">Categori</div>
-                                <select class="form-select" name="category" required>
-                                    <option selected disabled>--Pilih Categori--</option>
-                                    @foreach ($categori as $cat)
-                                        <option value="{{ $cat->nama }}"
-                                            {{ $cat->nama == $item->category ? 'selected' : '' }}>
-                                            {{ ucfirst($cat->kode) }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <label class="form-label">No Cust</label>
+                                <input type="text" name="no_cust" class="form-control cursor-not-allowed" required
+                                    placeholder="Masukkan nama" value="{{ $item->no_cust }}" readonly>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Nama Produk</label>
-                                <input type="text" name="nama_produk" class="form-control" required
-                                    placeholder="Masukkan nama produk" value="{{ $item->nama_produk }}">
+                                <label class="form-label">Nama</label>
+                                <input type="text" name="nama" class="form-control" required
+                                    placeholder="Masukkan nama" value="{{ $item->nama }}">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Harga</label>
-                                <input type="text" name="harga" class="form-control" required
-                                    placeholder="Masukkan harga produk" value="{{ $item->harga }}">
+                                <label class="form-label">No HP</label>
+                                <input type="text" name="no_hp" class="form-control" required
+                                    placeholder="Masukkan No hp" value="{{ $item->no_hp }}">
                             </div>
                             <div class="mb-3">
-                                <div class="form-label">Foto Produk</div>
-                                <input type="file" class="form-control" name="foto_produk" />
+                                <label class="form-label">Email</label>
+                                <input type="text" name="email" class="form-control" required
+                                    placeholder="Masukkan email" value="{{ $item->email }}">
                             </div>
-                            @if ($item->foto_produk)
-                                <div class="mb-3">
-                                    <label class="form-label">Current Image</label>
-                                    <div>
-                                        <img src="{{ asset('storage/produk/' . $item->foto_produk) }}"
-                                            alt="Current Image" width="150">
-                                    </div>
-                                </div>
-                            @endif
                             <div class="mb-3">
-                                <label class="form-label">Deskripsi</label>
-                                <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi produk">{{ $item->deskripsi }}</textarea>
+                                <label class="form-label">Alamat</label>
+                                <textarea class="form-control" name="alamat" rows="6" placeholder="Isi alamat">{{ $item->alamat }}</textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -137,7 +85,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="modal modal-blur fade" id="modal-hapus" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -182,7 +129,7 @@
 
 @section('scripts')
     <script type="text/javascript">
-        var tableProduct;
+        var tableData;
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -193,7 +140,9 @@
                 data.length = 2147483647;
                 dt.one('preDraw', function(e, settings) {
                     // Call the original action function
-                    if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
                         $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
                             $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
                             $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
@@ -225,7 +174,7 @@
         }
 
         $(function() {
-            tableProduct = $('.yajra').DataTable({
+            tableData = $('.yajra').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": false,
@@ -260,7 +209,7 @@
                     },
                     {
                         className: 'btn bg-blue-lt btn-md',
-                        text: '<i class="fa fa-add"></i> Add Product',
+                        text: '<i class="fa fa-add"></i> Tambah Pengeluaran',
                         action: function(e, dt, node, config) {
                             $('#modal-add').modal('show');
                         },
@@ -282,7 +231,13 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getProduk.index') }}",
+                    "url": "{{ route('getCustomer.index') }}",
+                    // "data": function(data) {
+                    //     data._token = "{{ csrf_token() }}";
+                    //     data.dari = $('#filterStart-all').val();
+                    //     data.sampai = $('#filterEnd-all').val();
+                    //     data.status = '*';
+                    // }
                 },
                 columns: [{
                         title: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-list-details"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 5h8" /><path d="M13 9h5" /><path d="M13 15h8" /><path d="M13 19h5" /><path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /></svg>',
@@ -293,33 +248,39 @@
                         searchable: false,
                     },
                     {
-                        title: 'categori',
-                        data: 'category',
-                        name: 'category',
+                        title: 'no cust',
+                        data: 'no_cust',
+                        name: 'no_cust',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
                         title: 'nama',
-                        data: 'nama_produk',
-                        name: 'nama_produk',
+                        data: 'nama',
+                        name: 'nama',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'harga',
-                        data: 'harga',
-                        name: 'harga',
-                        className: "cuspad0 text-center",
-                        render: function(data, type, row) {
-                            return new Intl.NumberFormat('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            }).format(data);
-                        }
+                        title: 'no hp',
+                        data: 'no_hp',
+                        name: 'no_hp',
+                        className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'deskripsi',
-                        data: 'deskripsi',
-                        name: 'deskripsi',
+                        title: 'email',
+                        data: 'email',
+                        name: 'email',
+                        className: "cuspad0 cuspad1 text-center"
+                    },
+                    {
+                        title: 'alamat',
+                        data: 'alamat',
+                        name: 'alamat',
+                        className: "cuspad0 cuspad1 text-center"
+                    },
+                    {
+                        title: 'created_by',
+                        data: 'created_by',
+                        name: 'created_by',
                         className: "cuspad0 cuspad1 text-center"
                     },
                 ],
@@ -330,7 +291,7 @@
             modal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
                 const recordId = button.getAttribute('data-id');
-                deleteForm.action = `/produk/destroy/${recordId}`;
+                deleteForm.action = `/customer/destroy/${recordId}`;
             });
         });
     </script>

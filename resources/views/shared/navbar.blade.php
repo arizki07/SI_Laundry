@@ -29,7 +29,7 @@
                     </svg>
                 </a>
                 <div class="nav-item dropdown d-none d-md-flex me-3">
-                    <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
+                    <a href="javascript:void()" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
                         aria-label="Show notifications">
                         <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -40,157 +40,87 @@
                                 d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                             <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                         </svg>
-                        <span class="badge bg-red"></span>
+                        @if ($logs->isNotEmpty())
+                            <span class="badge bg-red"></span>
+                        @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Last updates</h3>
+                                <h3 class="card-title">25 Update Terakhir</h3>
                             </div>
-                            <div class="list-group list-group-flush list-group-hoverable">
-                                <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span
-                                                class="status-dot status-dot-animated bg-red d-block"></span>
-                                        </div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 1</a>
-                                            <div class="d-block text-secondary text-truncate mt-n1">
-                                                Change deprecated html tags to text decoration classes (#29604)
+                            <div class="list-group list-group-flush list-group-hoverable overflow-auto"
+                                style="max-height: 300px; min-width: 450px; max-width: 450px;">
+
+                                @if ($logs->isNotEmpty())
+                                    @foreach ($logs as $log)
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center">
+                                                <div class="col-auto">
+                                                    <span
+                                                        class="status-dot status-dot-animated {{ Auth::user()->role == 'admin' ? 'bg-red' : (Auth::user()->role == 'karyawan' ? 'bg-blue' : 'bg-green') }} d-block"></span>
+                                                </div>
+                                                <div class="col text-truncate">
+                                                    <a href="javascript:void()" class="text-body d-block">
+                                                        @foreach (\App\Models\User::all() as $us)
+                                                            @if ($us->id == $log->user_id)
+                                                                {{ $us->name }}
+                                                            @else
+                                                                {{ $log->user_id }}
+                                                            @endif
+                                                        @endforeach
+                                                    </a>
+                                                    <div class="d-block text-secondary text-truncate mt-n1">
+                                                        {{ $log->activity }}
+                                                    </div>
+                                                    <div class="d-block text-secondary text-truncate mt-n1">
+                                                        {{ $log->created_at->diffForHumans() }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a href="{{ url($log->path) }}" class="list-group-item-actions">
+                                                        <i class="fas fa-info"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted"
-                                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="list-group-item">
+                                        <p class="text-center mb-0">No notifications available</p>
                                     </div>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span class="status-dot d-block"></span></div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 2</a>
-                                            <div class="d-block text-secondary text-truncate mt-n1">
-                                                justify-content:between ⇒ justify-content:space-between (#29734)
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions show">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-yellow"
-                                                    width="24" height="24" viewBox="0 0 24 24"
-                                                    stroke-width="2" stroke="currentColor" fill="none"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span class="status-dot d-block"></span></div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 3</a>
-                                            <div class="d-block text-secondary text-truncate mt-n1">
-                                                Update change-version.js (#29736)
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted"
-                                                    width="24" height="24" viewBox="0 0 24 24"
-                                                    stroke-width="2" stroke="currentColor" fill="none"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto"><span
-                                                class="status-dot status-dot-animated bg-green d-block"></span>
-                                        </div>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-body d-block">Example 4</a>
-                                            <div class="d-block text-secondary text-truncate mt-n1">
-                                                Regenerate package-lock.json (#29730)
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="#" class="list-group-item-actions">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted"
-                                                    width="24" height="24" viewBox="0 0 24 24"
-                                                    stroke-width="2" stroke="currentColor" fill="none"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endif
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
+                <a href="javascript:void()" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
                     <span class="avatar avatar-sm"
-                        style="background-image: url({{ asset('assets/static/avatars/super.jpg') }})"></span>
+                        style="background-image: url({{ asset('assets/landing/img/favicon.png') }})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ Auth::user()->name }}</div>
                         <div class="mt-1 small text-secondary">{{ Auth::user()->role }}</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="{{ url('status') }}" class="dropdown-item">
-                        <i class="fas fa-tachometer-alt" style="margin-right: 8px;"></i> Status
-                    </a>
-                    <a href="{{ url('kontak') }}" class="dropdown-item">
-                        <i class="fas fa-user" style="margin-right: 8px;"></i> Profile
-                    </a>
-                    <a href="{{ url('faqs') }}" class="dropdown-item">
-                        <i class="fas fa-question-circle" style="margin-right: 8px;"></i> Faqs
-                    </a>
+                    <a href="{{ route('status.index') }}" class="dropdown-item">Status</a>
+                    <a href="{{ route('kontak.index') }}" class="dropdown-item">Profile</a>
+                    <a href="{{ route('rating.index') }}" class="dropdown-item">Rating</a>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ url('user') }}" class="dropdown-item">
-                        <i class="fas fa-users" style="margin-right: 8px;"></i> Users
-                    </a>
-                    <a href="{{ url('logout') }}" class="dropdown-item">
-                        <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Logout
-                    </a>
+                    <a href="{{ route('logs.index') }}" class="dropdown-item">Settings</a>
+                    <a href="{{ url('logout') }}" class="dropdown-item">Logout</a>
                 </div>
-
-
             </div>
         </div>
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div>
                 <form action="assets/" method="get" autocomplete="off" novalidate>
                     <div class="input-icon">
-                        <span class="input-icon-addon">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                        {{-- <span class="input-icon-addon">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -200,7 +130,7 @@
                             </svg>
                         </span>
                         <input type="text" value="" class="form-control" placeholder="Search…"
-                            aria-label="Search in website">
+                            aria-label="Search in website"> --}}
                     </div>
                 </form>
             </div>

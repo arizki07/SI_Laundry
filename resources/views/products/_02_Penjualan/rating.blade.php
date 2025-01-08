@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('assets/dist/libs/star-rating.js/dist/star-rating.min.css?1692870487') }}" rel="stylesheet" />
+@endsection
+
 @section('content')
     @include('shared.table')
 @endsection
@@ -9,62 +13,51 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-blue-lt">
-                    <h5 class="modal-title text-blue">Tambah Produk</h5>
+                    <h5 class="modal-title text-blue">Tambah Rating</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('rating.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <div class="form-label">Categori</div>
-                            <select class="form-select" name="category" required>
-                                <option selected disabled>--Pilih Categori--</option>
-                                @foreach ($categori as $item)
-                                    <option value="{{ $item->nama }}">{{ ucfirst($item->kode) }}</option>
+                            <label class="form-label">No Hp Customers</label>
+                            <select class="form-select" name="no_hp_cust">
+                                <option selected>Pilih Customer</option>
+                                @foreach (\App\Models\CustomerModel::all() as $ds)
+                                    <option value="{{ $ds->no_hp }}">{{ $ds->no_hp }} - {{ $ds->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Nama Produk</label>
-                            <input type="text" name="nama_produk" class="form-control" required
-                                placeholder="Masukkan nama produk">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Harga</label>
-                            <input type="text" name="harga" class="form-control" required
-                                placeholder="Masukkan harga produk">
-                        </div>
                         <div class="row">
-                            <div class="col lg-6">
-                                <div class="mb-3">
-                                    <div class="form-label">Type</div>
-                                    <select class="form-select" name="type">
-                                        <option selected disabled>--Pilih Type--</option>
-                                        <option value="Paket A">Paket A</option>
-                                        <option value="Paket B">Paket B</option>
-                                        <option value="Paket C">Paket C</option>
-                                        <option value="Paket D">Paket D</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Penilaian</label>
+                                <select id="rating-add" name="rating">
+                                    <option value="">Select a rating</option>
+                                    <option value="5">Excellent</option>
+                                    <option value="4" selected>Very Good</option>
+                                    <option value="3">Average</option>
+                                    <option value="2">Poor</option>
+                                    <option value="1">Terrible</option>
+                                </select>
                             </div>
-                            <div class="col lg-6">
-                                <div class="mb-3">
-                                    <div class="form-label">Flag</div>
-                                    <select class="form-select" name="flag" required>
-                                        <option selected disabled>--Pilih Flag--</option>
-                                        <option value="0">InActive</option>
-                                        <option value="1">Active</option>
-                                    </select>
+                            <div class="col-md-8 mb-3">
+                                <div class="form-label">Tampilkan Reviews</div>
+                                <div>
+                                    <label class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="status" value="ya"
+                                            checked>
+                                        <span class="form-check-label">Ya</span>
+                                    </label>
+                                    <label class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="status" value="tidak">
+                                        <span class="form-check-label">Tidak</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <div class="form-label">Foto Produk</div>
-                            <input type="file" class="form-control" name="foto_produk" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Deskripsi</label>
-                            <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi produk"></textarea>
+                            <label class="form-label">Komentar</label>
+                            <textarea class="form-control" name="komentar" rows="3" placeholder="Komentar..."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -72,61 +65,64 @@
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 
-    @foreach ($products as $item)
+    @foreach ($rating as $item)
         <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-blue-lt">
-                        <h5 class="modal-title text-blue">Edit Produk</h5>
+                        <h5 class="modal-title text-blue">Edit Rating</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('produk.update', $item->id) }}" method="POST">
+                    <form action="{{ route('rating.update', $item->id) }}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
-                                <div class="form-label">Categori</div>
-                                <select class="form-select" name="category" required>
-                                    <option selected disabled>--Pilih Categori--</option>
-                                    @foreach ($categori as $cat)
-                                        <option value="{{ $cat->nama }}"
-                                            {{ $cat->nama == $item->category ? 'selected' : '' }}>
-                                            {{ ucfirst($cat->kode) }}
-                                        </option>
+                                <label class="form-label">No Hp Customers</label>
+                                <select class="form-select" name="no_hp_cust">
+                                    <option selected>Pilih Customer</option>
+                                    @foreach (\App\Models\CustomerModel::all() as $ds)
+                                        <option value="{{ $item->no_hp_cust }}"
+                                            {{ $item->no_hp_cust == $ds->no_hp ? 'selected' : '' }}>{{ $ds->no_hp }} -
+                                            {{ $ds->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Nama Produk</label>
-                                <input type="text" name="nama_produk" class="form-control" required
-                                    placeholder="Masukkan nama produk" value="{{ $item->nama_produk }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Harga</label>
-                                <input type="text" name="harga" class="form-control" required
-                                    placeholder="Masukkan harga produk" value="{{ $item->harga }}">
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-label">Foto Produk</div>
-                                <input type="file" class="form-control" name="foto_produk" />
-                            </div>
-                            @if ($item->foto_produk)
-                                <div class="mb-3">
-                                    <label class="form-label">Current Image</label>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Penilaian</label>
+                                    <select id="rating-edit" name="rating">
+                                        <option value="">Select a rating</option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 5 ? 'selected' : '' }}></option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 5 ? 'selected' : '' }} selected></option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 3 ? 'selected' : '' }}></option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 2 ? 'selected' : '' }}></option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 1 ? 'selected' : '' }}></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-8 mb-3">
+                                    <div class="form-label">Tampilkan Reviews</div>
                                     <div>
-                                        <img src="{{ asset('storage/produk/' . $item->foto_produk) }}"
-                                            alt="Current Image" width="150">
+                                        <label class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status" value="1"
+                                                {{ $item->status == 1 ? 'checked' : '' }}>
+                                            <span class="form-check-label">Ya</span>
+                                        </label>
+                                        <label class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status" value="2"
+                                                {{ $item->status == 2 ? 'checked' : '' }}>
+                                            <span class="form-check-label">Tidak</span>
+                                        </label>
                                     </div>
                                 </div>
-                            @endif
+                            </div>
                             <div class="mb-3">
-                                <label class="form-label">Deskripsi</label>
-                                <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi produk">{{ $item->deskripsi }}</textarea>
+                                <label class="form-label">Komentar</label>
+                                <textarea class="form-control" name="komentar" rows="3" placeholder="Komentar...">{{ $item->komentar }}</textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -143,8 +139,8 @@
             <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="modal-status bg-danger"></div>
-                    <div class="modal-body text-center py-4">
+                    {{-- <div class="modal-status bg-danger-lt"></div> --}}
+                    <div class="modal-body text-center text-danger py-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24"
                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -181,14 +177,15 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="{{ asset('assets/dist/libs/star-rating.js/dist/star-rating.min.js?1692870487') }}" defer></script>
     <script type="text/javascript">
-        var tableProduct;
+        var tableData;
 
         function newexportaction(e, dt, button, config) {
             var self = this;
             var oldStart = dt.settings()[0]._iDisplayStart;
             dt.one('preXhr', function(e, s, data) {
-                // Just this once, load all data from the server...
                 data.start = 0;
                 data.length = 2147483647;
                 dt.one('preDraw', function(e, settings) {
@@ -209,25 +206,20 @@
                         $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
                     }
                     dt.one('preXhr', function(e, s, data) {
-                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-                        // Set the property to what it was before exporting.
                         settings._iDisplayStart = oldStart;
                         data.start = oldStart;
                     });
-                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
                     setTimeout(dt.ajax.reload, 0);
-                    // Prevent rendering of the full data to the DOM
                     return false;
                 });
             });
-            // Requery the server with the new one-time export settings
             dt.ajax.reload();
         }
 
         $(function() {
-            tableProduct = $('.yajra').DataTable({
-                "processing": true, //Feature control the processing indicator.
-                "serverSide": false, //Feature control DataTables' server-side processing mode.
+            tableData = $('.yajra').DataTable({
+                "processing": true,
+                "serverSide": false,
                 "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
@@ -260,7 +252,7 @@
                     },
                     {
                         className: 'btn bg-blue-lt btn-md',
-                        text: '<i class="fa fa-add"></i> Add Product',
+                        text: '<i class="fa fa-add"></i> Add Rating',
                         action: function(e, dt, node, config) {
                             $('#modal-add').modal('show');
                         },
@@ -282,7 +274,7 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getProduk.index') }}",
+                    "url": "{{ route('getRating.index') }}"
                 },
                 columns: [{
                         title: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-list-details"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 5h8" /><path d="M13 9h5" /><path d="M13 15h8" /><path d="M13 19h5" /><path d="M3 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M3 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /></svg>',
@@ -293,33 +285,41 @@
                         searchable: false,
                     },
                     {
-                        title: 'categori',
-                        data: 'category',
-                        name: 'category',
+                        title: 'Customer',
+                        data: 'no_hp_cust',
+                        name: 'no_hp_cust',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'nama',
-                        data: 'nama_produk',
-                        name: 'nama_produk',
-                        className: "cuspad0 cuspad1 text-center"
-                    },
-                    {
-                        title: 'harga',
-                        data: 'harga',
-                        name: 'harga',
+                        title: 'Tanggal',
+                        data: 'updated_at',
+                        name: 'updated_at',
                         className: "cuspad0 text-center",
                         render: function(data, type, row) {
-                            return new Intl.NumberFormat('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            }).format(data);
+                            return moment(data).format('D MMMM YYYY HH:mm [WIB]');
                         }
                     },
                     {
-                        title: 'deskripsi',
-                        data: 'deskripsi',
-                        name: 'deskripsi',
+                        title: 'Rating',
+                        data: 'rating',
+                        name: 'rating',
+                        className: "cuspad0 cuspad1 text-center",
+                        render: function(data, type, row) {
+                            let stars = '';
+                            const fullStar =
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFC107" class="bi bi-star-fill" viewBox="0 0 16 16"><path d="M3.612 15.443c-.396.198-.86-.106-.746-.592l.83-4.73-3.523-3.356c-.329-.314-.158-.888.283-.95l4.898-.696 2.193-4.396c.197-.395.73-.395.927 0l2.193 4.396 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.114.486-.35.79-.746.592L8 13.187l-4.389 2.256z"/></svg>';
+                            const emptyStar =
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#E0E0E0" class="bi bi-star" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.345 5.188l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767L8 11.9l1.23.65-.296-1.686 1.19-1.13-1.657-.24L8 7.329l-.467.95-1.657.24 1.19 1.13-.296 1.686 1.23-.65z"/></svg>';
+                            for (let i = 1; i <= 5; i++) {
+                                stars += i <= data ? fullStar : emptyStar;
+                            }
+                            return stars;
+                        }
+                    },
+                    {
+                        title: 'flag',
+                        data: 'status',
+                        name: 'status',
                         className: "cuspad0 cuspad1 text-center"
                     },
                 ],
@@ -330,8 +330,37 @@
             modal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
                 const recordId = button.getAttribute('data-id');
-                deleteForm.action = `/produk/destroy/${recordId}`;
+                deleteForm.action = `/rating/destroy/${recordId}`;
             });
         });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const ratingAdd = new StarRating('#rating-add', {
+                tooltip: false,
+                clearable: false,
+                stars: function(el, item, index) {
+                    el.innerHTML =
+                        `<!-- Download SVG icon from http://tabler-icons.io/i/star-filled -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon gl-star-full icon-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" stroke-width="0" fill="currentColor" />
+                </svg>`;
+                },
+            });
+
+            const ratingEdit = new StarRating('#rating-edit', {
+                tooltip: false,
+                clearable: false,
+                stars: function(el, item, index) {
+                    el.innerHTML =
+                        `<!-- Download SVG icon from http://tabler-icons.io/i/star-filled -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon gl-star-full icon-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z" stroke-width="0" fill="currentColor" />
+                </svg>`;
+                },
+            });
+        })
     </script>
 @endsection

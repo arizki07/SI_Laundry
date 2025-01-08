@@ -1,4 +1,5 @@
  
+ <script src="{{ asset('assets/extentions/jquery-3.7.1.min.js') }}?v={{ hash('sha512', filemtime(public_path('assets/extentions/jquery-3.7.1.min.js'))) }}"></script>
 <script src="{{ asset('assets/dist/js/demo-theme.min.js') }}?v={{ hash('sha512', filemtime(public_path('assets/dist/js/demo-theme.min.js'))) }}"></script>
  <!-- Libs JS -->
  {{-- <script src="{{ asset('assets/dist/libs/apexcharts/dist/apexcharts.min.js') }}?v={{ hash('sha512', filemtime(public_path('assets/dist/libs/apexcharts/dist/apexcharts.min.js'))) }}" defer></script> --}}
@@ -10,8 +11,6 @@
  <script src="{{ asset('assets/dist/js/demo.min.js') }}?v={{ hash('sha512', filemtime(public_path('assets/dist/js/demo.min.js'))) }}" defer></script>
  <script src="{{ asset('assets/dist/libs/litepicker/dist/litepicker.js') }}?v={{ hash('sha512', filemtime(public_path('assets/dist/libs/litepicker/dist/litepicker.js'))) }}" defer></script>
  <script src="{{ asset('assets/dist/libs/fslightbox/index.js') }}?v={{ hash('sha512', filemtime(public_path('assets/dist/libs/fslightbox/index.js'))) }}" defer></script>
-
- <script src="{{ asset('assets/extentions/jquery-3.7.1.min.js') }}?v={{ hash('sha512', filemtime(public_path('assets/extentions/jquery-3.7.1.min.js'))) }}"></script>
  <script src="{{ asset('assets/extentions/jquery.validate.js') }}?v={{ hash('sha512', filemtime(public_path('assets/extentions/jquery.validate.js'))) }}"></script>
  {{-- <script src="{{ asset('assets/extentions/jquery.validate.min.js') }}"></script> --}}
  {{-- <script src="{{ asset('assets/extentions/xeditable/jquery-editable-poshytip.min.js') }}"></script> --}}

@@ -153,3 +153,42 @@ td.cuspad1 {
     padding: 6px 12px;
     font-size: 12px;
 }
+
+aside.navbar {
+    scrollbar-width: thin;
+}
+
+aside.navbar::-webkit-scrollbar {
+    width: 4px; 
+    height: 4px;
+}
+
+aside.navbar::-webkit-scrollbar-thumb {
+    background-color: #6c757d;
+    border-radius: 2px; 
+}
+
+aside.navbar::-webkit-scrollbar-thumb:hover {
+    background-color: #495057;
+}
+
+aside.navbar::-webkit-scrollbar-track {
+    background-color: #343a40;
+}
+
+.tooltip-inner {
+    background: linear-gradient(45deg, #76C8FF, #5A89FF);
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-arrow {
+    border-top-color: #76C8FF;
+}
+
+.tooltip.fade {
+    transition: opacity 0.3s ease-in-out;
+}

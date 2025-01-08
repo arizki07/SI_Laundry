@@ -9,9 +9,9 @@
                 class="nav-item nav-link {{ $act == 'home' ? 'active' : '' }}">Home</a>
             <a href="{{ route('landing.tentang-kami') }}"
                 class="nav-item nav-link {{ $act == 'about' ? 'active' : '' }}">Tentang Kami</a>
-            <a href="{{ route('landing.tentang-kami') }}"
-                class="nav-item nav-link {{ $act == 'testimoni' ? 'active' : '' }}">Testimoni</a>
             <a href="{{ route('landing.testimoni') }}"
+                class="nav-item nav-link {{ $act == 'testimoni' ? 'active' : '' }}">Testimoni</a>
+            <a href="{{ route('landing.daftar-harga') }}"
                 class="nav-item nav-link {{ $act == 'services' ? 'active' : '' }}">Daftar Harga</a>
             <a href="{{ route('landing.cek-resi') }}" class="nav-item nav-link {{ $act == 'resi' ? 'active' : '' }}">Cek
                 Resi</a>

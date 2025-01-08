@@ -8,6 +8,7 @@ use App\Http\Controllers\_00_Datatables\FaqsList;
 use App\Http\Controllers\_00_Datatables\LogsList;
 use App\Http\Controllers\_00_Datatables\ResiList;
 use App\Http\Controllers\_00_Datatables\SalesList;
+use App\Http\Controllers\_00_Datatables\RatingList;
 use App\Http\Controllers\_00_Datatables\StatusList;
 use App\Http\Controllers\_00_Datatables\ProductList;
 use App\Http\Controllers\_05_Setting\FaqsController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\_02_Penjualan\ResiController;
 use App\Http\Controllers\_04_SetData\StatusController;
 use App\Http\Controllers\_05_Setting\KontakController;
 use App\Http\Controllers\_02_Penjualan\SalesController;
+use App\Http\Controllers\_02_Penjualan\RatingController;
 use App\Http\Controllers\_04_SetData\CategoryController;
 use App\Http\Controllers\_04_SetData\ReferensiController;
 use App\Http\Controllers\_06_Finance\PemasukanController;
@@ -56,7 +58,7 @@ Route::middleware(['logs'])->group(function () {
         Route::get('logout', 'logout');
     });
 
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'notification'])->group(function () {
         Route::resource('getCategories', CategoryList::class);
         Route::resource('getProduk', ProductList::class);
         Route::resource('getCustomer', CustomerList::class);
@@ -67,6 +69,7 @@ Route::middleware(['logs'])->group(function () {
         Route::resource('getLogs', LogsList::class);
         Route::resource('getFaqs', FaqsList::class);
         Route::resource('getPemasukan', PemasukanList::class);
+        Route::resource('getRating', RatingList::class);
 
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'index');
@@ -118,7 +121,7 @@ Route::middleware(['logs'])->group(function () {
         });
 
         Route::controller(StatusController::class)->group(function () {
-            Route::get('status', 'status');
+            Route::get('status', 'status')->name('status.index');
             Route::post('status/store', 'store')->name('status.store');
             Route::post('status/update/{id}', 'update')->name('status.update');
             Route::delete('status/destroy/{id}', 'destroy');
@@ -151,6 +154,13 @@ Route::middleware(['logs'])->group(function () {
 
         Route::controller(PemasukanController::class)->group(function () {
             Route::get('pemasukan', 'pemasukan')->name('pemasukan.index');
+        });
+
+        Route::controller(RatingController::class)->group(function () {
+            Route::get('rating', 'index')->name('rating.index');
+            Route::post('rating', 'store')->name('rating.store');
+            Route::post('rating/update/{id}', 'update')->name('rating.update');
+            Route::delete('rating/destroy/{id}', 'destroy');
         });
     });
 });
