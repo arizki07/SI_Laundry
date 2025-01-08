@@ -106,38 +106,37 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-body-scan">
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-bell-cog">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                                    <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                                    <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                                    <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                                    <path d="M12 8m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                                    <path d="M10 17v-1a2 2 0 1 1 4 0v1" />
-                                    <path d="M8 10c.666 .666 1.334 1 2 1h4c.666 0 1.334 -.334 2 -1" />
-                                    <path d="M12 11v3" />
+                                    <path d="M12 17h-8a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6a2 2 0 1 1 4 0a7 7 0 0 1 4 6v.5" />
+                                    <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M19.001 15.5v1.5" />
+                                    <path d="M19.001 21v1.5" />
+                                    <path d="M22.032 17.25l-1.299 .75" />
+                                    <path d="M17.27 20l-1.3 .75" />
+                                    <path d="M15.97 17.25l1.3 .75" />
+                                    <path d="M20.733 20l1.3 .75" />
+                                    <path d="M9 17v1a3 3 0 0 0 3 3" />
                                 </svg>
                                 {{ $judul }}
                             </h2>
-                            <div class="page-pretitle">
+                            {{-- <div class="page-pretitle">
                                 <ol class="breadcrumb" aria-label="breadcrumbs">
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
                                                 class="fa-solid fa-virus"></i> {{ $judul }}</a></li>
                                 </ol>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="col-auto ms-auto d-print-none">
-                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-hourglass">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M17 2a2 2 0 0 1 1.995 1.85l.005 .15v2a6.996 6.996 0 0 1 -3.393 6a6.994 6.994 0 0 1 3.388 5.728l.005 .272v2a2 2 0 0 1 -1.85 1.995l-.15 .005h-10a2 2 0 0 1 -1.995 -1.85l-.005 -.15v-2a6.996 6.996 0 0 1 3.393 -6a6.994 6.994 0 0 1 -3.388 -5.728l-.005 -.272v-2a2 2 0 0 1 1.85 -1.995l.15 -.005h10z" />
-                                </svg>Tambah Referensi
-                            </a>
+                            <ol class="breadcrumb" aria-label="breadcrumbs">
+                                <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
+                                        Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
+                                            class="fa-solid fa-bell"></i> {{ $judul }}</a></li>
+                            </ol>
                         </div>
 
                     </div>
@@ -335,29 +334,30 @@
                         ['Default', '25', '50', 'Semua']
                     ],
                     "buttons": [{
-                            extend: 'copyHtml5',
-                            className: 'btn btn-teal',
-                            text: '<i class="fa fa-copy text-white"></i> Salin',
-                            action: newexportaction,
-                        },
-                        {
                             extend: 'excelHtml5',
                             autoFilter: true,
-                            className: 'btn btn-success',
-                            text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                            className: 'btn bg-success-lt btn-md',
+                            text: '<i class="fa fa-file-excel"></i> Excel',
                             action: newexportaction,
                         },
                         {
                             extend: 'pdfHtml5',
-                            className: 'btn btn-danger',
-                            text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                            className: 'btn bg-danger-lt btn-md',
+                            text: '<i class="fa fa-file-pdf"></i> Pdf',
                         },
                         {
-                            className: 'btn btn-dark',
+                            className: 'btn bg-purple-lt btn-md',
                             text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
                             action: function(e, dt, node, config) {
                                 dt.ajax.reload();
                             }
+                        },
+                        {
+                            className: 'btn bg-blue-lt btn-md',
+                            text: '<i class="fa fa-add"></i> Add Referensi',
+                            action: function(e, dt, node, config) {
+                                $('#modal-add').modal('show');
+                            },
                         },
                     ],
                     "language": {

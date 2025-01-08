@@ -1,11 +1,16 @@
 @extends('layouts.app')
-@section('styles')<link href="{{ asset('assets/landing/css/invoice.css') }}?v={{ hash('sha512', filemtime(public_path('assets/landing/css/invoice.css'))) }}" rel="stylesheet">@endsection
-@section('content') @include('shared.table') @endsection
+@section('styles')
+    <link
+        href="{{ asset('assets/landing/css/invoice.css') }}?v={{ hash('sha512', filemtime(public_path('assets/landing/css/invoice.css'))) }}"
+        rel="stylesheet">
+@endsection
+@section('content')
+    @include('shared.table')
+@endsection
 
 @section('modals')
     @foreach ($sales as $item)
-        <div class="modal modal-blur fade" id="modal-view{{ $item->id }}" tabindex="-1" role="dialog"
-            aria-hidden="true">
+        <div class="modal modal-blur fade" id="modal-view{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 70%;">
                 <div class="modal-content">
                     <div class="modal-header bg-blue-lt">
@@ -154,8 +159,8 @@
                                                                         class="fa fa-envelope"></i>
                                                                     info@themevessel.com</a>
                                                                 <a href="tel:info@themevessel.com"
-                                                                    class="mr-0 d-none-580"><i
-                                                                        class="fa fa-map-marker"></i> 169
+                                                                    class="mr-0 d-none-580"><i class="fa fa-map-marker"></i>
+                                                                    169
                                                                     Teroghoria, Bangladesh</a>
                                                             </div>
                                                         </div>
@@ -166,8 +171,7 @@
                                                 <a href="javascript:window.print()" class="btn btn-lg btn-print mb-3">
                                                     <i class="fa fa-print"></i> Print Invoice
                                                 </a>
-                                                <a id="invoice_download_btn"
-                                                    class="btn btn-lg btn-download btn-theme mb-3">
+                                                <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme mb-3">
                                                     <i class="fa fa-download"></i> Download Invoice
                                                 </a>
                                             </div>

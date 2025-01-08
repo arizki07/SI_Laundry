@@ -164,13 +164,25 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Status</a>
-                    <a href="assets/profile.html" class="dropdown-item">Profile</a>
-                    <a href="#" class="dropdown-item">Feedback</a>
+                    <a href="{{ url('status') }}" class="dropdown-item">
+                        <i class="fas fa-tachometer-alt" style="margin-right: 8px;"></i> Status
+                    </a>
+                    <a href="{{ url('kontak') }}" class="dropdown-item">
+                        <i class="fas fa-user" style="margin-right: 8px;"></i> Profile
+                    </a>
+                    <a href="{{ url('faqs') }}" class="dropdown-item">
+                        <i class="fas fa-question-circle" style="margin-right: 8px;"></i> Faqs
+                    </a>
                     <div class="dropdown-divider"></div>
-                    <a href="assets/settings.html" class="dropdown-item">Settings</a>
-                    <a href="{{ url('logout') }}" class="dropdown-item">Logout</a>
+                    <a href="{{ url('user') }}" class="dropdown-item">
+                        <i class="fas fa-users" style="margin-right: 8px;"></i> Users
+                    </a>
+                    <a href="{{ url('logout') }}" class="dropdown-item">
+                        <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Logout
+                    </a>
                 </div>
+
+
             </div>
         </div>
         <div class="collapse navbar-collapse" id="navbar-menu">

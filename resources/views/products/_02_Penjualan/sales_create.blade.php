@@ -63,68 +63,57 @@
                                 <div class="card-body">
                                     <form method="POST" action="{{ route('sales.store') }}" enctype="multipart/form-data">
                                         @csrf
+
+                                        <!-- Customer and Payment Details -->
                                         <div class="row g-5">
-                                            <div class="col-xl-4">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-xl-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-8">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Customer</label>
-                                                                    <select class="form-select" name="customer_id">
-                                                                        <option selected disabled>--Pilih Customer--
-                                                                        </option>
-                                                                        @foreach ($cust as $cus)
-                                                                            <option value="{{ $cus->id }}">
-                                                                                {{ $cus->nama }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Customer</label>
+                                                    <select class="form-select" name="customer_id">
+                                                        <option selected disabled>--Pilih Customer--</option>
+                                                        @foreach ($cust as $cus)
+                                                            <option value="{{ $cus->id }}">{{ $cus->nama }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                                                            <div class="col-lg-8">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">File Bukti</label>
-                                                                    <input type="file" class="form-control"
-                                                                        name="file_bukti">
-                                                                </div>
-                                                            </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Metode Pembayaran</label>
+                                                    <select class="form-select" name="metode_pembayaran">
+                                                        <option selected disabled>--Pilih Metode Pembayaran--</option>
+                                                        <option value="cash">Cash</option>
+                                                        <option value="transfer">Transfer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                                                            <div class="col-lg-8">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Metode Pembayaran</label>
-                                                                    <select class="form-select" name="metode_pembayaran">
-                                                                        <option selected disabled>--Pilih Metode
-                                                                            Pembayaran--</option>
-                                                                        <option value="cash">Cash</option>
-                                                                        <option value="transfer">Transfer</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">File Bukti</label>
+                                                    <input type="file" class="form-control" name="file_bukti">
+                                                </div>
 
-                                                            <div class="col-lg-8">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Status Pembayaran</label>
-                                                                    <select class="form-select" name="status_pembayaran">
-                                                                        <option selected disabled>--Pilih Status
-                                                                            Pembayaran--</option>
-                                                                        @foreach ($status as $stat)
-                                                                            <option value="{{ $stat->nama }}">
-                                                                                {{ ucfirst($stat->nama) }}</option>
-                                                                        @endforeach
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status Pembayaran</label>
+                                                    <select class="form-select" name="status_pembayaran">
+                                                        <option selected disabled>--Pilih Status Pembayaran--</option>
+                                                        @foreach ($status as $stat)
+                                                            <option value="{{ $stat->nama }}">{{ ucfirst($stat->nama) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <hr>
+                                        <!-- Items Section -->
                                         <div class="row g-5">
-                                            <div class="col-xl-8">
-                                                <label class="form-label">Items</label>
+                                            <div class="col-xl-12">
+                                                <div class="text-end">
+                                                    <button type="button" id="add-item-button" class="btn btn-success"><i
+                                                            class="fa-solid fa-cart-plus"></i> Add Item
+                                                    </button>
+                                                </div>
                                                 <div id="sales-items-container">
                                                     <div class="sales-item row mb-3">
                                                         <div class="col-md-4">
@@ -134,46 +123,49 @@
                                                                 @foreach ($product as $pro)
                                                                     <option value="{{ $pro->id }}"
                                                                         data-price="{{ $pro->harga }}">
-                                                                        {{ $pro->nama_produk }}
-                                                                    </option>
+                                                                        {{ $pro->nama_produk }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
+
                                                         <div class="col-md-2">
                                                             <label class="form-label">Quantity</label>
                                                             <input type="number" class="form-control qty-input"
-                                                                name="qty[]" min="1" step="0.1"
-                                                                placeholder="Qty" value="1">
+                                                                name="qty[]" min="1" step="0.1" value="1">
                                                         </div>
+
                                                         <div class="col-md-3">
                                                             <label class="form-label">Price</label>
                                                             <input type="number" class="form-control price-input"
-                                                                name="harga_per_qty[]" placeholder="Price" readonly>
+                                                                name="harga_per_qty[]" readonly>
                                                         </div>
 
                                                         <div class="col-md-2">
                                                             <label class="form-label">Total</label>
                                                             <input type="number" class="form-control total-input"
-                                                                name="total[]" placeholder="Total" readonly>
+                                                                name="total[]" readonly>
                                                         </div>
-                                                        <div class="col-md-1">
-                                                            <label class="form-label d-block">&nbsp;</label>
+
+                                                        <div class="col-md-1 d-flex align-items-end">
                                                             <button type="button"
-                                                                class="btn btn-danger btn-remove-item">X</button>
+                                                                class="btn btn-danger btn-remove-item"><i
+                                                                    class="fa-solid fa-trash"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button type="button" id="add-item-button" class="btn btn-success">Add
-                                                    Item</button>
+
                                             </div>
                                         </div>
 
+                                        <!-- Submit Button -->
                                         <div class="row mt-4">
                                             <div class="col-xl-12 text-end">
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
                                         </div>
                                     </form>
+
+
                                 </div>
                             </div>
                         </div>

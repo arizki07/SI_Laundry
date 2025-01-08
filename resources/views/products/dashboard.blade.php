@@ -231,7 +231,7 @@
                     <div class="row row-cards">
                         <div class="col-lg-6">
                             <div class="col-sm-12 col-lg-12">
-                                <div class="card" style="height: 238px">
+                                <div class="card bg-red-lt" style="height: 238px">
                                     <div class="card-header">
                                         <h3 class="card-title">
                                             Login Session
@@ -428,7 +428,8 @@
                         </div>
 
                         <div class="col-sm-6 col-lg-6">
-                            <div class="card" style="height: 400px;">
+                            <div class="card bg-info-lt" style="height: 400px;">
+                                <div class="ribbon bg-info">Log Aktifitas</div>
                                 <div class="card-header">
                                     <h3 class="card-title">50 Aktifitas Terbaru</h3>
                                 </div>
@@ -476,7 +477,8 @@
                             </div>
                         </div>
                         <div class="col-sm-6 col-lg-6">
-                            <div class="card" style="height: 400px;">
+                            <div class="card bg-green-lt" style="height: 400px;">
+                                <div class="ribbon bg-green">Transaksi</div>
                                 <div class="card-header">
                                     <h3 class="card-title">Status Transaksi</h3>
                                 </div>

@@ -115,20 +115,26 @@
                                 </svg>
                                 {{ $judul }}
                             </h2>
-                            <div class="page-pretitle">
+                            {{-- <div class="page-pretitle">
                                 <ol class="breadcrumb" aria-label="breadcrumbs">
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
                                                 class="fa-solid fa-cart-shopping"></i> {{ $judul }}</a></li>
                                 </ol>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="col-auto ms-auto d-print-none">
-                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
+                            {{-- <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
                                 <i class="fa-solid fa-cart-shopping"></i> Tambah Produk
-                            </a>
+                            </a> --}}
+                            <ol class="breadcrumb" aria-label="breadcrumbs">
+                                <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
+                                        Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
+                                            class="fa-solid fa-cart-shopping"></i> {{ $judul }}</a></li>
+                            </ol>
                         </div>
 
                     </div>
@@ -405,29 +411,30 @@
                         ['Default', '25', '50', 'Semua']
                     ],
                     "buttons": [{
-                            extend: 'copyHtml5',
-                            className: 'btn btn-teal',
-                            text: '<i class="fa fa-copy text-white"></i> Salin',
-                            action: newexportaction,
-                        },
-                        {
                             extend: 'excelHtml5',
                             autoFilter: true,
-                            className: 'btn btn-success',
-                            text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                            className: 'btn bg-success-lt btn-md',
+                            text: '<i class="fa fa-file-excel"></i> Excel',
                             action: newexportaction,
                         },
                         {
                             extend: 'pdfHtml5',
-                            className: 'btn btn-danger',
-                            text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                            className: 'btn bg-danger-lt btn-md',
+                            text: '<i class="fa fa-file-pdf"></i> Pdf',
                         },
                         {
-                            className: 'btn btn-dark',
+                            className: 'btn bg-purple-lt btn-md',
                             text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
                             action: function(e, dt, node, config) {
                                 dt.ajax.reload();
                             }
+                        },
+                        {
+                            className: 'btn bg-blue-lt btn-md',
+                            text: '<i class="fa fa-add"></i> Add Product',
+                            action: function(e, dt, node, config) {
+                                $('#modal-add').modal('show');
+                            },
                         },
                     ],
                     "language": {

@@ -4,10 +4,12 @@
             aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <h1 class="navbar-brand navbar-brand-autodark">
-            <a href=".">
-                <img src="assets/static/logo.svg" width="110" height="32" alt="Tabler"
-                    class="navbar-brand-image">
+        <h1 class="navbar-brand navbar-brand-autodark" style="margin-top: 5px">
+            <a href="{{ url('dashboard') }}" style="margin-right: 5px">
+                <img src="{{ asset('assets/landing/img/favicon.png') }}" alt="" srcset="">
+            </a>
+            <a href="{{ url('dashboard') }}" style="margin-top: 3px">
+                INDAH LAUNDRY
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
@@ -291,7 +293,8 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item dropdown {{ ($active == 'sales' || $active == 'resi' || $active == 'rating') ? 'active' : '' }}">
+                <li
+                    class="nav-item dropdown {{ $active == 'sales' || $active == 'resi' || $active == 'rating' ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-bantuan" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span
@@ -312,8 +315,10 @@
                             Sales
                         </span>
                     </a>
-                    <div class="dropdown-menu mx-3 {{ ($active == 'sales' || $active == 'resi' || $active == 'rating') ? 'show' : '' }}">
-                        <a class="nav-link {{ $active == 'sales' ? 'text-azure fw-bold' : '' }}" href="{{ url('sales') }}">
+                    <div
+                        class="dropdown-menu mx-3 {{ $active == 'sales' || $active == 'resi' || $active == 'rating' ? 'show' : '' }}">
+                        <a class="nav-link {{ $active == 'sales' ? 'text-azure fw-bold' : '' }}"
+                            href="{{ url('sales') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <i class="fa-solid fa-code-commit"></i>
                             </span>
@@ -321,7 +326,8 @@
                                 Sales
                             </span>
                         </a>
-                        <a class="nav-link {{ $active == 'resi' ? 'text-azure fw-bold' : '' }}" href="{{ url('resi') }}">
+                        <a class="nav-link {{ $active == 'resi' ? 'text-azure fw-bold' : '' }}"
+                            href="{{ url('resi') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <i class="fa-solid fa-code-commit"></i>
                             </span>
@@ -329,7 +335,8 @@
                                 Resi History
                             </span>
                         </a>
-                        <a class="nav-link {{ $active == 'rating' ? 'text-azure fw-bold' : '' }}" href="{{ url('resi') }}">
+                        <a class="nav-link {{ $active == 'rating' ? 'text-azure fw-bold' : '' }}"
+                            href="{{ url('resi') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <i class="fa-solid fa-code-commit"></i>
                             </span>
@@ -484,7 +491,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item {{ ($active == 'logs') ? 'active' : '' }}">
+                <li class="nav-item {{ $active == 'logs' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('logs.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -500,7 +507,8 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item dropdown {{ ($active == 'kontak' || $active == 'faqs') ? 'active' : '' }}"  style="padding-bottom: 50px;">
+                <li class="nav-item dropdown {{ $active == 'kontak' || $active == 'faqs' ? 'active' : '' }}"
+                    style="padding-bottom: 50px;">
                     <a class="nav-link dropdown-toggle" href="#navbar-bantuan" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span
@@ -521,8 +529,9 @@
                             Profile & Bantuan
                         </span>
                     </a>
-                    <div class="dropdown-menu {{ ($active == 'kontak' || $active == 'faqs') ? 'show' : '' }} mx-3">
-                        <a class="nav-link {{ $active == 'kontak' ? 'text-azure fw-bold' : '' }}" href="{{ route('kontak.index') }}">
+                    <div class="dropdown-menu {{ $active == 'kontak' || $active == 'faqs' ? 'show' : '' }} mx-3">
+                        <a class="nav-link {{ $active == 'kontak' ? 'text-azure fw-bold' : '' }}"
+                            href="{{ route('kontak.index') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <i class="fa-solid fa-code-commit"></i>
                             </span>
@@ -530,7 +539,8 @@
                                 Contact
                             </span>
                         </a>
-                        <a class="nav-link {{ $active == 'faqs' ? 'text-azure fw-bold' : '' }}" href="{{ route('faqs.index') }}">
+                        <a class="nav-link {{ $active == 'faqs' ? 'text-azure fw-bold' : '' }}"
+                            href="{{ route('faqs.index') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <i class="fa-solid fa-code-commit"></i>
                             </span>

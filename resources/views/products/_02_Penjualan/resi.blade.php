@@ -320,25 +320,19 @@
                         ['Default', '25', '50', 'Semua']
                     ],
                     "buttons": [{
-                            extend: 'copyHtml5',
-                            className: 'btn btn-teal',
-                            text: '<i class="fa fa-copy text-white"></i> Salin',
-                            action: newexportaction,
-                        },
-                        {
                             extend: 'excelHtml5',
                             autoFilter: true,
-                            className: 'btn btn-success',
-                            text: '<i class="fa fa-file-excel text-white"></i> Excel',
+                            className: 'btn bg-success-lt btn-md',
+                            text: '<i class="fa fa-file-excel"></i> Excel',
                             action: newexportaction,
                         },
                         {
                             extend: 'pdfHtml5',
-                            className: 'btn btn-danger',
-                            text: '<i class="fa fa-file-pdf text-white"></i> Pdf',
+                            className: 'btn bg-danger-lt btn-md',
+                            text: '<i class="fa fa-file-pdf"></i> Pdf',
                         },
                         {
-                            className: 'btn btn-dark',
+                            className: 'btn bg-purple-lt btn-md',
                             text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
                             action: function(e, dt, node, config) {
                                 dt.ajax.reload();

@@ -65,73 +65,64 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="row g-5">
-                                            <div class="col-xl-4">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-xl-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-8">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Customer</label>
-                                                                    <select class="form-select" name="customer_id">
-                                                                        <option disabled>--Pilih Customer--</option>
-                                                                        @foreach ($customers as $customer)
-                                                                            <option value="{{ $customer->id }}"
-                                                                                {{ $sales->customer_id == $customer->id ? 'selected' : '' }}>
-                                                                                {{ $customer->nama }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-8">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">File Bukti</label>
-                                                                    <input type="file" class="form-control"
-                                                                        name="file_bukti">
-                                                                    @if ($sales->file_bukti)
-                                                                        <a href="{{ asset('storage/sales/bukti/' . $sales->file_bukti) }}"
-                                                                            target="_blank">Lihat File</a>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-8">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Metode Pembayaran</label>
-                                                                    <select class="form-select" name="metode_pembayaran">
-                                                                        <option disabled>--Pilih Metode Pembayaran--
-                                                                        </option>
-                                                                        <option value="cash"
-                                                                            {{ $sales->metode_pembayaran == 'cash' ? 'selected' : '' }}>
-                                                                            Cash</option>
-                                                                        <option value="transfer"
-                                                                            {{ $sales->metode_pembayaran == 'transfer' ? 'selected' : '' }}>
-                                                                            Transfer</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-8">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Status Pembayaran</label>
-                                                                    <select class="form-select" name="status_pembayaran">
-                                                                        <option disabled>--Pilih Status Pembayaran--
-                                                                        </option>
-                                                                        @foreach ($statuses as $status)
-                                                                            <option value="{{ $status->nama }}"
-                                                                                {{ $sales->status_pembayaran == $status->nama ? 'selected' : '' }}>
-                                                                                {{ ucfirst($status->nama) }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Customer</label>
+                                                    <select class="form-select" name="customer_id">
+                                                        <option disabled>--Pilih Customer--</option>
+                                                        @foreach ($customers as $customer)
+                                                            <option value="{{ $customer->id }}"
+                                                                {{ $sales->customer_id == $customer->id ? 'selected' : '' }}>
+                                                                {{ $customer->nama }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">File Bukti</label>
+                                                    <input type="file" class="form-control" name="file_bukti">
+                                                    @if ($sales->file_bukti)
+                                                        <a href="{{ asset('storage/sales/bukti/' . $sales->file_bukti) }}"
+                                                            target="_blank">Lihat File</a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Metode Pembayaran</label>
+                                                    <select class="form-select" name="metode_pembayaran">
+                                                        <option disabled>--Pilih Metode Pembayaran--
+                                                        </option>
+                                                        <option value="cash"
+                                                            {{ $sales->metode_pembayaran == 'cash' ? 'selected' : '' }}>
+                                                            Cash</option>
+                                                        <option value="transfer"
+                                                            {{ $sales->metode_pembayaran == 'transfer' ? 'selected' : '' }}>
+                                                            Transfer</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status Pembayaran</label>
+                                                    <select class="form-select" name="status_pembayaran">
+                                                        <option disabled>--Pilih Status Pembayaran--
+                                                        </option>
+                                                        @foreach ($statuses as $status)
+                                                            <option value="{{ $status->nama }}"
+                                                                {{ $sales->status_pembayaran == $status->nama ? 'selected' : '' }}>
+                                                                {{ ucfirst($status->nama) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row g-5">
                                             <div class="col-xl-8">
-                                                <label class="form-label">Items</label>
+                                                <div class="text-end">
+                                                    <button type="button" id="add-item-button" class="btn btn-success"><i
+                                                            class="fa-solid fa-cart-plus"></i> Add Item
+                                                    </button>
+                                                </div>
                                                 <div id="sales-items-container">
                                                     @foreach ($sales->items as $item)
                                                         <div class="sales-item row mb-3">
@@ -173,8 +164,6 @@
                                                         </div>
                                                     @endforeach
                                                 </div>
-                                                <button type="button" id="add-item-button" class="btn btn-success">Add
-                                                    Item</button>
                                             </div>
                                         </div>
                                         <div class="row mt-4">
@@ -183,7 +172,6 @@
                                             </div>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
