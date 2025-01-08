@@ -12,7 +12,7 @@ class CustomerController extends Controller
     public function customer()
     {
         $customer = CustomerModel::all();
-        return view('products._02_penjualan.customer', [
+        return view('products._02_Penjualan.customer', [
             'judul' => 'Customer',
             'active' => 'Customer',
             'customer' => $customer
