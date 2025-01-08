@@ -162,6 +162,10 @@
                         settings._iDisplayStart = oldStart;
                         data.start = oldStart;
                     });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
                 });
             });
             // Requery the server with the new one-time export settings
