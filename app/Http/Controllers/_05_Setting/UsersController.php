@@ -12,7 +12,7 @@ class UsersController extends Controller
 {
     public function users()
     {
-        $user = User::all();
+        $user = User::paginate(4);
         return view('products._05_Setting.users', [
             'judul' => 'Users',
             'active' => 'Users',
@@ -34,8 +34,9 @@ class UsersController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make('password'),
+            'password' => Hash::make($request->password),
             'role' => $request->role,
+            'status' => 1,
         ]);
 
         if ($user) {
@@ -59,7 +60,7 @@ class UsersController extends Controller
                     'confirmed',
                 ],
             ]);
-    
+
             if (Hash::check($request->password_saat_ini, Auth::user()->password)) {
                 if (Hash::check($request->password_baru, Auth::user()->password)) {
                     return back()->withErrors(['password_baru' => 'Password baru tidak boleh sama dengan password lama.']);
@@ -67,7 +68,7 @@ class UsersController extends Controller
                 Auth::user()->update([
                     'password' => Hash::make($request->password_baru),
                 ]);
-    
+
                 return redirect()->back()->with('success', 'Password berhasil diperbarui');
             } else {
                 return back()->withErrors(['password_saat_ini' => 'Password saat ini salah']);
@@ -99,14 +100,30 @@ class UsersController extends Controller
         }
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['success' => false, 'message' => 'User tidak ditemukan.'], 404);
+        }
+
+        $user->status = $request->status;
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'Status berhasil diperbarui.']);
+    }
+
+
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $user = User::find($id);
+
         if ($user) {
-            return redirect()->back()->with('success', 'User berhasil di hapus');
-        } else {
-            return redirect()->back()->with('error', 'User berhasil gagal di hapus');
+            $user->delete();
+            return response()->json(['success' => true]);
         }
+
+        return response()->json(['success' => false, 'message' => 'Data tidak ditemukan.'], 404);
     }
 }

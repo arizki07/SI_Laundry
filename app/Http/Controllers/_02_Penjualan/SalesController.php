@@ -50,6 +50,8 @@ class SalesController extends Controller
             'file_bukti' => 'nullable|file|mimes:jpg,png,pdf|max:2048',
             'status_pembayaran' => 'required|string',
             'metode_pembayaran' => 'required|string',
+            'round_up' => 'nullable|array',
+            'round_up.*' => 'boolean',
         ]);
 
         $noResi = 'RESI' . strtoupper(bin2hex(random_bytes(5)));
@@ -80,7 +82,10 @@ class SalesController extends Controller
         foreach ($validated['products'] as $index => $productId) {
             $product = ProductModel::findOrFail($productId);
             $qty = $validated['qty'][$index];
-            $qtyRounded = round($qty * 2) / 2;
+
+            $roundUp = isset($validated['round_up'][$index]) && $validated['round_up'][$index];
+            $qtyRounded = $roundUp ? ceil($qty) : floor($qty);
+
             $hargaPerQty = $product->harga;
             $total = $qtyRounded * $hargaPerQty;
 
@@ -137,11 +142,12 @@ class SalesController extends Controller
             'file_bukti' => 'nullable|file|mimes:jpg,png,pdf|max:2048',
             'status_pembayaran' => 'required|string',
             'metode_pembayaran' => 'required|string',
+            'round_up' => 'nullable|array',
+            'round_up.*' => 'in:1',
         ]);
 
         $sales = SalesModel::findOrFail($id);
 
-        // Update file if provided
         $fileName = $sales->file_bukti;
         if ($request->hasFile('file_bukti')) {
             $file = $request->file('file_bukti');
@@ -149,7 +155,6 @@ class SalesController extends Controller
             $file->storeAs('sales/bukti', $fileName, 'public');
         }
 
-        // Update sales data
         $sales->update([
             'customer_id' => $validated['customer_id'],
             'status_pembayaran' => $validated['status_pembayaran'],
@@ -157,21 +162,26 @@ class SalesController extends Controller
             'file_bukti' => $fileName,
         ]);
 
-        // Delete existing items
         $sales->items()->delete();
 
-        // Add new items
         $totalHarga = 0;
+
         foreach ($validated['products'] as $index => $productId) {
             $product = ProductModel::findOrFail($productId);
             $qty = $validated['qty'][$index];
-            $qtyRounded = round($qty * 2) / 2;
+
+            $roundUp = isset($validated['round_up'][$index]) && $validated['round_up'][$index] == 1;
+
+            if ($roundUp) {
+                $qty = ceil($qty);
+            }
+
             $hargaPerQty = $product->harga;
-            $total = $qtyRounded * $hargaPerQty;
+            $total = $qty * $hargaPerQty;
 
             $sales->items()->create([
                 'product_id' => $productId,
-                'qty' => $qtyRounded,
+                'qty' => $qty,
                 'harga_per_qty' => $hargaPerQty,
                 'total' => $total,
             ]);
@@ -179,11 +189,11 @@ class SalesController extends Controller
             $totalHarga += $total;
         }
 
-        // Update total price
         $sales->update(['total_harga' => $totalHarga]);
 
         return redirect()->route('sales.index')->with('success', 'Sales berhasil diperbarui');
     }
+
 
     public function destroy($id)
     {

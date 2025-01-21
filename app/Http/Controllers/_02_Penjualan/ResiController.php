@@ -7,18 +7,24 @@ use App\Models\CustomerModel;
 use App\Models\ResiHistoryModel;
 use App\Models\SalesItemModel;
 use App\Models\SalesModel;
+use App\Models\StatusModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ResiController extends Controller
 {
     public function resi()
     {
         $resi = ResiHistoryModel::all();
+        $status = StatusModel::where('kode', 'sales')->get();
+
         // dd($sales);
         return view('products._02_Penjualan.resi', [
             'judul' => 'Resi History',
             'active' => 'resi',
             'resi' => $resi,
+            'status' => $status,
+
         ]);
     }
 
@@ -29,16 +35,23 @@ class ResiController extends Controller
             'catatan' => 'nullable|string',
         ]);
 
-        $resi = ResiHistoryModel::find($id);
-        $resi->status = $request->input('status');
-        $resi->catatan = $request->input('catatan');
-        $resi->save();
+        $existingResi = ResiHistoryModel::findOrFail($id);
+
+        // Buat entri baru di tabel ResiHistory
+        $newResi = ResiHistoryModel::create([
+            'no_cust' => $existingResi->no_cust,
+            'no_resi' => $existingResi->no_resi,
+            'status' => $request->input('status'),
+            'catatan' => $request->input('catatan'),
+            'foto_final' => $existingResi->foto_final,
+            'created_by' => Auth::user()->name,
+        ]);
 
         if ($request->input('status') === 'success') {
-            $this->sendWhatsApp($resi);
+            $this->sendWhatsApp($newResi);
         }
 
-        return redirect()->back()->with('success', 'Resi history berhasil di update');
+        return redirect()->back()->with('success', 'Resi history berhasil diperbarui');
     }
 
     private function sendWhatsApp($resi)
@@ -57,7 +70,7 @@ class ResiController extends Controller
             $message = "
 Halo *{$customer->nama}*,
 
-Terima kasih telah mempercayakan layanan cucian Anda kepada *Indah Laundry*. Pesanan Anda telah selesai diproses dan siap untuk dikirimkan/dijemput. Berikut adalah detail pesanan Anda:
+Terima kasih telah mempercayakan layanan cucian Anda kepada *Indah Laundry*. Pesanan Anda dengan nomor resi *{$resi->no_resi}* telah selesai diproses dan siap untuk dikirimkan/dijemput. Berikut adalah detail pesanan Anda:
 
 $itemsDetail
 --------------------------------
@@ -79,7 +92,6 @@ Salam hangat,
             $this->sendViaFonnte($customer->no_hp, $message);
         }
     }
-
 
     private function sendViaFonnte($to, $message)
     {

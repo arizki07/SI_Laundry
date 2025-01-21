@@ -1,6 +1,7 @@
 <!doctype html>
 <!--
 * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+* Developer = Ahmad Rizki , Moch Syarif Hidayat
 * @version 1.0.0-beta20
 * @link https://tabler.io
 * Copyright 2018-2023 The Tabler Authors
@@ -112,18 +113,23 @@
         <div class="wave"></div>
         <div class="wave"></div>
         <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
     </div>
     <script src="assets/dist/js/demo-theme.min.js?1692870487"></script>
     <div class="page page-center">
         <div class="container container-tight py-4">
-            {{-- <div class="text-center mb-4">
-            <a href="." class="navbar-brand navbar-brand-autodark">
-                <img src="assets/static/logo.png" width="50" height="100" alt="Tabler">
-            </a>
-        </div> --}}
+            <div class="text-center mb-2">
+                <h2 class="text-white">INDAH LAUNDRY</h2>
+            </div>
             <div class="card card-md">
                 <div class="card-body">
-                    <h2 class="h2 text-center mb-4">Login to your account</h2>
+                    <h2 class="h2 text-center mb-4">
+                        <img src="{{ asset('assets/landing/img/favicon.png') }}" alt="Login Icon"
+                            style="vertical-align: middle; width: 40px; margin-right: 2px;">
+                        Login to your account
+                    </h2>
+
                     <form action="{{ route('post.login') }}" method="POST" id="handleajax" autocomplete="off"
                         novalidate>
                         @csrf
@@ -140,9 +146,9 @@
                         <div class="mb-2">
                             <label class="form-label">
                                 Password
-                                <span class="form-label-description">
+                                {{-- <span class="form-label-description">
                                     <a href="{{ url('reset') }}">I forgot password</a>
-                                </span>
+                                </span> --}}
                             </label>
                             <div class="input-group input-group-flat">
                                 <input type="password" name="password" class="form-control" placeholder="Your password"
@@ -152,7 +158,7 @@
                                 @endif
                                 <span class="input-group-text">
                                     <a href="#" class="link-secondary" title="Show password"
-                                        data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
+                                        data-bs-toggle="tooltip" id="toggle-password">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                             fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -173,46 +179,12 @@
                         </div>
                         <div class="form-footer">
                             <button type="submit" id="submitLogin" class="btn btn-primary w-100 mb-3">Sign in</button>
-                            {{-- <div class="d-flex justify-content-center">
-                                <x-turnstile data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}" data-action="login"
-                                    data-callback="callback" data-expired-callback="expiredCallback"
-                                    data-error-callback="errorCallback" data-theme="dark" data-tabindex="1" />
-                            </div> --}}
+
                         </div>
                     </form>
                 </div>
-                <div class="hr-text">or</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col"><a href="#" class="btn w-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-google">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M20.945 11a9 9 0 1 1 -3.284 -5.997l-2.655 2.392a5.5 5.5 0 1 0 2.119 6.605h-4.125v-3h7.945z" />
-                                </svg>
-                                Login with Google
-                            </a></div>
-                        <div class="col"><a href="#" class="btn w-100">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-twitter" width="24"
-                                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z" />
-                                </svg>
-                                Login with Twitter
-                            </a></div>
-                    </div>
-                </div>
             </div>
-            {{-- <div class="text-center mt-3">
-                <span>Don't have an account yet?</span>
-                <a href="{{ url('register') }}" tabindex="-1" class="text-danger"> Sign up</a>
-            </div> --}}
+
         </div>
     </div>
     <!-- Libs JS -->

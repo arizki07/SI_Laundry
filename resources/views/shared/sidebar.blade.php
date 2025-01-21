@@ -249,266 +249,371 @@
                         </span>
                     </a>
                 </li> --}}
-
-                <div class="custom-hr">
-                    <span>Set Data Penjualan</span>
-                </div>
-                <li class="nav-item {{ $active == 'Customer' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('customer') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-square-rounded">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
-                                <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-                                <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Customer
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item {{ $active == 'Product' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('produk') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                <path d="M17 17h-11v-14h-2" />
-                                <path d="M6 5l14 1l-1 7h-13" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Product
-                        </span>
-                    </a>
-                </li>
-                <li
-                    class="nav-item dropdown {{ $active == 'sales' || $active == 'resi' || $active == 'rating' ? 'active' : '' }}">
-                    <a class="nav-link dropdown-toggle" href="#navbar-bantuan" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-currency-dollar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" /><path d="M12 3v3m0 12v3" /></svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Sales
-                        </span>
-                    </a>
-                    <div
-                        class="dropdown-menu mx-3 {{ $active == 'sales' || $active == 'resi' || $active == 'rating' ? 'show' : '' }}">
-                        <a class="nav-link {{ $active == 'sales' ? 'text-azure fw-bold' : '' }}"
-                            href="{{ url('sales') }}">
+                @if (Auth::user()->role == 'admin')
+                    <div class="custom-hr">
+                        <span>Set Data Penjualan</span>
+                    </div>
+                    <li class="nav-item {{ $active == 'Customer' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('customer') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fa-solid fa-code-commit"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-square-rounded">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
+                                    <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                    <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Customer
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ $active == 'Product' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('produk') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M17 17h-11v-14h-2" />
+                                    <path d="M6 5l14 1l-1 7h-13" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Product
+                            </span>
+                        </a>
+                    </li>
+                    <li
+                        class="nav-item dropdown {{ $active == 'sales' || $active == 'resi' || $active == 'rating' ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#navbar-bantuan" data-bs-toggle="dropdown"
+                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-currency-dollar">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                                    <path d="M12 3v3m0 12v3" />
+                                </svg>
                             </span>
                             <span class="nav-link-title">
                                 Sales
                             </span>
                         </a>
-                        <a class="nav-link {{ $active == 'resi' ? 'text-azure fw-bold' : '' }}"
-                            href="{{ url('resi') }}">
+                        <div
+                            class="dropdown-menu mx-3 {{ $active == 'sales' || $active == 'resi' || $active == 'rating' ? 'show' : '' }}">
+                            <a class="nav-link {{ $active == 'sales' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ url('sales') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Sales
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'resi' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ url('resi') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Resi History
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'rating' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ route('rating.index') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Ratings
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li
+                        class="nav-item dropdown {{ $active == 'Referensi' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
+                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-pointer-up">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M15.984 13.428l-1.206 -1.206l3.113 -2.09a1.2 1.2 0 0 0 -.309 -2.228l-13.582 -3.904l3.904 13.563a1.2 1.2 0 0 0 2.228 .308l2.09 -3.093l1.217 1.217" />
+                                    <path d="M19 22v-6" />
+                                    <path d="M22 19l-3 -3l-3 3" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Select Master
+                            </span>
+                        </a>
+                        <div
+                            class="dropdown-menu mx-3 {{ $active == 'Referensi' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' ? 'show' : '' }}">
+                            <a class="nav-link {{ $active == 'Referensi' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ url('referensi') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Referensi
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'Payment' ? 'text-azure fw-bold' : '' }}"
+                                href="javascript:void()">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    <i>Metode</i>
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'Kategori' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ url('categories') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Kategori
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'Status' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ url('status') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Status
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <div class="custom-hr">
+                        <span>Kelola Keuangan</span>
+                    </div>
+                    <li class="nav-item {{ $active == 'pemasukan' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('pemasukan.index') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fa-solid fa-code-commit"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-credit-card-pay">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M12 19h-6a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5" />
+                                    <path d="M3 10h18" />
+                                    <path d="M16 19h6" />
+                                    <path d="M19 16l3 3l-3 3" />
+                                    <path d="M7.005 15h.005" />
+                                    <path d="M11 15h2" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Pemasukan
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ $active == 'Pengeluaran' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('pengeluaran') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-dollar">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 21h-7a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3" />
+                                    <path d="M16 3v4" />
+                                    <path d="M8 3v4" />
+                                    <path d="M4 11h12.5" />
+                                    <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                    <path d="M19 21v1m0 -8v1" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                <i>Pengeluaran</i>
+                            </span>
+                        </a>
+                    </li>
+                    <div class="custom-hr">
+                        <span>Pengaturan Aplikasi</span>
+                    </div>
+                    <li class="nav-item {{ $active == 'Users' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('user') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                    <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+                                    <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                    <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+                                    <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                    <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Users
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ $active == 'logs' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('logs.index') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-activity">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 12h4l3 8l4 -16l3 8h4" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Log Activity
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown {{ $active == 'kontak' || $active == 'faqs' ? 'active' : '' }}"
+                        style="padding-bottom: 50px;">
+                        <a class="nav-link dropdown-toggle" href="#navbar-bantuan" data-bs-toggle="dropdown"
+                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                    <path d="M15 15l3.35 3.35" />
+                                    <path d="M9 15l-3.35 3.35" />
+                                    <path d="M5.65 5.65l3.35 3.35" />
+                                    <path d="M18.35 5.65l-3.35 3.35" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Profile & Bantuan
+                            </span>
+                        </a>
+                        <div class="dropdown-menu {{ $active == 'kontak' || $active == 'faqs' ? 'show' : '' }} mx-3">
+                            <a class="nav-link {{ $active == 'kontak' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ route('kontak.index') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Contact
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'faqs' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ route('faqs.index') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Faqs
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                @elseif (Auth::user()->role == 'karyawan')
+                    <div class="custom-hr">
+                        <span>Fitur Karyawan</span>
+                    </div>
+                    <li class="nav-item {{ $active == 'Product' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('produk') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M17 17h-11v-14h-2" />
+                                    <path d="M6 5l14 1l-1 7h-13" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Product
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ $active == 'sales' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('sales') }}">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-currency-dollar">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                                    <path d="M12 3v3m0 12v3" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Sales
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ $active == 'resi' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('resi') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trekking">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M12 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                    <path d="M7 21l2 -4" />
+                                    <path d="M13 21v-4l-3 -3l1 -6l3 4l3 2" />
+                                    <path
+                                        d="M10 14l-1.827 -1.218a2 2 0 0 1 -.831 -2.15l.28 -1.117a2 2 0 0 1 1.939 -1.515h1.439l4 1l3 -2" />
+                                    <path d="M17 12v9" />
+                                    <path d="M16 20h2" />
+                                </svg>
                             </span>
                             <span class="nav-link-title">
                                 Resi History
                             </span>
                         </a>
-                        <a class="nav-link {{ $active == 'rating' ? 'text-azure fw-bold' : '' }}"
-                            href="{{ route('rating.index') }}">
+                    </li>
+                    <li class="nav-item {{ $active == 'Kategori' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('categories') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fa-solid fa-code-commit"></i>
-                            </span>
-                            <span class="nav-link-title">
-                                Ratings
-                            </span>
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown {{ $active == 'Referensi' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' ? 'active' : '' }}">
-                    <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pointer-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15.984 13.428l-1.206 -1.206l3.113 -2.09a1.2 1.2 0 0 0 -.309 -2.228l-13.582 -3.904l3.904 13.563a1.2 1.2 0 0 0 2.228 .308l2.09 -3.093l1.217 1.217" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Select Master
-                        </span>
-                    </a>
-                    <div class="dropdown-menu mx-3 {{ $active == 'Referensi' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' ? 'show' : '' }}">
-                        <a class="nav-link {{ $active == 'Referensi' ? 'text-azure fw-bold' : '' }}" href="{{ url('referensi') }}">
-                            <span
-                                class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fa-solid fa-code-commit"></i>
-                            </span>
-                            <span class="nav-link-title">
-                                Referensi
-                            </span>
-                        </a>
-                        <a class="nav-link {{ $active == 'Payment' ? 'text-azure fw-bold' : '' }}" href="javascript:void()">
-                            <span
-                                class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fa-solid fa-code-commit"></i>
-                            </span>
-                            <span class="nav-link-title">
-                                <i>Metode</i>
-                            </span>
-                        </a>
-                        <a class="nav-link {{ $active == 'Kategori' ? 'text-azure fw-bold' : '' }}" href="{{ url('categories') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fa-solid fa-code-commit"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-category">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 4h6v6h-6z" />
+                                    <path d="M14 4h6v6h-6z" />
+                                    <path d="M4 14h6v6h-6z" />
+                                    <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                </svg>
                             </span>
                             <span class="nav-link-title">
                                 Kategori
                             </span>
                         </a>
-                        <a class="nav-link {{ $active == 'Status' ? 'text-azure fw-bold' : '' }}" href="{{ url('status') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fa-solid fa-code-commit"></i>
-                            </span>
-                            <span class="nav-link-title">
-                                Status
-                            </span>
-                        </a>
-                    </div>
-                </li>
-                <div class="custom-hr">
-                    <span>Kelola Keuangan</span>
-                </div>
-                <li class="nav-item {{ $active == 'pemasukan' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('pemasukan.index') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-credit-card-pay">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 19h-6a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5" />
-                                <path d="M3 10h18" />
-                                <path d="M16 19h6" />
-                                <path d="M19 16l3 3l-3 3" />
-                                <path d="M7.005 15h.005" />
-                                <path d="M11 15h2" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Pemasukan
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item {{ $active == 'pengeluaran' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('categories') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-dollar">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M13 21h-7a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3" />
-                                <path d="M16 3v4" />
-                                <path d="M8 3v4" />
-                                <path d="M4 11h12.5" />
-                                <path d="M21 15h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
-                                <path d="M19 21v1m0 -8v1" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            <i>Pengeluaran</i>
-                        </span>
-                    </a>
-                </li>
-                <div class="custom-hr">
-                    <span>Pengaturan Aplikasi</span>
-                </div>
-                <li class="nav-item {{ $active == 'Users' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('user') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-                                <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                <path d="M17 10h2a2 2 0 0 1 2 2v1" />
-                                <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Users
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item {{ $active == 'logs' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('logs.index') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-activity">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M3 12h4l3 8l4 -16l3 8h4" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Log Activity
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item dropdown {{ $active == 'kontak' || $active == 'faqs' ? 'active' : '' }}"
-                    style="padding-bottom: 50px;">
-                    <a class="nav-link dropdown-toggle" href="#navbar-bantuan" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                                <path d="M15 15l3.35 3.35" />
-                                <path d="M9 15l-3.35 3.35" />
-                                <path d="M5.65 5.65l3.35 3.35" />
-                                <path d="M18.35 5.65l-3.35 3.35" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Profile & Bantuan
-                        </span>
-                    </a>
-                    <div class="dropdown-menu {{ $active == 'kontak' || $active == 'faqs' ? 'show' : '' }} mx-3">
-                        <a class="nav-link {{ $active == 'kontak' ? 'text-azure fw-bold' : '' }}"
-                            href="{{ route('kontak.index') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fa-solid fa-code-commit"></i>
-                            </span>
-                            <span class="nav-link-title">
-                                Contact
-                            </span>
-                        </a>
-                        <a class="nav-link {{ $active == 'faqs' ? 'text-azure fw-bold' : '' }}"
-                            href="{{ route('faqs.index') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <i class="fa-solid fa-code-commit"></i>
-                            </span>
-                            <span class="nav-link-title">
-                                Faqs
-                            </span>
-                        </a>
-                    </div>
-                </li>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

@@ -17,6 +17,7 @@ use App\Http\Controllers\_00_Datatables\CategoryList;
 use App\Http\Controllers\_00_Datatables\CustomerList;
 use App\Http\Controllers\_05_Setting\UsersController;
 use App\Http\Controllers\_00_Datatables\PemasukanList;
+use App\Http\Controllers\_00_Datatables\PengeluaranList;
 use App\Http\Controllers\_00_Datatables\ReferensiList;
 use App\Http\Controllers\_01_Produk\ProductController;
 use App\Http\Controllers\_02_Penjualan\ResiController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\_04_SetData\CategoryController;
 use App\Http\Controllers\_04_SetData\ReferensiController;
 use App\Http\Controllers\_06_Finance\PemasukanController;
 use App\Http\Controllers\_02_Penjualan\CustomerController;
+use App\Http\Controllers\_06_Finance\PengeluaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +72,7 @@ Route::middleware(['logs'])->group(function () {
         Route::resource('getFaqs', FaqsList::class);
         Route::resource('getPemasukan', PemasukanList::class);
         Route::resource('getRating', RatingList::class);
+        Route::resource('getPengeluaran', PengeluaranList::class);
 
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'index');
@@ -132,7 +135,8 @@ Route::middleware(['logs'])->group(function () {
             Route::get('user', 'users');
             Route::post('user/store', 'store')->name('user.store');
             Route::post('user/update/{id}', 'update')->name('user.update');
-            Route::post('user/destroy/{id}', 'destroy');
+            Route::post('/user/update-status/{id}', 'updateStatus')->name('user.updateStatus');
+            Route::delete('user/destroy/{id}', 'destroy');
         });
 
         Route::controller(LogsController::class)->group(function () {
@@ -154,6 +158,13 @@ Route::middleware(['logs'])->group(function () {
 
         Route::controller(PemasukanController::class)->group(function () {
             Route::get('pemasukan', 'pemasukan')->name('pemasukan.index');
+        });
+
+        Route::controller(PengeluaranController::class)->group(function () {
+            Route::get('pengeluaran', 'pengeluaran');
+            Route::post('pengeluaran/store', 'storePengeluaran')->name('store.pengeluaran');
+            Route::post('pengeluaran/update/{id}', 'updatePengeluaran')->name('update.pengeluaran');
+            Route::delete('pengeluaran/destroy/{id}', 'destroyPengeluaran');
         });
 
         Route::controller(RatingController::class)->group(function () {

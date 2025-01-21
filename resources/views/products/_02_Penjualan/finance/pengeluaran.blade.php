@@ -8,27 +8,58 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Customer</h5>
+                    <h5 class="modal-title">Tambah {{ $judul }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('customer.store') }}" method="POST">
+                <form action="{{ route('store.pengeluaran') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Nama</label>
-                            <input type="text" name="nama" class="form-control" required placeholder="Masukkan nama">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">No Pengeluaran</label>
+                                    <input type="text" name="no_pengeluaran" class="form-control" required
+                                        placeholder="Masukkan nama">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tanggal</label>
+                                    <input type="date" name="tanggal_pengeluaran" class="form-control" required
+                                        placeholder="Masukkan nama">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Ketegori</label>
+                                    <input type="text" name="kategori_pengeluaran" class="form-control" required
+                                        placeholder="Masukkan nama">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Metode Pembayaran</label>
+                                    <input type="text" name="metode_pembayaran" class="form-control" required
+                                        placeholder="Masukkan nama">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Jumlah</label>
+                                    <input type="text" name="jumlah" class="form-control" required
+                                        placeholder="Masukkan nama">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Bukti Pengeluaran</label>
+                                    <input type="file" class="form-control" name="bukti_pengeluaran">
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">No HP</label>
-                            <input type="text" name="no_hp" class="form-control" required placeholder="Masukkan no hp">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="text" name="email" class="form-control" required placeholder="Masukkan email">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Alamat</label>
-                            <textarea class="form-control" name="alamat" rows="6" placeholder="Isi alamat"></textarea>
+                            <label class="form-label">Deskripsi</label>
+                            <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi alamat"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -40,7 +71,7 @@
         </div>
     </div>
 
-    @foreach ($customer as $item)
+    @foreach ($pengeluarans as $item)
         <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -49,32 +80,69 @@
                         <h5 class="modal-title text-white">Edit Customer</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('customer.update', $item->id) }}" method="POST">
+                    <form action="{{ route('update.pengeluaran', $item->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
-                            <div class="mb-3">
-                                <label class="form-label">No Cust</label>
-                                <input type="text" name="no_cust" class="form-control cursor-not-allowed" required
-                                    placeholder="Masukkan nama" value="{{ $item->no_cust }}" readonly>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">No Pengeluaran</label>
+                                        <input type="text" name="no_pengeluaran" class="form-control"
+                                            value="{{ old('no_pengeluaran', $item->no_pengeluaran) }}" required
+                                            placeholder="Masukkan no pengeluaran">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Tanggal</label>
+                                        <input type="date" name="tanggal_pengeluaran" class="form-control"
+                                            value="{{ old('tanggal_pengeluaran', $item->tanggal_pengeluaran) }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Kategori</label>
+                                        <input type="text" name="kategori_pengeluaran" class="form-control"
+                                            value="{{ old('kategori_pengeluaran', $item->kategori_pengeluaran) }}" required
+                                            placeholder="Masukkan kategori">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Metode Pembayaran</label>
+                                        <input type="text" name="metode_pembayaran" class="form-control"
+                                            value="{{ old('metode_pembayaran', $item->metode_pembayaran) }}" required
+                                            placeholder="Masukkan metode pembayaran">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Jumlah</label>
+                                        <input type="text" name="jumlah" class="form-control"
+                                            value="{{ old('jumlah', $item->jumlah) }}" required
+                                            placeholder="Masukkan jumlah">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Bukti Pengeluaran</label>
+                                        <input type="file" class="form-control" name="bukti_pengeluaran">
+                                        @if ($item->bukti_pengeluaran)
+                                            <div class="mt-2">
+                                                <!-- Tombol untuk membuka modal -->
+                                                <button type="button" class="btn btn-link" data-bs-toggle="modal"
+                                                    data-bs-target="#buktiModal">
+                                                    Lihat Bukti Pengeluaran
+                                                </button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Nama</label>
-                                <input type="text" name="nama" class="form-control" required
-                                    placeholder="Masukkan nama" value="{{ $item->nama }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">No HP</label>
-                                <input type="text" name="no_hp" class="form-control" required
-                                    placeholder="Masukkan No hp" value="{{ $item->no_hp }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="text" name="email" class="form-control" required
-                                    placeholder="Masukkan email" value="{{ $item->email }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Alamat</label>
-                                <textarea class="form-control" name="alamat" rows="6" placeholder="Isi alamat">{{ $item->alamat }}</textarea>
+                                <label class="form-label">Deskripsi</label>
+                                <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi">{{ old('deskripsi', $item->deskripsi) }}</textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -82,6 +150,23 @@
                             <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal untuk Bukti Pengeluaran -->
+        <div class="modal fade" id="buktiModal" tabindex="-1" aria-labelledby="buktiModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="buktiModalLabel">Bukti Pengeluaran</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ asset('storage/finance/pengeluaran/' . $item->bukti_pengeluaran) }}"
+                            alt="Bukti Pengeluaran" class="img-fluid">
+                    </div>
                 </div>
             </div>
         </div>
@@ -231,7 +316,7 @@
                     },
                 },
                 "ajax": {
-                    "url": "{{ route('getCustomer.index') }}",
+                    "url": "{{ route('getPengeluaran.index') }}",
                     // "data": function(data) {
                     //     data._token = "{{ csrf_token() }}";
                     //     data.dari = $('#filterStart-all').val();
@@ -248,39 +333,39 @@
                         searchable: false,
                     },
                     {
-                        title: 'no cust',
-                        data: 'no_cust',
-                        name: 'no_cust',
+                        title: 'no Pengeluaran',
+                        data: 'no_pengeluaran',
+                        name: 'no_pengeluaran',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'nama',
-                        data: 'nama',
-                        name: 'nama',
+                        title: 'tgl',
+                        data: 'tanggal_pengeluaran',
+                        name: 'tanggal_pengeluaran',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'no hp',
-                        data: 'no_hp',
-                        name: 'no_hp',
+                        title: 'kategori',
+                        data: 'kategori_pengeluaran',
+                        name: 'kategori_pengeluaran',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'email',
-                        data: 'email',
-                        name: 'email',
+                        title: 'pembayaran',
+                        data: 'metode_pembayaran',
+                        name: 'metode_pembayaran',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'alamat',
-                        data: 'alamat',
-                        name: 'alamat',
+                        title: 'jumlah',
+                        data: 'jumlah',
+                        name: 'jumlah',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'created_by',
-                        data: 'created_by',
-                        name: 'created_by',
+                        title: 'status',
+                        data: 'status',
+                        name: 'status',
                         className: "cuspad0 cuspad1 text-center"
                     },
                 ],
@@ -291,7 +376,7 @@
             modal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
                 const recordId = button.getAttribute('data-id');
-                deleteForm.action = `/customer/destroy/${recordId}`;
+                deleteForm.action = `/pengeluaran/destroy/${recordId}`;
             });
         });
     </script>

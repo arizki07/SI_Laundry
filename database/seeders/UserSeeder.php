@@ -23,6 +23,14 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
                 'status' => 1
             ],
+            [
+                'name' => 'Karyawan',
+                'username' => 'rizki',
+                'email' => 'rizki@gmail.com',
+                'password' => Hash::make('Rizki.123'),
+                'role' => 'karyawan',
+                'status' => 1
+            ],
         ];
 
         foreach ($users as $us) {

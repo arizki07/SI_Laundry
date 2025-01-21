@@ -59,39 +59,102 @@
                                     <div class="mt-3">
                                         <span class="badge bg-purple-lt">{{ $item->role }}</span>
                                     </div>
+                                    <div class="mt-3">
+                                        <span class="badge {{ $item->status ? 'bg-success' : 'bg-danger' }}">
+                                            {{ $item->status ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="d-flex">
-                                    <a class="card-btn" data-bs-toggle="offcanvas" href="#modal-edit{{ $item->id }}"
-                                        aria-controls="offcanvasEnd">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                                            <path
-                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                                            <path d="M16 5l3 3" />
-                                        </svg>
-                                        edit</a>
-                                    <a href="#"
-                                        class="card-btn"><!-- Download SVG icon from http://tabler-icons.io/i/phone -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M4 7l16 0" />
-                                            <path d="M10 11l0 6" />
-                                            <path d="M14 11l0 6" />
-                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                        </svg>
-                                        hapus</a>
+                                <!-- Card footer for buttons -->
+                                <div class="card-footer text-center">
+                                    <div class="d-flex justify-content-center">
+                                        <a class="btn btn-success mx-2" data-bs-toggle="offcanvas"
+                                            href="#modal-edit{{ $item->id }}" aria-controls="offcanvasEnd"
+                                            style="padding: 2px;">
+                                            <i class="fas fa-edit fa-2x"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-danger mx-2 delete-button"
+                                            data-id="{{ $item->id }}" style="padding: 2px;">
+                                            <i class="fas fa-trash-alt fa-2x"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-warning mx-2 status-button"
+                                            data-id="{{ $item->id }}" data-status="{{ $item->status }}"
+                                            style="padding: 2px;">
+                                            <i class="fas fa-toggle-{{ $item->status ? 'on' : 'off' }} fa-2x"></i>
+                                        </a>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     @endforeach
+                </div>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <ul class="pagination">
+                        <!-- Previous button -->
+                        @if ($user->onFirstPage())
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M15 6l-6 6l6 6" />
+                                    </svg>
+                                    prev
+                                </a>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $user->previousPageUrl() }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M15 6l-6 6l6 6" />
+                                    </svg>
+                                    prev
+                                </a>
+                            </li>
+                        @endif
+
+                        <!-- Page numbers -->
+                        @foreach ($user->links()->elements[0] as $page => $url)
+                            <li class="page-item {{ $user->currentPage() == $page ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">
+                                    {{ $page }}
+                                </a>
+                            </li>
+                        @endforeach
+
+                        <!-- Next button -->
+                        @if ($user->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $user->nextPageUrl() }}">
+                                    next
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M9 6l6 6l-6 6" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    next
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M9 6l6 6l-6 6" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
                 </div>
             </div>
         </div>
@@ -99,7 +162,8 @@
         <div class="offcanvas offcanvas-end" tabindex="-1" id="modal-add" aria-labelledby="offcanvasEndLabel">
             <div class="offcanvas-header">
                 <h2 class="offcanvas-title" id="offcanvasEndLabel">Modal tambah</h2>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <form action="{{ route('user.store') }}" method="POST">
@@ -192,5 +256,126 @@
             </div>
         @endforeach
     @endsection
+    @section('scripts')
+        <script>
+            $(document).ready(function() {
+                // Update status
+                $(document).on('click', '.status-button', function(e) {
+                    e.preventDefault();
+
+                    const id = $(this).data('id');
+                    const currentStatus = $(this).data('status');
+
+                    Swal.fire({
+                        title: "Apakah Anda yakin?",
+                        text: currentStatus ? "Ubah status menjadi Inactive?" :
+                            "Ubah status menjadi Active?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya, Ubah!",
+                        cancelButtonText: "Batal"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '/user/update-status/' + id,
+                                type: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                                data: {
+                                    status: currentStatus ? 0 : 1
+                                },
+                                success: function(response) {
+                                    if (response.success) {
+                                        Swal.fire({
+                                            title: "Berhasil!",
+                                            text: "Status berhasil diperbarui.",
+                                            icon: "success"
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            title: "Gagal!",
+                                            text: response.message ||
+                                                "Status gagal diperbarui.",
+                                            icon: "error"
+                                        });
+                                    }
+                                },
+                                error: function() {
+                                    Swal.fire({
+                                        title: "Error!",
+                                        text: "Terjadi kesalahan pada server.",
+                                        icon: "error"
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+
+                // DELETE
+                $(document).on('click', '.delete-button', function(e) {
+                    e.preventDefault();
+
+                    const id = $(this).data('id');
+
+                    Swal.fire({
+                        title: "Apakah Anda yakin?",
+                        text: "Data ini akan dihapus dan tidak dapat dikembalikan!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya, hapus!",
+                        cancelButtonText: "Batal"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '/user/destroy/' + id,
+                                type: 'DELETE',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content'),
+                                },
+                                success: function(response) {
+                                    if (response.success) {
+                                        Swal.fire({
+                                            title: "Dihapus!",
+                                            text: "Data berhasil dihapus.",
+                                            icon: "success"
+                                        });
+
+                                        // Hapus kartu pengguna tanpa reload
+                                        $(`a[data-id="${id}"]`).closest('.col-md-6')
+                                            .remove();
+                                    } else {
+                                        Swal.fire({
+                                            title: "Gagal!",
+                                            text: response.message ||
+                                                "Data gagal dihapus.",
+                                            icon: "error"
+                                        });
+                                    }
+                                },
+                                error: function() {
+                                    Swal.fire({
+                                        title: "Error!",
+                                        text: "Terjadi kesalahan pada server.",
+                                        icon: "error"
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
+    @endsection
+
 </div>
 @endsection

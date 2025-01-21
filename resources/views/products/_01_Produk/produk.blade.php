@@ -40,10 +40,8 @@
                                     <div class="form-label">Type</div>
                                     <select class="form-select" name="type">
                                         <option selected disabled>--Pilih Type--</option>
-                                        <option value="Paket A">Paket A</option>
-                                        <option value="Paket B">Paket B</option>
-                                        <option value="Paket C">Paket C</option>
-                                        <option value="Paket D">Paket D</option>
+                                        <option value="KG">Kilogram</option>
+                                        <option value="PCS">Satuan</option>
                                     </select>
                                 </div>
                             </div>

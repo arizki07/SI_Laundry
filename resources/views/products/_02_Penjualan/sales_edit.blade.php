@@ -78,6 +78,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+
                                                 <div class="mb-3">
                                                     <label class="form-label">File Bukti</label>
                                                     <input type="file" class="form-control" name="file_bukti">
@@ -87,25 +88,25 @@
                                                     @endif
                                                 </div>
                                             </div>
+
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Metode Pembayaran</label>
                                                     <select class="form-select" name="metode_pembayaran">
-                                                        <option disabled>--Pilih Metode Pembayaran--
-                                                        </option>
+                                                        <option disabled>--Pilih Metode Pembayaran--</option>
                                                         <option value="cash"
-                                                            {{ $sales->metode_pembayaran == 'cash' ? 'selected' : '' }}>
-                                                            Cash</option>
+                                                            {{ $sales->metode_pembayaran == 'cash' ? 'selected' : '' }}>Cash
+                                                        </option>
                                                         <option value="transfer"
                                                             {{ $sales->metode_pembayaran == 'transfer' ? 'selected' : '' }}>
                                                             Transfer</option>
                                                     </select>
                                                 </div>
+
                                                 <div class="mb-3">
                                                     <label class="form-label">Status Pembayaran</label>
                                                     <select class="form-select" name="status_pembayaran">
-                                                        <option disabled>--Pilih Status Pembayaran--
-                                                        </option>
+                                                        <option disabled>--Pilih Status Pembayaran--</option>
                                                         @foreach ($statuses as $status)
                                                             <option value="{{ $status->nama }}"
                                                                 {{ $sales->status_pembayaran == $status->nama ? 'selected' : '' }}>
@@ -116,17 +117,24 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <hr>
                                         <div class="row g-5">
-                                            <div class="col-xl-8">
+                                            <div class="col-xl-12">
                                                 <div class="text-end">
                                                     <button type="button" id="add-item-button" class="btn btn-success"><i
-                                                            class="fa-solid fa-cart-plus"></i> Add Item
-                                                    </button>
+                                                            class="fa-solid fa-cart-plus"></i> Add Item</button>
                                                 </div>
+
                                                 <div id="sales-items-container">
                                                     @foreach ($sales->items as $item)
                                                         <div class="sales-item row mb-3">
-                                                            <div class="col-md-4">
+                                                            <div
+                                                                class="col-md-1 d-flex justify-content-center align-items-center">
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-remove-item">X</button>
+                                                            </div>
+
+                                                            <div class="col-md-3">
                                                                 <label class="form-label">Product</label>
                                                                 <select class="form-select product-select"
                                                                     name="products[]">
@@ -140,38 +148,50 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
+
                                                             <div class="col-md-2">
                                                                 <label class="form-label">Quantity</label>
                                                                 <input type="number" class="form-control qty-input"
                                                                     name="qty[]" min="0.1" step="0.1"
                                                                     value="{{ $item->qty }}">
                                                             </div>
+
                                                             <div class="col-md-3">
                                                                 <label class="form-label">Price</label>
                                                                 <input type="number" class="form-control price-input"
                                                                     name="harga_per_qty[]"
                                                                     value="{{ $item->harga_per_qty }}" readonly>
                                                             </div>
+
                                                             <div class="col-md-2">
                                                                 <label class="form-label">Total</label>
                                                                 <input type="number" class="form-control total-input"
                                                                     name="total[]" value="{{ $item->total }}" readonly>
                                                             </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button"
-                                                                    class="btn btn-danger btn-remove-item">X</button>
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <input type="checkbox" class="round-up-checkbox"
+                                                                    name="round_up[]" value="1">
+                                                                <label>Bulatkan ke atas (contoh: 4.5 menjadi 5)</label>
                                                             </div>
                                                         </div>
                                                     @endforeach
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row mt-4">
                                             <div class="col-xl-12 text-end">
-                                                <button type="submit" class="btn btn-primary">Update</button>
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="fa-solid fa-check"></i> Update
+                                                </button>
+                                                <a href="{{ route('sales.index') }}" class="btn btn-danger ms-2">
+                                                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                                                </a>
                                             </div>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>

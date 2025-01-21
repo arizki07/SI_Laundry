@@ -6,8 +6,7 @@
 
 @section('modals')
     @foreach ($resi as $item)
-        <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
-            aria-hidden="true">
+        <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header" style="background: blue;">
@@ -30,17 +29,15 @@
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
                                 <select class="form-select" name="status" required>
-                                    <option value="success" {{ $item->status == 'success' ? 'selected' : '' }}>
-                                        Success
-                                    </option>
-                                    <option value="pending" {{ $item->status == 'pending' ? 'selected' : '' }}>
-                                        Pending
-                                    </option>
-                                    <option value="reject" {{ $item->status == 'reject' ? 'selected' : '' }}>
-                                        Reject
-                                    </option>
+                                    @foreach ($status as $stat)
+                                        <option value="{{ $stat->nama }}"
+                                            {{ $stat->nama == $item->status ? 'selected' : '' }}>
+                                            {{ ucfirst($stat->nama) }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
+
                             <div class="mb-3">
                                 <label class="form-label">Catatan</label>
                                 <textarea class="form-control" name="catatan" rows="3" placeholder="Isi catatan">{{ $item->catatan }}</textarea>
