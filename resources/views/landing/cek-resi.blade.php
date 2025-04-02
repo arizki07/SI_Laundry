@@ -23,7 +23,7 @@
     <!-- Page Header End -->
 
     <!-- Service Start -->
-    <div class="container-fluid">
+    {{-- <div class="container-fluid"> --}}
         <div class="container">
             <!-- Bagian Judul -->
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
@@ -50,11 +50,11 @@
 
             <!-- Daftar Resi -->
             <div class="row justify-content-center g-4 mt-5">
-                            <div id="resiList"></div>
-                            <div id="invoiceList"></div>
+                <div id="resiList"></div>
+                {{-- <div id="invoiceList"></div> --}}
             </div>
         </div>
-    </div>
+    {{-- </div> --}}
     <!-- Service End -->
 @endSection
 
@@ -64,264 +64,130 @@
         href="{{ asset('assets/landing/js/jspdf.min.js') }}?v={{ hash('sha512', filemtime(public_path('assets/landing/js/jspdf.min.js'))) }}"
         rel="stylesheet">
     <script>
-        function checkResi() {
+        async function checkResi() {
             const resiInput = document.getElementById('resiInput').value.trim();
 
-            if (resiInput) {
-                const resiList = document.getElementById('resiList');
-                const invoiceList = document.getElementById('invoiceList');
-                resiList.innerHTML = '';
-                invoiceList.innerHTML = '';
+            if (!resiInput) {
+                alert('Masukkan nomor resi!');
+                return;
+            }
 
-                const listItem = document.createElement('div');
-                listItem.innerHTML = `<h5 class="fw-bold mb-2">Search Result:</h5>
-                    <div class="container padding-bottom-3x mb-4">
-                        <div class="card mb-3 shadow" style="border: 0px;">
-                            <div class="p-4 text-center text-white text-lg rounded-top" style="background-image: linear-gradient(to bottom, #ff0000, #ff8100);">
-                                <span class="text-uppercase">Tracking Order No - </span><span class="text-medium">${resiInput}</span>
-                            </div>
-                            <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary">
-                                <div class="w-100 text-center py-1 px-2"><span class="text-medium">Shipped Via:</span> UPS Ground</div>
-                                <div class="w-100 text-center py-1 px-2"><span class="text-medium">Status:</span> Checking Quality</div>
-                                <div class="w-100 text-center py-1 px-2"><span class="text-medium">Expected Date:</span> SEP 09, 2017</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
-                                    <div class="step completed">
-                                        <div class="step-icon-wrap">
-                                            <div class="step-icon"><i class="fa fa-check-circle"></i></div>
-                                        </div>
-                                        <h4 class="step-title">Confirmed Order</h4>
-                                    </div>
-                                    <div class="step completed">
-                                        <div class="step-icon-wrap">
-                                            <div class="step-icon"><i class="fa fa-cogs"></i></div>
-                                        </div>
-                                        <h4 class="step-title">Processing Order</h4>
-                                    </div>
-                                    <div class="step completed">
-                                        <div class="step-icon-wrap">
-                                            <div class="step-icon"><i class="fa fa-check"></i></div>
-                                        </div>
-                                        <h4 class="step-title">Quality Check</h4>
-                                    </div>
-                                    <div class="step">
-                                        <div class="step-icon-wrap">
-                                            <div class="step-icon"><i class="fa fa-truck"></i></div>
-                                        </div>
-                                        <h4 class="step-title">Product Dispatched</h4>
-                                    </div>
-                                    <div class="step">
-                                        <div class="step-icon-wrap">
-                                            <div class="step-icon"><i class="fa fa-home"></i></div>
-                                        </div>
-                                        <h4 class="step-title">Product Delivered</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                resiList.appendChild(listItem);
-
-                const invoiceItem = document.createElement('div');
-                invoiceItem.innerHTML = `
-                    <div class="invoice-1 invoice-content" style="background-color: white;">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="invoice-inner clearfix shadow">
-                                        <div class="invoice-info clearfix" id="invoice_wrapper">
-                                            <div class="invoice-headar">
-                                                <div class="row g-0">
-                                                    <div class="col-sm-6">
-                                                        <div class="invoice-logo">
-                                                            <div class="logo">
-                                                                <img src="assets/landing/img/logo.png" alt="logo">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6 invoice-id">
-                                                        <div class="info">
-                                                            <h1 class="color-white inv-header-1">Invoice</h1>
-                                                            <p class="color-white mb-1">Invoice Number <span>#45613</span></p>
-                                                            <p class="color-white mb-0">Invoice Date <span>21 Sep 2021</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="invoice-top">
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="invoice-number mb-30">
-                                                            <h4 class="inv-title-1">Invoice To</h4>
-                                                            <h2 class="name mb-10">Jhon Smith</h2>
-                                                            <p class="invo-addr-1">
-                                                                Theme Vessel <br/>
-                                                                info@themevessel.com <br/>
-                                                                21-12 Green Street, Meherpur, Bangladesh <br/>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="invoice-number mb-30">
-                                                            <div class="invoice-number-inner">
-                                                                <h4 class="inv-title-1">Invoice From</h4>
-                                                                <h2 class="name mb-10">Animas Roky</h2>
-                                                                <p class="invo-addr-1">
-                                                                    Apexo Inc  <br/>
-                                                                    billing@apexo.com <br/>
-                                                                    169 Teroghoria, Bangladesh <br/>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="invoice-center">
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0 table-striped invoice-table">
-                                                        <thead class="bg-active">
-                                                        <tr class="tr">
-                                                            <th>No.</th>
-                                                            <th class="pl0 text-start">Item Description</th>
-                                                            <th class="text-center">Price</th>
-                                                            <th class="text-center">Quantity</th>
-                                                            <th class="text-end">Amount</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr class="tr">
-                                                            <td>
-                                                                <div class="item-desc-1">
-                                                                    <span>01</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl0">Businesscard Design</td>
-                                                            <td class="text-center">$300</td>
-                                                            <td class="text-center">2</td>
-                                                            <td class="text-end">$600.00</td>
-                                                        </tr>
-                                                        <tr class="bg-grea">
-                                                            <td>
-                                                                <div class="item-desc-1">
-                                                                    <span>02</span>
-                    
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl0">Fruit Flayer Design</td>
-                                                            <td class="text-center">$400</td>
-                                                            <td class="text-center">1</td>
-                                                            <td class="text-end">$60.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="item-desc-1">
-                                                                    <span>03</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl0">Application Interface Design</td>
-                                                            <td class="text-center">$240</td>
-                                                            <td class="text-center">3</td>
-                                                            <td class="text-end">$640.00</td>
-                                                        </tr>
-                    
-                                                        <tr>
-                                                            <td>
-                                                                <div class="item-desc-1">
-                                                                    <span>04</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pl0">Theme Development</td>
-                                                            <td class="text-center">$720</td>
-                                                            <td class="text-center">4</td>
-                                                            <td class="text-end">$640.00</td>
-                                                        </tr>
-                                                        <tr class="tr2">
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td class="text-center">SubTotal</td>
-                                                            <td class="text-end">$710.99</td>
-                                                        </tr>
-                                                        <tr class="tr2">
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td class="text-center">Tax</td>
-                                                            <td class="text-end">$85.99</td>
-                                                        </tr>
-                                                        <tr class="tr2">
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td class="text-center f-w-600 active-color">Grand Total</td>
-                                                            <td class="f-w-600 text-end active-color">$795.99</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="invoice-bottom">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-8 col-sm-7">
-                                                        <div class="mb-30 dear-client">
-                                                            <h3 class="inv-title-1">Terms & Conditions</h3>
-                                                            <p>Dengan menggunakan layanan kami, Anda setuju bahwa kami tidak bertanggung jawab atas kerusakan atau kehilangan barang selama proses pencucian dan pengiriman. Pembayaran wajib dilakukan sesuai harga yang tertera.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-4 col-sm-5">
-                                                        <div class="mb-30 payment-method">
-                                                            <h3 class="inv-title-1">Payment Method</h3>
-                                                            <ul class="payment-method-list-1 text-14">
-                                                                <li><strong>Account No:</strong> 00 123 647 840</li>
-                                                                <li><strong>Account Name:</strong> Jhon Doe</li>
-                                                                <li><strong>Branch Name:</strong> xyz</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="invoice-contact clearfix">
-                                                <div class="row g-0">
-                                                    <div class="col-lg-9 col-md-11 col-sm-12">
-                                                        <div class="contact-info">
-                                                            <a href="tel:+55-4XX-634-7071"><i class="fa fa-phone"></i> +00 123 647 840</a>
-                                                            <a href="tel:info@themevessel.com"><i class="fa fa-envelope"></i> info@themevessel.com</a>
-                                                            <a href="tel:info@themevessel.com" class="mr-0 d-none-580"><i class="fa fa-map-marker"></i> 169 Teroghoria, Bangladesh</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="invoice-btn-section clearfix d-print-none">
-                                            <a href="javascript:window.print()" class="btn btn-lg btn-print mb-3">
-                                                <i class="fa fa-print"></i> Print Invoice
-                                            </a>
-                                            <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme mb-3">
-                                                <i class="fa fa-download"></i> Download Invoice
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                invoiceList.appendChild(invoiceItem);
-
-                document.getElementById('resiInput').value = '';
-            } else {
-                new Notify({
-                    status: 'error',
-                    title: 'Error!',
-                    text: 'Mohon masukkan nomor resi yang valid!',
-                    effect: 'slide',
-                    speed: 300,
-                    autoplay: true,
-                    position: 'right top',
+            try {
+                const response = await fetch('/cek-resi/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        resi: resiInput
+                    }),
                 });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    const data = result.data;
+
+                    document.getElementById('resiList').innerHTML = `
+                            // <h5 class="fw-bold mb-2">Search Result:</h5>
+                            <div class="container padding-bottom-3x mb-4">
+                                <div class="card mb-3 shadow" style="border: 0px;">
+                                    <div class="p-4 text-center text-white text-lg rounded-top" style="background-image: linear-gradient(to bottom, #ff0000, #ff8100);">
+                                        <span>Tracking Order No &nbsp; - &nbsp; </span><span class="text-medium fw-bold">${data.no_resi}</span>
+                                    </div>
+                                    <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between py-3 px-2 bg-secondary mb-2">
+                                        <div class="w-100 text-center py-1 px-2">No Cust: <span class="text-medium badge mx-2"> ${data.no_cust}</span></div>
+                                        <div class="w-100 text-center py-1 px-2">Nama Cust: <span class="text-medium badge mx-2"> ${data.nama_cust}</span></div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
+                                            <div class="step completed">
+                                            <div class="step-icon-wrap">
+                                                <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                                            </div>
+                                            <h4 class="step-title">Confirmed Order</h4>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon-wrap">
+                                                <div class="step-icon"><i class="fas fa-shopping-basket"></i></div>
+                                            </div>
+                                            <h4 class="step-title">Processing Order</h4>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon-wrap">
+                                                <div class="step-icon"><i class="fas fa-search"></i></div>
+                                            </div>
+                                            <h4 class="step-title">Quality Check</h4>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon-wrap">
+                                                <div class="step-icon"><i class="fas fa-tshirt"></i></div>
+                                            </div>
+                                            <h4 class="step-title">Laundry In Progress</h4>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-icon-wrap">
+                                                <div class="step-icon"><i class="fas fa-store"></i></div>
+                                            </div>
+                                            <h4 class="step-title">Ready for Pickup</h4>
+                                        </div>
+                                        </div>
+                                        <div class="notes-section mt-4">
+                                            <!-- Note for Step 1 -->
+                                            <div class="note mb-3 active">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h5 class="fw-bold">Confirmed Order</h5>
+                                                        <span class="text-muted">${data.updated_at}</span>
+                                                        <p class="text-muted">Pesanan Anda telah diterima dan dikonfirmasi oleh sistem.</p>
+                                                    </div>
+                                                    <div>
+                                                        <i class="fas fa-clock text-muted"></i> <!-- Icon Jam untuk Progress -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Note for Step 2 -->
+                                            <div class="note mb-3">
+                                                <h5 class="fw-bold">Processing Order</h5>
+                                                <p class="text-muted">Pesanan sedang diproses di gudang kami.</p>
+                                            </div>
+                                            <!-- Note for Step 3 -->
+                                            <div class="note mb-3">
+                                                <h5 class="fw-bold">Quality Check</h5>
+                                                <p class="text-muted">Barang sedang melalui pemeriksaan kualitas.</p>
+                                            </div>
+                                            <!-- Note for Step 4 -->
+                                            <div class="note mb-3">
+                                                <h5 class="fw-bold">Product Dispatched</h5>
+                                                <p class="text-muted">Barang telah dikirim dan sedang dalam perjalanan ke alamat Anda.</p>
+                                            </div>
+                                            <!-- Note for Step 5 -->
+                                            <div class="note">
+                                                <h5 class="fw-bold">Product Delivered</h5>
+                                                <p class="text-muted">Barang telah sampai di tujuan. Terima kasih telah berbelanja bersama kami!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                } else {
+                    document.getElementById('resiList').innerHTML = `
+                            <div class="alert alert-warning">
+                                ${result.message}
+                            </div>
+                        `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
             }
         }
+    </script>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
     </script>
 @endsection

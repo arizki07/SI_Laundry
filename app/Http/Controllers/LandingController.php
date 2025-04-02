@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\FaqsModel;
 use App\Models\RatingModel;
 use Illuminate\Http\Request;
+use App\Models\ResiHistoryModel;
+use Illuminate\Support\Facades\DB;
 
 class LandingController extends Controller
 {
@@ -25,6 +28,39 @@ class LandingController extends Controller
 
     public function resi()
     {
+        return view('landing.cek-resi', ['title' => 'Cek Nomor Resi', 'act' => 'resi']);
+    }
+
+    public function checkResi(Request $request)
+    {
+        $resi = $request->input('resi');
+        $data = DB::table('resi_historys as A')
+                ->join('customers as B', 'A.no_cust', '=', 'B.no_cust')
+                ->select('A.*', 'B.nama')
+                ->where('A.no_resi', $resi)
+                ->first();
+                // dd($data);
+
+        if ($data) {
+            $formattedData = [
+                'nama_cust' => $data->nama,
+                'no_resi' => $data->no_resi,
+                'no_cust' => $data->no_cust,
+                'status' => $data->status,
+                'updated_at' => Carbon::parse($data->updated_at)->translatedFormat('D, d M Y H:i') . ' WIB',
+            ];
+    
+            return response()->json([
+                'status' => 'success',
+                'data' => $formattedData,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Nomor resi tidak ditemukan!',
+        ]);
+
         return view('landing.cek-resi', ['title' => 'Cek Nomor Resi', 'act' => 'resi']);
     }
 

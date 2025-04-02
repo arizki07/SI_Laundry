@@ -42,7 +42,7 @@
                             <p class="mb-4">Layanan cuci pakaian kami memastikan pakaian Anda dicuci dengan sempurna dan
                                 penuh perhatian.</p>
                             <a class="btn btn-sm" href="javascript:void(0)"><i
-                                    class="fa fa-plus text-primary me-2"></i>Selengkapnya</a>
+                                    class="fab fa-whatsapp text-primary me-2"></i>Pesan Sekarang</a>
                         </div>
                     </div>
                 </div>
