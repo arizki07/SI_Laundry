@@ -18,7 +18,7 @@ class DashboardController extends Controller
             $month = $request->input('month', date('m'));
             $year = $request->input('year', date('Y'));
 
-            $sales = SalesModel::selectRaw('SUM(total_harga) as total_sales, DATE(created_at) as date')->whereYear('created_at', $year)->whereMonth('created_at', $month)->where('status_pembayaran', 'berhasil')->groupBy('date')->orderBy('date', 'ASC')->get();
+            $sales = SalesModel::selectRaw('SUM(total_harga) as total_sales, DATE(created_at) as date')->whereYear('created_at', $year)->whereMonth('created_at', $month)->where('status_pembayaran', 'success')->groupBy('date')->orderBy('date', 'ASC')->get();
             // dd($sales->toArray());
 
             $sales_data = $sales->map(function ($sale) {
@@ -35,7 +35,7 @@ class DashboardController extends Controller
                 '
                 COUNT(CASE WHEN status_pembayaran = "pending" THEN 1 END) as pending,
                 COUNT(CASE WHEN status_pembayaran = "gagal" THEN 1 END) as gagal,
-                COUNT(CASE WHEN status_pembayaran = "berhasil" THEN 1 END) as berhasil,
+                COUNT(CASE WHEN status_pembayaran = "success" THEN 1 END) as success,
                 COUNT(CASE WHEN status_pembayaran = "refund" THEN 1 END) as refund
             ',
             )
@@ -48,7 +48,7 @@ class DashboardController extends Controller
                 ->where('user_id', Auth::user()->id)
                 ->where('path', 'postLogin')
                 ->first();
-            
+
 
             return view('products.dashboard', [
                 'judul' => 'Dashboard',

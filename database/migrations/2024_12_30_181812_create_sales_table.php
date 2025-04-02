@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('no_resi');
             $table->string('no_invoice');
             $table->double('total_harga');
+            $table->double('pembayaran');
             $table->string('status_pembayaran');
             $table->string('metode_pembayaran');
             $table->string('file_bukti')->nullable();

@@ -271,6 +271,25 @@
                             </span>
                         </a>
                     </li>
+                    <li class="nav-item {{ $active == 'Product' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('produk') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M17 17h-11v-14h-2" />
+                                    <path d="M6 5l14 1l-1 7h-13" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Product
+                            </span>
+                        </a>
+                    </li>
                     <li
                         class="nav-item dropdown {{ $active == 'sales' || $active == 'resi' || $active == 'rating' ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-bantuan" data-bs-toggle="dropdown"
@@ -345,6 +364,24 @@
                         </a>
                         <div
                             class="dropdown-menu mx-3 {{ $active == 'Referensi' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' ? 'show' : '' }}">
+                            <a class="nav-link {{ $active == 'Referensi' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ url('referensi') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Referensi
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'Payment' ? 'text-azure fw-bold' : '' }}"
+                                href="javascript:void()">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    <i>Metode</i>
+                                </span>
+                            </a>
                             <a class="nav-link {{ $active == 'Kategori' ? 'text-azure fw-bold' : '' }}"
                                 href="{{ url('categories') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -354,13 +391,13 @@
                                     Kategori
                                 </span>
                             </a>
-                            <a class="nav-link {{ $active == 'Product' ? 'text-azure fw-bold' : '' }}"
-                                href="{{ url('produk') }}">
+                            <a class="nav-link {{ $active == 'Status' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ url('status') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="fa-solid fa-code-commit"></i>
                                 </span>
                                 <span class="nav-link-title">
-                                    Produk
+                                    Status
                                 </span>
                             </a>
                         </div>
@@ -573,28 +610,6 @@
                             </span>
                             <span class="nav-link-title">
                                 Kategori
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item {{ $active == 'kontak' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('kontak.index') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-address-book">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" />
-                                    <path d="M10 16h6" />
-                                    <path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M4 8h3" />
-                                    <path d="M4 12h3" />
-                                    <path d="M4 16h3" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                Contact
                             </span>
                         </a>
                     </li>

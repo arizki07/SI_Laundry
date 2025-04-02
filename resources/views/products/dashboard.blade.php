@@ -119,10 +119,10 @@
                     series: [
                         transactionStatus.pending,
                         transactionStatus.gagal,
-                        transactionStatus.berhasil,
+                        transactionStatus.success,
                         transactionStatus.refund,
                     ],
-                    labels: ["Pending", "Gagal", "Berhasil", "Refund"],
+                    labels: ["Pending", "Gagal", "success", "Refund"],
                     tooltip: {
                         theme: "dark",
                     },
@@ -252,316 +252,583 @@
     <div class="page-body">
         <div class="container-xl">
             <div class="row row-deck row-cards">
-                <div class="col-12">
-                    <div class="row row-cards">
-                        <div class="col-lg-6">
-                            <div class="col-sm-12 col-lg-12">
-                                <div class="card bg-red-lt" style="height: 238px">
-                                    <div class="card-header">
-                                        <h3 class="card-title">
-                                            Login Session
-                                        </h3>
-                                        <div class="card-actions">
-                                            <a href="{{ route('kontak.index') }}">
-                                                Show Profile
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                                                    <path
-                                                        d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                                                    <path d="M16 5l3 3" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <dl class="row">
-                                            <dt class="col-5">Login Date</dt>
-                                            <dd class="col-7">:
-                                                {{ \Carbon\Carbon::parse($config->created_at)->locale('id')->isoFormat('ddd, D MMM YYYY HH:mm [WIB]') }}
-                                            </dd>
-                                            <dt class="col-5">IP Address</dt>
-                                            <dd class="col-7">: {{ $config->ip_address }}</dd>
-                                            <dt class="col-5">Akun</dt>
-                                            <dd class="col-7">: {{ Auth::user()->name }}</dd>
-                                            <dt class="col-5">Email</dt>
-                                            <dd class="col-7">: {{ Auth::user()->email }}</dd>
-                                            <dt class="col-5">Role</dt>
-                                            <dd class="col-7">: <span
-                                                    class="badge {{ Auth::user()->role == 'admin' ? 'bg-indigo-lt' : 'bg-lime-lt' }}">{{ Auth::user()->role }}</span>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="row row-cards mb-2">
-                                <div class="col-sm-6 col-lg-6">
-                                    <div class="card card-sm">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <span class="bg-green-lt avatar" data-toggle="tooltip"
-                                                        title="Pengeluaran Bulan Lalu Rp. {{ number_format($sales_bulan_lalu, 0, ',', '.') }},00">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon"
-                                                            width="24" height="24" viewBox="0 0 24 24"
-                                                            stroke-width="2" stroke="currentColor" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M12 5l0 14" />
-                                                            <path d="M18 11l-6 -6" />
-                                                            <path d="M6 11l6 -6" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="font-weight-medium">
-                                                        Rp. {{ number_format($pemasukan, 0, ',', '.') }},00
-                                                        <span
-                                                            class="float-right font-weight-medium {{ $persentase < 0 ? 'text-red' : 'text-green' }}">
-                                                            {{ $persentase > 0 ? '+' : '' }}{{ number_format($persentase, 1) }}%
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-secondary">
-                                                        Pemasukan {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}
-                                                    </div>
-                                                </div>
+                @if (Auth::user()->role == 'admin')
+                    <div class="col-12">
+                        <div class="row row-cards">
+                            <div class="col-lg-6">
+                                <div class="col-sm-12 col-lg-12">
+                                    <div class="card bg-red-lt" style="height: 238px">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                Login Session
+                                            </h3>
+                                            <div class="card-actions">
+                                                <a href="{{ route('kontak.index') }}">
+                                                    Show Profile
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24"
+                                                        height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                        stroke="currentColor" fill="none" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                        <path
+                                                            d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                        <path d="M16 5l3 3" />
+                                                    </svg>
+                                                </a>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-6">
-                                    <div class="card card-sm">
                                         <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <span class="bg-red-lt avatar" data-toggle="tooltip"
-                                                        title="Pengeluaran Bulan Lalu Rp. {{ number_format($pengeluaran_bulan_lalu, 0, ',', '.') }},00">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon"
-                                                            width="24" height="24" viewBox="0 0 24 24"
-                                                            stroke-width="2" stroke="currentColor" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M12 5l0 14" />
-                                                            <path d="M18 13l-6 6" />
-                                                            <path d="M6 13l6 6" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="font-weight-medium">
-                                                        Rp. {{ number_format($pengeluaran, 0, ',', '.') }},00
-                                                        <span
-                                                            class="float-right font-weight-medium {{ $persentase_out < 0 ? 'text-red' : 'text-green' }}">
-                                                            {{ $persentase_out > 0 ? '+' : '' }}{{ number_format($persentase_out, 1) }}%
-                                                        </span>
-                                                    </div>
-                                                    <div class="text-secondary">
-                                                        Pengeluaran {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <dl class="row">
+                                                <dt class="col-5">Login Date</dt>
+                                                <dd class="col-7">:
+                                                    {{ \Carbon\Carbon::parse($config->created_at)->locale('id')->isoFormat('ddd, D MMM YYYY HH:mm [WIB]') }}
+                                                </dd>
+                                                <dt class="col-5">IP Address</dt>
+                                                <dd class="col-7">: {{ $config->ip_address }}</dd>
+                                                <dt class="col-5">Akun</dt>
+                                                <dd class="col-7">: {{ Auth::user()->name }}</dd>
+                                                <dt class="col-5">Email</dt>
+                                                <dd class="col-7">: {{ Auth::user()->email }}</dd>
+                                                <dt class="col-5">Role</dt>
+                                                <dd class="col-7">: <span
+                                                        class="badge {{ Auth::user()->role == 'admin' ? 'bg-indigo-lt' : 'bg-lime-lt' }}">{{ Auth::user()->role }}</span>
+                                                </dd>
+                                            </dl>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row row-cards mb-2">
-                                <div class="col-sm-6 col-lg-6">
-                                    <div class="card card-sm">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <span class="bg-orange-lt avatar">
-                                                        <i class="fa-solid fa-cart-shopping fs--2"></i>
-                                                    </span>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="font-weight-medium">
-                                                        Data Product
-                                                    </div>
-                                                    <div class="text-secondary">
-                                                        {{ \App\Models\ProductModel::count() }} Product
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-6">
-                                    <div class="card card-sm">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <span class="bg-indigo-lt avatar">
-                                                        <i class="fa-solid fa-truck-fast fs--2"></i>
-                                                    </span>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="font-weight-medium">
-                                                        Data Resi History
-                                                    </div>
-                                                    <div class="text-secondary">
-                                                        {{ \App\Models\ResiHistoryModel::count() }} Resi History
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row row-cards">
-                                <div class="col-sm-6 col-lg-6">
-                                    <div class="card card-sm">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <span class="bg-cyan-lt avatar">
-                                                        <i class="fa-solid fa-user-tag fs--2"></i>
-                                                    </span>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="font-weight-medium">
-                                                        Data Pelanggan
-                                                    </div>
-                                                    <div class="text-secondary">
-                                                        {{ \App\Models\CustomerModel::count() }} Customers
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-6">
-                                    <div class="card card-sm">
-                                        <div class="card-body">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <span class="bg-purple-lt avatar">
-                                                        <i class="fa-solid fa-user-lock fs--2"></i>
-                                                    </span>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="font-weight-medium">
-                                                        Data User
-                                                    </div>
-                                                    <div class="text-secondary">
-                                                        {{ \App\Models\User::count() }} Akun User
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-lg-6">
-                            <div class="card bg-info-lt" style="height: 400px;">
-                                <div class="ribbon bg-info">Log Aktifitas</div>
-                                <div class="card-header">
-                                    <h3 class="card-title">50 Aktifitas Terbaru</h3>
-                                </div>
-                                <div class="card-body card-body-scrollable card-body-scrollable-shadow">
-                                    <div class="divide-y">
-                                        @foreach ($logs as $item)
-                                            <div class="py-3">
-                                                <div class="row">
-                                                    <!-- Avatar atau Ikon -->
+                            <div class="col-lg-6">
+                                <div class="row row-cards mb-2">
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
                                                     <div class="col-auto">
-                                                        <span
-                                                            class="avatar bg-primary-lt">{{ $item->user_id != 'Guest' ? 'US' : 'GU' }}</span>
+                                                        <span class="bg-green-lt avatar" data-toggle="tooltip"
+                                                            title="Pemasukan Bulan Lalu Rp. {{ number_format($sales_bulan_lalu, 0, ',', '.') }},00">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon"
+                                                                width="24" height="24" viewBox="0 0 24 24"
+                                                                stroke-width="2" stroke="currentColor" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M12 5l0 14" />
+                                                                <path d="M18 11l-6 -6" />
+                                                                <path d="M6 11l6 -6" />
+                                                            </svg>
+                                                        </span>
                                                     </div>
-                                                    <!-- Informasi Log -->
                                                     <div class="col">
-                                                        <div class="text-truncate">
-                                                            <strong>Activity</strong> at
-                                                            <span>{{ \Carbon\Carbon::parse($item->created_at)->locale('id')->diffForHumans() }}</span>
+                                                        <div class="font-weight-medium">
+                                                            Rp. {{ number_format($pemasukan, 0, ',', '.') }},00
+                                                            <span
+                                                                class="float-right font-weight-medium {{ $persentase < 0 ? 'text-red' : 'text-green' }}">
+                                                                {{ $persentase > 0 ? '+' : '' }}{{ number_format($persentase, 1) }}%
+                                                            </span>
                                                         </div>
                                                         <div class="text-secondary">
-                                                            <span>User:
-                                                                @foreach (\App\Models\User::all() as $us)
-                                                                    @if ($us->id == $item->user_id)
-                                                                        {{ $us->name }}
-                                                                    @else
-                                                                        {{ $item->user_id }}
-                                                                    @endif
-                                                                @endforeach
-                                                            </span> | <span>IP: {{ $item->ip_address }}</span> |
-                                                            <span>{{ $item->method }} {{ $item->path }}</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Status -->
-                                                    <div class="col-auto align-self-center">
-                                                        <div
-                                                            class="badge bg-{{ $item->status == 200 ? 'success' : 'secondary' }}">
-                                                            {{ $item->status }}
+                                                            Pemasukan {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-6">
-                            <div class="card bg-green-lt" style="height: 400px;">
-                                <div class="ribbon bg-green">Transaksi</div>
-                                <div class="card-header">
-                                    <h3 class="card-title">Status Transaksi</h3>
-                                </div>
-                                <div class="card-body mt-4">
-                                    <div id="chart-demo-pie"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h3 class="card-title mb-3">Grafik Keuangan</h3>
-                                        <div class="ms-auto">
-                                            <form method="GET" action="{{ url('/dashboard') }}"
-                                                class="d-flex align-items-center gap-2">
-
-                                                {{-- Bulan --}}
-                                                <select name="month" class="form-select form-select-sm"
-                                                    onchange="this.form.submit()">
-                                                    @foreach (range(1, 12) as $m)
-                                                        <option value="{{ $m }}"
-                                                            {{ $current_month == $m ? 'selected' : '' }}>
-                                                            {{ date('F', mktime(0, 0, 0, $m, 1)) }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-
-                                                {{-- Tahun --}}
-                                                <select name="year" class="form-select form-select-sm"
-                                                    onchange="this.form.submit()">
-                                                    @foreach (range(date('Y') - 5, date('Y')) as $y)
-                                                        <option value="{{ $y }}"
-                                                            {{ $current_year == $y ? 'selected' : '' }}>
-                                                            {{ $y }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </form>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div id="chart-sales"></div>
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-red-lt avatar" data-toggle="tooltip"
+                                                            title="Pengeluaran Bulan Lalu Rp. {{ number_format($pengeluaran_bulan_lalu, 0, ',', '.') }},00">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon"
+                                                                width="24" height="24" viewBox="0 0 24 24"
+                                                                stroke-width="2" stroke="currentColor" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M12 5l0 14" />
+                                                                <path d="M18 13l-6 6" />
+                                                                <path d="M6 13l6 6" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Rp. {{ number_format($pengeluaran, 0, ',', '.') }},00
+                                                            <span
+                                                                class="float-right font-weight-medium {{ $persentase_out < 0 ? 'text-red' : 'text-green' }}">
+                                                                {{ $persentase_out > 0 ? '+' : '' }}{{ number_format($persentase_out, 1) }}%
+                                                            </span>
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            Pengeluaran
+                                                            {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-cards mb-2">
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-orange-lt avatar">
+                                                            <i class="fa-solid fa-cart-shopping fs--2"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Data Product
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            {{ \App\Models\ProductModel::count() }} Product
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-indigo-lt avatar">
+                                                            <i class="fa-solid fa-truck-fast fs--2"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Data Resi History
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            {{ \App\Models\ResiHistoryModel::count() }} Resi History
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-cards">
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-cyan-lt avatar">
+                                                            <i class="fa-solid fa-user-tag fs--2"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Data Pelanggan
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            {{ \App\Models\CustomerModel::count() }} Customers
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-purple-lt avatar">
+                                                            <i class="fa-solid fa-user-lock fs--2"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Data User
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            {{ \App\Models\User::count() }} Akun User
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-lg-6">
+                                <div class="card bg-info-lt" style="height: 400px;">
+                                    <div class="ribbon bg-info">Log Aktifitas</div>
+                                    <div class="card-header">
+                                        <h3 class="card-title">50 Aktifitas Terbaru</h3>
+                                    </div>
+                                    <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                        <div class="divide-y">
+                                            @foreach ($logs as $item)
+                                                <div class="py-3">
+                                                    <div class="row">
+                                                        <!-- Avatar atau Ikon -->
+                                                        <div class="col-auto">
+                                                            <span
+                                                                class="avatar bg-primary-lt">{{ $item->user_id != 'Guest' ? 'US' : 'GU' }}</span>
+                                                        </div>
+                                                        <!-- Informasi Log -->
+                                                        <div class="col">
+                                                            <div class="text-truncate">
+                                                                <strong>Activity</strong> at
+                                                                <span>{{ \Carbon\Carbon::parse($item->created_at)->locale('id')->diffForHumans() }}</span>
+                                                            </div>
+                                                            <div class="text-secondary">
+                                                                <span>User:
+                                                                    @foreach (\App\Models\User::all() as $us)
+                                                                        @if ($us->id == $item->user_id)
+                                                                            {{ $us->name }}
+                                                                        @else
+                                                                            {{ $item->user_id }}
+                                                                        @endif
+                                                                    @endforeach
+                                                                </span> | <span>IP: {{ $item->ip_address }}</span> |
+                                                                <span>{{ $item->method }} {{ $item->path }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Status -->
+                                                        <div class="col-auto align-self-center">
+                                                            <div
+                                                                class="badge bg-{{ $item->status == 200 ? 'success' : 'secondary' }}">
+                                                                {{ $item->status }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-6">
+                                <div class="card bg-green-lt" style="height: 400px;">
+                                    <div class="ribbon bg-green">Transaksi</div>
+                                    <div class="card-header">
+                                        <h3 class="card-title">Status Transaksi</h3>
+                                    </div>
+                                    <div class="card-body mt-4">
+                                        <div id="chart-demo-pie"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <h3 class="card-title mb-3">Grafik Keuangan</h3>
+                                            <div class="ms-auto">
+                                                <form method="GET" action="{{ url('/dashboard') }}"
+                                                    class="d-flex align-items-center gap-2">
+
+                                                    {{-- Bulan --}}
+                                                    <select name="month" class="form-select form-select-sm"
+                                                        onchange="this.form.submit()">
+                                                        @foreach (range(1, 12) as $m)
+                                                            <option value="{{ $m }}"
+                                                                {{ $current_month == $m ? 'selected' : '' }}>
+                                                                {{ date('F', mktime(0, 0, 0, $m, 1)) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    {{-- Tahun --}}
+                                                    <select name="year" class="form-select form-select-sm"
+                                                        onchange="this.form.submit()">
+                                                        @foreach (range(date('Y') - 5, date('Y')) as $y)
+                                                            <option value="{{ $y }}"
+                                                                {{ $current_year == $y ? 'selected' : '' }}>
+                                                                {{ $y }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div id="chart-sales"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @else
+                    <div class="col-12">
+                        <div class="row row-cards">
+                            <div class="col-lg-6">
+                                <div class="col-sm-12 col-lg-12">
+                                    <div class="card bg-red-lt" style="height: 238px">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                Login Session
+                                            </h3>
+                                            <div class="card-actions">
+                                                <a href="{{ route('kontak.index') }}">
+                                                    Show Profile
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1"
+                                                        width="24" height="24" viewBox="0 0 24 24"
+                                                        stroke-width="2" stroke="currentColor" fill="none"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                        <path
+                                                            d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                        <path d="M16 5l3 3" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <dl class="row">
+                                                <dt class="col-5">Login Date</dt>
+                                                <dd class="col-7">:
+                                                    {{ \Carbon\Carbon::parse($config->created_at)->locale('id')->isoFormat('ddd, D MMM YYYY HH:mm [WIB]') }}
+                                                </dd>
+                                                <dt class="col-5">IP Address</dt>
+                                                <dd class="col-7">: {{ $config->ip_address }}</dd>
+                                                <dt class="col-5">Akun</dt>
+                                                <dd class="col-7">: {{ Auth::user()->name }}</dd>
+                                                <dt class="col-5">Email</dt>
+                                                <dd class="col-7">: {{ Auth::user()->email }}</dd>
+                                                <dt class="col-5">Role</dt>
+                                                <dd class="col-7">: <span
+                                                        class="badge {{ Auth::user()->role == 'admin' ? 'bg-indigo-lt' : 'bg-lime-lt' }}">{{ Auth::user()->role }}</span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row row-cards mb-2">
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-green-lt avatar" data-toggle="tooltip"
+                                                            title="Pemasukan Bulan Lalu Rp. {{ number_format($sales_bulan_lalu, 0, ',', '.') }},00">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon"
+                                                                width="24" height="24" viewBox="0 0 24 24"
+                                                                stroke-width="2" stroke="currentColor" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M12 5l0 14" />
+                                                                <path d="M18 11l-6 -6" />
+                                                                <path d="M6 11l6 -6" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Rp. {{ number_format($pemasukan, 0, ',', '.') }},00
+                                                            <span
+                                                                class="float-right font-weight-medium {{ $persentase < 0 ? 'text-red' : 'text-green' }}">
+                                                                {{ $persentase > 0 ? '+' : '' }}{{ number_format($persentase, 1) }}%
+                                                            </span>
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            Pemasukan {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-red-lt avatar" data-toggle="tooltip"
+                                                            title="Pengeluaran Bulan Lalu Rp. {{ number_format($pengeluaran_bulan_lalu, 0, ',', '.') }},00">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon"
+                                                                width="24" height="24" viewBox="0 0 24 24"
+                                                                stroke-width="2" stroke="currentColor" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M12 5l0 14" />
+                                                                <path d="M18 13l-6 6" />
+                                                                <path d="M6 13l6 6" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Rp. {{ number_format($pengeluaran, 0, ',', '.') }},00
+                                                            <span
+                                                                class="float-right font-weight-medium {{ $persentase_out < 0 ? 'text-red' : 'text-green' }}">
+                                                                {{ $persentase_out > 0 ? '+' : '' }}{{ number_format($persentase_out, 1) }}%
+                                                            </span>
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            Pengeluaran
+                                                            {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-cards mb-2">
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-orange-lt avatar">
+                                                            <i class="fa-solid fa-cart-shopping fs--2"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Data Product
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            {{ \App\Models\ProductModel::count() }} Product
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-indigo-lt avatar">
+                                                            <i class="fa-solid fa-truck-fast fs--2"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Data Resi History
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            {{ \App\Models\ResiHistoryModel::count() }} Resi History
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-cards">
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-cyan-lt avatar">
+                                                            <i class="fa-solid fa-user-tag fs--2"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Data Pelanggan
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            {{ \App\Models\CustomerModel::count() }} Customers
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6">
+                                        <div class="card card-sm">
+                                            <div class="card-body">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <span class="bg-purple-lt avatar">
+                                                            <i class="fa-solid fa-user-lock fs--2"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="font-weight-medium">
+                                                            Data User
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            {{ \App\Models\User::count() }} Akun User
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-12">
+                                <div class="card bg-green-lt" style="height: 400px;">
+                                    <div class="ribbon bg-green">Transaksi</div>
+                                    <div class="card-header">
+                                        <h3 class="card-title">Status Transaksi</h3>
+                                    </div>
+                                    <div class="card-body mt-4">
+                                        <div id="chart-demo-pie"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <h3 class="card-title mb-3">Grafik Keuangan</h3>
+                                            <div class="ms-auto">
+                                                <form method="GET" action="{{ url('/dashboard') }}"
+                                                    class="d-flex align-items-center gap-2">
+
+                                                    {{-- Bulan --}}
+                                                    <select name="month" class="form-select form-select-sm"
+                                                        onchange="this.form.submit()">
+                                                        @foreach (range(1, 12) as $m)
+                                                            <option value="{{ $m }}"
+                                                                {{ $current_month == $m ? 'selected' : '' }}>
+                                                                {{ date('F', mktime(0, 0, 0, $m, 1)) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    {{-- Tahun --}}
+                                                    <select name="year" class="form-select form-select-sm"
+                                                        onchange="this.form.submit()">
+                                                        @foreach (range(date('Y') - 5, date('Y')) as $y)
+                                                            <option value="{{ $y }}"
+                                                                {{ $current_year == $y ? 'selected' : '' }}>
+                                                                {{ $y }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div id="chart-sales"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
