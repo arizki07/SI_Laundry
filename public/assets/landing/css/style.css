@@ -576,3 +576,108 @@ h6,
     background-color: rgba(30, 190, 87, 0.8);
     text-decoration: none;
     }
+
+    .notes-section {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+    }
+
+    .note {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .note:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .note h5 {
+        color: #333333;
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .note p {
+        color: #FFFFFF;
+        font-size: 1rem;
+    }
+
+    .note:nth-child(1) {
+        border-left: 5px solid #007bff;
+    }
+
+    .note:nth-child(2) {
+        border-left: 5px solid #ff9800;
+    }
+
+    .note:nth-child(3) {
+        border-left: 5px solid #4caf50;
+    }
+
+    .note:nth-child(4) {
+        border-left: 5px solid #ff5722;
+    }
+
+    .note:nth-child(5) {
+        border-left: 5px solid #8bc34a;
+    }
+
+    @media (max-width: 768px) {
+        .notes-section {
+            padding: 10px;
+        }
+
+        .note {
+            padding: 15px;
+        }
+
+        .note h5 {
+            font-size: 1.125rem;
+        }
+
+        .note p {
+            font-size: 0.95rem;
+        }
+    }
+
+.note.active {
+    border-left: 5px solid #007bff;
+    background-color: #e3f2fd;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.note.active::before {
+    /* content: '✔️'; */
+    font-size: 1.5rem;
+    color: #007bff;
+    position: absolute;
+    top: 15px;
+    left: -30px;
+}
+
+.text-medium.badge {
+    background: linear-gradient(45deg, #FF014F, #FF7A00);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.scroll-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+
+#resiList, #invoiceList {
+    display: inline-block;
+}

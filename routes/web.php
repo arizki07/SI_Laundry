@@ -46,6 +46,7 @@ Route::middleware(['data.kontak', 'logs'])->controller(LandingController::class)
     Route::get('tentang-kami', 'about')->name('landing.tentang-kami');
     Route::get('daftar-harga', 'list')->name('landing.daftar-harga');
     Route::get('cek-resi', 'resi')->name('landing.cek-resi');
+    Route::post('cek-resi/search', 'checkResi')->name('landing.search-resi');
     Route::get('bantuan', 'bantuan')->name('landing.bantuan');
     Route::get('syarat-ketentuan', 'syarat_ketentuan')->name('landing.syarat-ketentuan');
     Route::get('testimoni', 'testimoni')->name('landing.testimoni');
