@@ -105,14 +105,21 @@
 
                                                 <div class="mb-3">
                                                     <label class="form-label">Status Pembayaran</label>
-                                                    <select class="form-select" name="status_pembayaran">
+                                                    <select class="form-select" name="status_pembayaran"
+                                                        id="status_pembayaran">
                                                         <option disabled>--Pilih Status Pembayaran--</option>
-                                                        @foreach ($statuses as $status)
-                                                            <option value="{{ $status->nama }}"
-                                                                {{ $sales->status_pembayaran == $status->nama ? 'selected' : '' }}>
-                                                                {{ ucfirst($status->nama) }}
-                                                            </option>
-                                                        @endforeach
+                                                        <option value="pending"
+                                                            {{ $sales->status_pembayaran == 'pending' ? 'selected' : '' }}>
+                                                            Pending</option>
+                                                        <option value="cancel"
+                                                            {{ $sales->status_pembayaran == 'cancel' ? 'selected' : '' }}>
+                                                            Cancel</option>
+                                                        <option value="dp"
+                                                            {{ $sales->status_pembayaran == 'dp' ? 'selected' : '' }}>DP
+                                                        </option>
+                                                        <option value="lunas"
+                                                            {{ $sales->status_pembayaran == 'lunas' ? 'selected' : '' }}>
+                                                            Lunas</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -243,6 +250,57 @@
                     }
                 }
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusPembayaranSelect = document.querySelector('select[name="status_pembayaran"]');
+            const pembayaranFieldContainer = document.createElement('div');
+
+            pembayaranFieldContainer.classList.add('mb-3');
+            pembayaranFieldContainer.innerHTML = `
+            <label class="form-label">Jumlah DP</label>
+            <input type="number" class="form-control" name="pembayaran" id="pembayaran" min="0" step="0.01">
+            <small id="dp-warning" class="text-danger" style="display: none;">
+                DP tidak boleh lebih besar dari total pembayaran!
+            </small>
+        `;
+
+            pembayaranFieldContainer.style.display = 'none';
+            statusPembayaranSelect.closest('.mb-3').after(pembayaranFieldContainer);
+
+            const pembayaranInput = document.getElementById('pembayaran');
+            const dpWarning = document.getElementById('dp-warning');
+            const totalHargaInput = document.getElementById('total_harga');
+
+            function updateDPField() {
+                let totalHarga = parseFloat(totalHargaInput.value) || 0;
+
+                if (statusPembayaranSelect.value === 'dp') {
+                    pembayaranFieldContainer.style.display = 'block';
+                    pembayaranInput.setAttribute('max', totalHarga);
+                } else {
+                    pembayaranFieldContainer.style.display = 'none';
+                    pembayaranInput.value = '';
+                    dpWarning.style.display = 'none';
+                }
+            }
+
+            function validateDP() {
+                let totalHarga = parseFloat(totalHargaInput.value) || 0;
+                let dpValue = parseFloat(pembayaranInput.value) || 0;
+
+                if (dpValue > totalHarga) {
+                    dpWarning.style.display = 'block';
+                } else {
+                    dpWarning.style.display = 'none';
+                }
+            }
+
+            statusPembayaranSelect.addEventListener('change', updateDPField);
+            pembayaranInput.addEventListener('input', validateDP);
+
+            updateDPField();
         });
     </script>
 @endsection

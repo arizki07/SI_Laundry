@@ -148,6 +148,7 @@ Route::middleware(['logs'])->group(function () {
         Route::controller(KontakController::class)->group(function () {
             Route::get('kontak', 'index')->name('kontak.index');
             Route::post('kontak/update', 'update')->name('kontak.update');
+            Route::post('karyawan/update', 'KaryawanUpdate')->name('karyawan.update');
         });
 
         Route::controller(FaqsController::class)->group(function () {

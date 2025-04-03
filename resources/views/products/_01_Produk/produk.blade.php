@@ -20,7 +20,7 @@
                             <select class="form-select" name="category" required>
                                 <option selected disabled>--Pilih Categori--</option>
                                 @foreach ($categori as $item)
-                                    <option value="{{ $item->nama }}">{{ ucfirst($item->kode) }}</option>
+                                    <option value="{{ $item->nama }}">{{ $item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -96,10 +96,10 @@
                                                     <label class="form-label">Status Pembayaran</label>
                                                     <select class="form-select" name="status_pembayaran">
                                                         <option selected disabled>--Pilih Status Pembayaran--</option>
-                                                        @foreach ($status as $stat)
-                                                            <option value="{{ $stat->nama }}">{{ ucfirst($stat->nama) }}
-                                                            </option>
-                                                        @endforeach
+                                                        <option value="pending">Pending</option>
+                                                        <option value="cancel">Cancel</option>
+                                                        <option value="dp">DP</option>
+                                                        <option value="lunas">Lunas</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -166,7 +166,6 @@
                                             </div>
                                         </div>
 
-
                                         <div class="row mt-4">
                                             <div class="col-xl-12 text-end">
                                                 <button type="submit" class="btn btn-primary">
@@ -178,7 +177,6 @@
                                             </div>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -248,6 +246,56 @@
                     } else {
                         alert('At least one item is required.');
                     }
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusPembayaranSelect = document.querySelector('select[name="status_pembayaran"]');
+            const pembayaranFieldContainer = document.createElement('div');
+            pembayaranFieldContainer.classList.add('mb-3');
+            pembayaranFieldContainer.innerHTML = `
+        <label class="form-label">Jumlah DP</label>
+        <input type="number" class="form-control" name="pembayaran" id="pembayaran" min="0" step="0.01">
+        <small id="dp-warning" class="text-danger" style="display: none;">
+            DP tidak boleh lebih besar dari total pembayaran!
+        </small>
+    `;
+            pembayaranFieldContainer.style.display = 'none';
+
+            statusPembayaranSelect.closest('.mb-3').after(pembayaranFieldContainer);
+
+            const pembayaranInput = document.getElementById('pembayaran');
+            const dpWarning = document.getElementById('dp-warning');
+
+            statusPembayaranSelect.addEventListener('change', function() {
+                if (this.value === 'dp') {
+                    pembayaranFieldContainer.style.display = 'block';
+                    pembayaranInput.setAttribute('required',
+                    'required'); // Menambahkan required saat DP dipilih
+
+                    // Ambil total harga dari elemen hidden atau AJAX
+                    let totalHarga = parseFloat(document.getElementById('total_harga').value) || 0;
+
+                    // Atur batas maksimal input DP
+                    pembayaranInput.setAttribute('max', totalHarga);
+                } else {
+                    pembayaranFieldContainer.style.display = 'none';
+                    pembayaranInput.value = ''; // Kosongkan input
+                    dpWarning.style.display = 'none'; // Sembunyikan warning
+                    pembayaranInput.removeAttribute('required'); // Hapus required saat bukan DP
+                }
+            });
+
+            pembayaranInput.addEventListener('input', function() {
+                let totalHarga = parseFloat(document.getElementById('total_harga').value) || 0;
+                let dpValue = parseFloat(pembayaranInput.value) || 0;
+
+                if (dpValue > totalHarga) {
+                    dpWarning.style.display = 'block';
+                } else {
+                    dpWarning.style.display = 'none';
                 }
             });
         });

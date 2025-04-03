@@ -14,6 +14,7 @@ class SalesModel extends Model
         'no_resi',
         'no_invoice',
         'total_harga',
+        'pembayaran',
         'status_pembayaran',
         'metode_pembayaran',
         'file_bukti',

@@ -24,15 +24,6 @@
                             <label class="form-label">Deskripsi</label>
                             <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi category"></textarea>
                         </div>
-                        <div class="mb-3">
-                            <div class="form-label">Peruntukan</div>
-                            <select class="form-select" name="kode">
-                                <option selected disabled>--Pilih Peruntukan--</option>
-                                @foreach ($ref as $item)
-                                    <option value="{{ $item->nama }}">{{ $item->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
@@ -63,18 +54,6 @@
                             <div class="mb-3">
                                 <label class="form-label">Deskripsi</label>
                                 <textarea class="form-control" name="deskripsi" rows="6" placeholder="Isi deskripsi produk">{{ $item->deskripsi }}</textarea>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-label">Peruntukan</div>
-                                <select class="form-select" name="kode">
-                                    <option disabled>--Pilih Peruntukan--</option>
-                                    @foreach ($ref as $item)
-                                        <option value="{{ $item->nama }}"
-                                            {{ old('kode', $item->kode) == $item->nama ? 'selected' : '' }}>
-                                            {{ $item->nama }}
-                                        </option>
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -256,12 +235,6 @@
                         title: 'deskripsi',
                         data: 'deskripsi',
                         name: 'deskripsi',
-                        className: "cuspad0 cuspad1 text-center"
-                    },
-                    {
-                        title: 'kode',
-                        data: 'kode',
-                        name: 'kode',
                         className: "cuspad0 cuspad1 text-center"
                     },
                 ],

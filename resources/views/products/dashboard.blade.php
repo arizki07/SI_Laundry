@@ -119,10 +119,10 @@
                     series: [
                         transactionStatus.pending,
                         transactionStatus.gagal,
-                        transactionStatus.success,
+                        transactionStatus.lunas,
                         transactionStatus.refund,
                     ],
-                    labels: ["Pending", "Gagal", "success", "Refund"],
+                    labels: ["Pending", "Gagal", "Success", "Refund"],
                     tooltip: {
                         theme: "dark",
                     },
@@ -132,7 +132,7 @@
                     colors: [
                         tabler.getColor("warning"),
                         tabler.getColor("danger"),
-                        tabler.getColor("success"),
+                        tabler.getColor("Success"),
                         tabler.getColor("info"),
                     ],
                     legend: {
@@ -500,7 +500,7 @@
                                                         <!-- Status -->
                                                         <div class="col-auto align-self-center">
                                                             <div
-                                                                class="badge bg-{{ $item->status == 200 ? 'success' : 'secondary' }}">
+                                                                class="badge bg-{{ $item->status == 200 ? 'Success' : 'secondary' }}">
                                                                 {{ $item->status }}
                                                             </div>
                                                         </div>

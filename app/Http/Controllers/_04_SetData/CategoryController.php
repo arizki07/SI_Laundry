@@ -12,14 +12,12 @@ class CategoryController extends Controller
 {
     public function Categories()
     {
-        $ref = ReferensiModel::all();
         $cat = CategoriesModel::all();
         // dd($ref);
         return view('products._04_SetData.category', [
             'judul' => 'Categories',
             'active' => 'Kategori',
             'cat' => $cat,
-            'ref' => $ref,
         ]);
     }
 
@@ -29,13 +27,11 @@ class CategoryController extends Controller
         $request->validate([
             'nama' => 'required',
             'deskripsi' => 'required',
-            'kode' => 'required',
         ]);
 
-        $cat = CategoriesModel::create([
+        $cat = CategoriesModel::insert([
             'nama' => $request->nama,
             'deskripsi' => $request->deskripsi,
-            'kode' => $request->kode,
             'created_at' => Carbon::now(),
         ]);
 
@@ -51,7 +47,6 @@ class CategoryController extends Controller
         $request->validate([
             'nama' => 'required',
             'deskripsi' => 'required',
-            'kode' => 'required',
         ]);
 
         $cat = CategoriesModel::findOrFail($id);
@@ -59,7 +54,6 @@ class CategoryController extends Controller
         $update = $cat->update([
             'nama' => $request->nama,
             'deskripsi' => $request->deskripsi,
-            'kode' => $request->kode,
         ]);
 
         if ($update) {

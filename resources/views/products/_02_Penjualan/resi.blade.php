@@ -29,12 +29,13 @@
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
                                 <select class="form-select" name="status" required>
-                                    @foreach ($status as $stat)
-                                        <option value="{{ $stat->nama }}"
-                                            {{ $stat->nama == $item->status ? 'selected' : '' }}>
-                                            {{ ucfirst($stat->nama) }}
-                                        </option>
-                                    @endforeach
+                                    <option selected disabled>--Pilih Status--</option>
+                                    <option value="proses pembayaran">Proses Pembayaran</option>
+                                    <option value="diterima">Diterima</option>
+                                    <option value="proses pencucian">Proses Pencucian</option>
+                                    <option value="pengeringan">Pengeringan</option>
+                                    <option value="siap ambil">Siap Ambil</option>
+                                    <option value="selesai">Selesai</option>
                                 </select>
                             </div>
 

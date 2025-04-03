@@ -14,9 +14,9 @@ class SalesList extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('sales')
-                    ->join('customers', 'sales.customer_id', '=', 'customers.id')
-                    ->select('sales.*', 'customers.nama as nama_customer', 'customers.no_cust')
-                    ->get();
+                ->join('customers', 'sales.customer_id', '=', 'customers.id')
+                ->select('sales.*', 'customers.nama as nama_customer', 'customers.no_cust')
+                ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -42,15 +42,15 @@ class SalesList extends Controller
                     return $btn;
                 })
                 ->addColumn('status_pembayaran', function ($row) {
-                    if ($row->status_pembayaran == 'Berhasil') {
-                        return '<span class="badge bg-green-lt" style="font-size:11px"><i class="fa-solid fa-check me-2"></i>'.$row->status_pembayaran.'</span>';
+                    if ($row->status_pembayaran == 'lunas') {
+                        return '<span class="badge bg-green-lt" style="font-size:11px"><i class="fa-solid fa-check me-2"></i>' . $row->status_pembayaran . '</span>';
                     } elseif ($row->status_pembayaran == 'Pending') {
-                        return '<span class="badge bg-orange-lt" style="font-size:11px"><i class="fa-solid fa-clock me-2"></i>'.$row->status_pembayaran.'</span>';
-                    } elseif ($row->status_pembayaran == 'Gagal') {
-                        return '<span class="badge bg-danger-lt" style="font-size:11px"><i class="fa-solid fa-xmark me-2"></i>'.$row->status_pembayaran.'</span>';
-                    } elseif ($row->status_pembayaran == 'Refund') {
-                        return '<span class="badge bg-blue-lt" style="font-size:11px"><i class="fa-solid fa-rotate me-2"></i>'.$row->status_pembayaran.'</span>';
-                    } 
+                        return '<span class="badge bg-orange-lt" style="font-size:11px"><i class="fa-solid fa-clock me-2"></i>' . $row->status_pembayaran . '</span>';
+                    } elseif ($row->status_pembayaran == 'cancel') {
+                        return '<span class="badge bg-danger-lt" style="font-size:11px"><i class="fa-solid fa-xmark me-2"></i>' . $row->status_pembayaran . '</span>';
+                    } elseif ($row->status_pembayaran == 'dp') {
+                        return '<span class="badge bg-blue-lt" style="font-size:11px"><i class="fa-solid fa-rotate me-2"></i>' . $row->status_pembayaran . '</span>';
+                    }
                 })
                 ->rawColumns(['action', 'status_pembayaran'])
                 ->make(true);

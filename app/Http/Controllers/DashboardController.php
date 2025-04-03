@@ -35,7 +35,7 @@ class DashboardController extends Controller
                 '
                 COUNT(CASE WHEN status_pembayaran = "pending" THEN 1 END) as pending,
                 COUNT(CASE WHEN status_pembayaran = "gagal" THEN 1 END) as gagal,
-                COUNT(CASE WHEN status_pembayaran = "success" THEN 1 END) as success,
+                COUNT(CASE WHEN status_pembayaran = "lunas" THEN 1 END) as lunas,
                 COUNT(CASE WHEN status_pembayaran = "refund" THEN 1 END) as refund
             ',
             )

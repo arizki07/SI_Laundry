@@ -5,6 +5,9 @@ namespace App\Http\Controllers\_05_Setting;
 use App\Models\KontakModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,10 +16,12 @@ class KontakController extends Controller
     public function index()
     {
         $kontak = KontakModel::orderBy('created_at', 'asc')->first();
+        $user = Auth::user();
         return view('products._05_Setting.kontak', [
             'judul' => 'Profile & Bantuan',
             'active' => 'kontak',
             'kontak' => $kontak,
+            'user' => $user,
         ]);
     }
 
@@ -67,9 +72,9 @@ class KontakController extends Controller
             KontakModel::create([
                 'head_first' => $request->head_first,
                 'head_two' => $request->head_two,
-                'logo' => $request->hasFile('logo') 
-                ? $request->file('logo')->store('public/logo') 
-                : null,
+                'logo' => $request->hasFile('logo')
+                    ? $request->file('logo')->store('public/logo')
+                    : null,
                 'alamat' => $request->alamat,
                 'deskripsi' => $request->deskripsi,
                 'maps' => $request->maps,
@@ -82,6 +87,34 @@ class KontakController extends Controller
             ]);
 
             return redirect()->back()->with('success', 'Kontak berhasil dibuat');
+        }
+    }
+
+    public function KaryawanUpdate(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'email' => 'required|email', // Pastikan email valid
+        ]);
+
+        try {
+            // Ambil data user yang sedang login
+            $user = Auth::user();
+
+            // Proses update data pengguna
+            $user->update([
+                'name' => $request->input('name'),
+                'username' => $request->input('username'),
+                'email' => $request->input('email'),
+            ]);
+
+            // Redirect kembali dengan pesan sukses
+            return redirect()->back()->with('success', 'Data karyawan berhasil diperbarui!');
+        } catch (\Exception $e) {
+            // Menangani error apabila terjadi
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage());
         }
     }
 }

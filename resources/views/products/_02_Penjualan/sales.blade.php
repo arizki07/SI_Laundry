@@ -39,9 +39,6 @@
                                                                 <p class="color-white mb-1">Invoice
                                                                     <span>{{ $item->no_invoice }}</span>
                                                                 </p>
-                                                                <p class="color-white mb-0">Invoice Date
-                                                                    <span>{{ $item->created_at->format('d M Y') }}</span>
-                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -56,7 +53,6 @@
                                                                 <p class="invo-addr-1">
                                                                     {{ Auth::user()->name }} <br />
                                                                     {{ Auth::user()->email }} <br />
-                                                                    21-12 Green Street, Meherpur, Bangladesh <br />
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -82,45 +78,48 @@
                                                             <thead class="bg-active">
                                                                 <tr class="tr">
                                                                     <th>No.</th>
-                                                                    <th class="pl0 text-start">Item Description
-                                                                    </th>
+                                                                    <th class="pl0 text-start">Item Description</th>
                                                                     <th class="text-center">Price</th>
                                                                     <th class="text-center">Quantity</th>
                                                                     <th class="text-end">Amount</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                @php
+                                                                    $grandTotal = 0;
+                                                                    $index = 1;
+                                                                @endphp
+
                                                                 @foreach ($sales as $sale)
-                                                                    @foreach ($sale->items as $index => $item)
+                                                                    @foreach ($sale->items as $item)
                                                                         <tr>
-                                                                            <td>{{ $index + 1 }}</td>
-                                                                            <td>{{ $item->product->nama_produk }}
-                                                                            </td>
-                                                                            <td class="text-center">
-                                                                                Rp.
+                                                                            <td>{{ $index++ }}</td>
+                                                                            <td>{{ $item->product->nama_produk }}</td>
+                                                                            <td class="text-center">Rp.
                                                                                 {{ number_format($item->harga_per_qty, 2) }}
                                                                             </td>
-                                                                            <td class="text-center">
-                                                                                {{ $item->qty }}</td>
-                                                                            <td class="text-end">
-                                                                                Rp.
-                                                                                {{ number_format($item->total, 2) }}
+                                                                            <td class="text-center">{{ $item->qty }}
                                                                             </td>
+                                                                            <td class="text-end">Rp.
+                                                                                {{ number_format($item->total, 2) }}</td>
                                                                         </tr>
                                                                     @endforeach
-                                                                    <tr>
-                                                                        <td colspan="4" class="text-center">
-                                                                            <strong>SubTotal</strong>
-                                                                        </td>
-                                                                        <td class="text-end">
-                                                                            Rp.
-                                                                            {{ number_format($sale->total_harga, 2) }}
-                                                                        </td>
-                                                                    </tr>
+                                                                    @php
+                                                                        $grandTotal += $sale->total_harga;
+                                                                    @endphp
                                                                 @endforeach
 
+                                                                <tr>
+                                                                    <td colspan="4" class="text-center">
+                                                                        <strong>SubTotal</strong>
+                                                                    </td>
+                                                                    <td class="text-end"><strong>Rp.
+                                                                            {{ number_format($grandTotal, 2) }}</strong>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
+
                                                     </div>
                                                 </div>
                                                 <div class="invoice-bottom">
@@ -135,34 +134,25 @@
                                                                     dilakukan sesuai harga yang tertera.</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6 col-md-4 col-sm-5">
-                                                            <div class="mb-30 payment-method">
-                                                                <h3 class="inv-title-1">Payment Method</h3>
-                                                                <ul class="payment-method-list-1 text-14">
-                                                                    <li><strong>Account No:</strong> 00 123 647 840
-                                                                    </li>
-                                                                    <li><strong>Account Name:</strong> Jhon Doe</li>
-                                                                    <li><strong>Branch Name:</strong> xyz</li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="invoice-contact clearfix">
                                                     <div class="row g-0">
                                                         <div class="col-lg-9 col-md-11 col-sm-12">
-                                                            <div class="contact-info">
-                                                                <a href="tel:+55-4XX-634-7071"><i class="fa fa-phone"></i>
-                                                                    +00 123 647
-                                                                    840</a>
-                                                                <a href="tel:info@themevessel.com"><i
-                                                                        class="fa fa-envelope"></i>
-                                                                    info@themevessel.com</a>
-                                                                <a href="tel:info@themevessel.com"
-                                                                    class="mr-0 d-none-580"><i class="fa fa-map-marker"></i>
-                                                                    169
-                                                                    Teroghoria, Bangladesh</a>
-                                                            </div>
+                                                            @foreach ($kontak as $contact)
+                                                                <div class="contact-info">
+                                                                    <a href="tel:+55-4XX-634-7071"><i
+                                                                            class="fa fa-phone"></i>
+                                                                        {{ $contact->no_hp }}</a>
+                                                                    <a href="tel:info@themevessel.com"><i
+                                                                            class="fa fa-envelope"></i>
+                                                                        {{ $contact->email }}</a>
+                                                                    <a href="tel:info@themevessel.com"
+                                                                        class="mr-0 d-none-580"><i
+                                                                            class="fa fa-map-marker"></i>
+                                                                        {{ $contact->alamat }}</a>
+                                                                </div>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
