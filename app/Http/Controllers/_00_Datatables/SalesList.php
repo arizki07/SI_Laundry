@@ -43,13 +43,15 @@ class SalesList extends Controller
                 })
                 ->addColumn('status_pembayaran', function ($row) {
                     if ($row->status_pembayaran == 'lunas') {
-                        return '<span class="badge bg-green-lt" style="font-size:11px"><i class="fa-solid fa-check me-2"></i>' . $row->status_pembayaran . '</span>';
-                    } elseif ($row->status_pembayaran == 'Pending') {
-                        return '<span class="badge bg-orange-lt" style="font-size:11px"><i class="fa-solid fa-clock me-2"></i>' . $row->status_pembayaran . '</span>';
+                        return '<span class="badge bg-green-lt" style="font-size:11px"><i class="fa-solid fa-check me-2"></i>'.$row->status_pembayaran.'</span>';
+                    } elseif ($row->status_pembayaran == 'pending') {
+                        return '<span class="badge bg-orange-lt" style="font-size:11px"><i class="fa-solid fa-clock me-2"></i>'.$row->status_pembayaran.'</span>';
                     } elseif ($row->status_pembayaran == 'cancel') {
-                        return '<span class="badge bg-danger-lt" style="font-size:11px"><i class="fa-solid fa-xmark me-2"></i>' . $row->status_pembayaran . '</span>';
+                        return '<span class="badge bg-danger-lt" style="font-size:11px"><i class="fa-solid fa-xmark me-2"></i>'.$row->status_pembayaran.'</span>';
                     } elseif ($row->status_pembayaran == 'dp') {
-                        return '<span class="badge bg-blue-lt" style="font-size:11px"><i class="fa-solid fa-rotate me-2"></i>' . $row->status_pembayaran . '</span>';
+                        return '<span class="badge bg-blue-lt" style="font-size:11px"><i class="fa-solid fa-rotate me-2"></i>'.$row->status_pembayaran.'</span>';
+                    } else {
+                        return '<span class="badge bg-secondary-lt" style="font-size:11px"><i class="fa-solid fa-xmark me-2"></i>'.$row->status_pembayaran.'</span>';
                     }
                 })
                 ->rawColumns(['action', 'status_pembayaran'])

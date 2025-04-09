@@ -9,7 +9,7 @@ use App\Models\ProductModel;
 use App\Models\ResiHistoryModel;
 use App\Models\SalesItemModel;
 use App\Models\SalesModel;
-use App\Models\StatusModel;
+// use App\Models\StatusModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -26,7 +26,7 @@ class SalesController extends Controller
             'judul' => 'Sales',
             'active' => 'sales',
             'sales' => $sales,
-            'kontak' => $kontak
+            'kontak' => $kontak,
         ]);
     }
 
@@ -82,7 +82,7 @@ class SalesController extends Controller
             'status_pembayaran' => $validated['status_pembayaran'],
             'metode_pembayaran' => $validated['metode_pembayaran'],
             'file_bukti' => $fileName,
-            'pembayaran' => ($validated['status_pembayaran'] === 'dp') ? $validated['pembayaran'] : null,
+            'pembayaran' => $validated['status_pembayaran'] === 'dp' ? $validated['pembayaran'] : null,
             'created_at' => now(),
         ]);
 
@@ -113,7 +113,9 @@ class SalesController extends Controller
 
         // Cek jika pembayaran DP melebihi total harga
         if ($validated['status_pembayaran'] === 'dp' && $validated['pembayaran'] > $totalHarga) {
-            return redirect()->back()->withErrors(['pembayaran' => 'DP tidak boleh lebih besar dari total harga.']);
+            return redirect()
+                ->back()
+                ->withErrors(['pembayaran' => 'DP tidak boleh lebih besar dari total harga.']);
         }
 
         // Update pembayaran hanya jika DP valid
@@ -145,25 +147,30 @@ class SalesController extends Controller
         $salesItems = SalesItemModel::where('sale_id', $sales->id)->get();
 
         if (!$customer || $salesItems->isEmpty()) {
-            Log::error("WhatsApp gagal dikirim: Data customer atau sales item tidak ditemukan.");
+            Log::error('WhatsApp gagal dikirim: Data customer atau sales item tidak ditemukan.');
             return;
         }
 
         // Buat detail item pesanan
-        $itemsDetail = $salesItems->map(function ($item) {
-            $totalItem = $item->qty * $item->harga_per_qty;
-            return "- Produk ID: {$item->product_id}, Qty: {$item->qty}, Harga: Rp. " . number_format($item->harga_per_qty, 0, ',', '.');
-        })->implode("\n");
+        $itemsDetail = $salesItems
+            ->map(function ($item) {
+                $totalItem = $item->qty * $item->harga_per_qty;
+                return "- Produk ID: {$item->product_id}, Qty: {$item->qty}, Harga: Rp. " . number_format($item->harga_per_qty, 0, ',', '.');
+            })
+            ->implode("\n");
 
         // Format pesan WhatsApp
-        $message = "
+        $message =
+            "
 Halo *{$customer->nama}*,
 
 Terima kasih telah mempercayakan layanan cucian Anda kepada *Indah Laundry*. Silahkan Anda cek proses cucian anda dengan nomor resi *{$sales->no_resi}*. Berikut adalah detail pesanan Anda:
 
 $itemsDetail
 --------------------------------
-*Total Harga:* Rp. " . number_format($sales->total_harga, 0, ',', '.') . "
+*Total Harga:* Rp. " .
+            number_format($sales->total_harga, 0, ',', '.') .
+            "
 
 *Alamat:*
 {$customer->alamat}
@@ -172,7 +179,7 @@ Apabila ada pertanyaan lebih lanjut, silakan hubungi kami. Kami berkomitmen memb
 
 Terima kasih telah memilih *Indah Laundry*! 😊
 
-Salam hangat,  
+Salam hangat,
 *Indah Laundry*
 ";
 
@@ -200,21 +207,18 @@ Salam hangat,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => http_build_query($data),
-            CURLOPT_HTTPHEADER => [
-                "Authorization: $token",
-            ],
+            CURLOPT_HTTPHEADER => ["Authorization: $token"],
         ]);
 
         $response = curl_exec($curl);
         curl_close($curl);
 
         if (!$response) {
-            Log::error("Gagal mengirim pesan WhatsApp via Fonnte.");
+            Log::error('Gagal mengirim pesan WhatsApp via Fonnte.');
         } else {
             Log::info("Pesan WhatsApp berhasil dikirim: $response");
         }
     }
-
 
     // PROSES MENAMPILKAN HALAMAN EDIT SALES
     public function edit($id)
@@ -223,12 +227,12 @@ Salam hangat,
 
         $customers = CustomerModel::all();
         $products = ProductModel::all();
-        $statuses = StatusModel::all();
+        // $statuses = StatusModel::all();
         return view('products._02_Penjualan.sales_edit', [
             'sales' => $sales,
             'customers' => $customers,
             'products' => $products,
-            'statuses' => $statuses,
+            // 'statuses' => $statuses,
             'judul' => 'Edit Sales',
             'active' => 'Sales',
         ]);
@@ -289,7 +293,9 @@ Salam hangat,
 
         // Validasi DP tidak boleh lebih besar dari total harga
         if ($validated['status_pembayaran'] === 'dp' && isset($validated['pembayaran']) && $validated['pembayaran'] > $totalHarga) {
-            return redirect()->back()->withErrors(['pembayaran' => 'DP tidak boleh lebih besar dari total harga.']);
+            return redirect()
+                ->back()
+                ->withErrors(['pembayaran' => 'DP tidak boleh lebih besar dari total harga.']);
         }
 
         // Update sales record
@@ -299,12 +305,11 @@ Salam hangat,
             'metode_pembayaran' => $validated['metode_pembayaran'],
             'file_bukti' => $fileName,
             'total_harga' => $totalHarga,
-            'pembayaran' => ($validated['status_pembayaran'] === 'dp') ? $validated['pembayaran'] : null,
+            'pembayaran' => $validated['status_pembayaran'] === 'dp' ? $validated['pembayaran'] : null,
         ]);
 
         return redirect()->route('sales.index')->with('success', 'Sales berhasil diperbarui');
     }
-
 
     // PROSES HAPUS DATA SALES
     public function destroy($id)

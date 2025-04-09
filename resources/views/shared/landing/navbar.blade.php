@@ -12,9 +12,8 @@
             <a href="{{ route('landing.testimoni') }}"
                 class="nav-item nav-link {{ $act == 'testimoni' ? 'active' : '' }}">Testimoni</a>
             <a href="{{ route('landing.daftar-harga') }}"
-                class="nav-item nav-link {{ $act == 'services' ? 'active' : '' }}">Daftar Harga</a>
-            <a href="{{ route('landing.cek-resi') }}" class="nav-item nav-link {{ $act == 'resi' ? 'active' : '' }}">Cek
-                Resi</a>
+                class="nav-item nav-link {{ $act == 'services' ? 'active' : '' }}">Layanan</a>
+            <a href="{{ route('landing.cek-resi') }}" class="nav-item nav-link {{ $act == 'resi' ? 'active' : '' }}">Kode Pemesanan</a>
             <div class="nav-item dropdown">
                 <a href="{{ route('landing.home') }}" class="nav-link dropdown-toggle"
                     data-bs-toggle="dropdown">Lainnya</a>

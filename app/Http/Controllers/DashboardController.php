@@ -18,7 +18,7 @@ class DashboardController extends Controller
             $month = $request->input('month', date('m'));
             $year = $request->input('year', date('Y'));
 
-            $sales = SalesModel::selectRaw('SUM(total_harga) as total_sales, DATE(created_at) as date')->whereYear('created_at', $year)->whereMonth('created_at', $month)->where('status_pembayaran', 'success')->groupBy('date')->orderBy('date', 'ASC')->get();
+            $sales = SalesModel::selectRaw('SUM(total_harga) as total_sales, DATE(created_at) as date')->whereYear('created_at', $year)->whereMonth('created_at', $month)->where('status_pembayaran', 'lunas')->groupBy('date')->orderBy('date', 'ASC')->get();
             // dd($sales->toArray());
 
             $sales_data = $sales->map(function ($sale) {

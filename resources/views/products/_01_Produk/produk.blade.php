@@ -94,7 +94,7 @@
                                     @foreach ($categori as $cat)
                                         <option value="{{ $cat->nama }}"
                                             {{ $cat->nama == $item->category ? 'selected' : '' }}>
-                                            {{ ucfirst($cat->kode) }}
+                                            {{ ucfirst($cat->nama) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -108,6 +108,28 @@
                                 <label class="form-label">Harga</label>
                                 <input type="text" name="harga" class="form-control" required
                                     placeholder="Masukkan harga produk" value="{{ $item->harga }}">
+                            </div>
+                            <div class="row">
+                                <div class="col lg-6">
+                                    <div class="mb-3">
+                                        <div class="form-label">Type</div>
+                                        <select class="form-select" name="type">
+                                            <option selected disabled>--Pilih Type--</option>
+                                            <option value="KG" {{ $item->type == 'KG' ? 'selected' : '' }}>Kilogram</option>
+                                            <option value="PCS" {{ $item->type == 'PCS' ? 'selected' : '' }}>Satuan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col lg-6">
+                                    <div class="mb-3">
+                                        <div class="form-label">Flag</div>
+                                        <select class="form-select" name="flag" required>
+                                            <option selected disabled>--Pilih Flag--</option>
+                                            <option value="0" {{ $item->flag == '0' ? 'selected' : '' }}>InActive</option>
+                                            <option value="1" {{ $item->flag == '1' ? 'selected' : '' }}>Active</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <div class="form-label">Foto Produk</div>

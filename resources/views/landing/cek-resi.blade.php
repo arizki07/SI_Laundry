@@ -5,57 +5,68 @@
     <link
         href="{{ asset('assets/landing/css/invoice.css') }}?v={{ hash('sha512', filemtime(public_path('assets/landing/css/invoice.css'))) }}"
         rel="stylesheet">
+
+    <style>
+        .note.active {
+            border-left: 4px solid #3758F9;
+            background-color: #f0f4ff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .note .fas {
+            font-size: 1.2rem;
+        }
+    </style>
 @endsection
 
 @section('content')
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
-            <h1 class="display-3 text-white mb-4 animated slideInDown">Services</h1>
+            <h1 class="display-3 text-white mb-4 animated slideInDown">Cek Kode Pemesanan</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('landing.home') }}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Cek Resi</li>
+                    <li class="breadcrumb-item active" aria-current="page">Cek Kode Pemesanan</li>
                 </ol>
             </nav>
         </div>
     </div>
     <!-- Page Header End -->
 
-    <!-- Service Start -->
     {{-- <div class="container-fluid"> --}}
-        <div class="container">
-            <!-- Bagian Judul -->
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-bold text-primary">Cek Resi</p>
-                <h1 class="display-5 mb-5" style="font-size: 30px;">Cek Progress pesanan anda disini melalui nomor resi yang
-                    anda miliki.</h1>
-            </div>
+    <div class="container">
+        <!-- Bagian Judul -->
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-bold text-primary">Cek Kode Pemesanan</p>
+            <h1 class="display-5 mb-5" style="font-size: 22px;">Cek Progress pesanan anda disini melalui nomor resi yang
+                anda miliki.</h1>
+        </div>
 
-            <!-- Form Cek Resi -->
-            <div class="row justify-content-center g-4">
-                <div class="col-md-6">
-                    <form action="" method="POST">
-                        <div class="card shadow-sm border-0">
-                            <div class="card-body">
-                                <input type="text" class="form-control" id="resiInput" placeholder="Masukkan Nomor Resi"
-                                    style="max-width: 100%;">
-                                <button type="button" class="btn btn-outline-primary mt-3 w-100" onclick="checkResi()">Cek
-                                    Resi</button>
-                            </div>
+        <!-- Form Cek Resi -->
+        <div class="row justify-content-center g-4">
+            <div class="col-md-6">
+                {{-- <form action="" method="POST"> --}}
+                    <form onsubmit="checkResi(); return false;" method="POST">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <input type="text" class="form-control" id="resiInput" placeholder="Masukkan Kode Pemesanan Anda"
+                                style="max-width: 100%;">
+                            <button type="button" class="btn btn-outline-primary mt-3 w-100" onclick="checkResi()">Cek
+                                Kode Pemesanan</button>
                         </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Daftar Resi -->
-            <div class="row justify-content-center g-4 mt-5">
-                <div id="resiList"></div>
-                {{-- <div id="invoiceList"></div> --}}
+                    </div>
+                </form>
             </div>
         </div>
-    {{-- </div> --}}
-    <!-- Service End -->
+
+        <!-- Daftar Resi -->
+        <div class="row justify-content-center g-4 mt-5">
+            <div id="resiList"></div>
+            {{-- <div id="invoiceList"></div> --}}
+        </div>
+    </div>
 @endSection
 
 @section('scripts')
@@ -89,6 +100,133 @@
                 if (result.status === 'success') {
                     const data = result.data;
 
+                    const steps = [{
+                            title: "Proses Pembayaran",
+                            icon: "fas fa-credit-card"
+                        },
+                        {
+                            title: "Diterima",
+                            icon: "fas fa-inbox"
+                        },
+                        {
+                            title: "Proses Pencucian",
+                            icon: "fas fa-tint"
+                        },
+                        {
+                            title: "Pengeringan",
+                            icon: "fas fa-wind"
+                        },
+                        {
+                            title: "Siap Ambil",
+                            icon: "fas fa-box-open"
+                        },
+                        {
+                            title: "Selesai",
+                            icon: "fas fa-check-circle"
+                        }
+                    ];
+
+                    let lastStatusIndex = steps.findIndex(
+    step => step.title.toLowerCase() === data.status.toLowerCase()
+);
+
+// Jika status tidak ditemukan, tambahkan di paling kiri (index 0)
+if (lastStatusIndex === -1) {
+    steps.unshift({
+        title: data.status,
+        icon: "fas fa-info-circle" // default icon
+    });
+    lastStatusIndex = 0;
+}
+
+let stepsHTML = '';
+steps.forEach((step, index) => {
+    const isCompleted = index <= lastStatusIndex ? 'completed' : '';
+    stepsHTML += `
+        <div class="step ${isCompleted}">
+            <div class="step-icon-wrap">
+                <div class="step-icon"><i class="${step.icon}"></i></div>
+            </div>
+            <h4 class="step-title">${step.title}</h4>
+        </div>
+    `;
+});
+
+                    // Notes data sesuai urutan
+                    const notes = [{
+                            title: "Proses Pembayaran",
+                            statusKey: "proses pembayaran"
+                        },
+                        {
+                            title: "Diterima",
+                            statusKey: "diterima"
+                        },
+                        {
+                            title: "Proses Pencucian",
+                            statusKey: "proses pencucian"
+                        },
+                        {
+                            title: "Pengeringan",
+                            statusKey: "pengeringan"
+                        },
+                        {
+                            title: "Siap Diambil",
+                            statusKey: "siap ambil"
+                        },
+                        {
+                            title: "Selesai",
+                            statusKey: "selesai"
+                        }
+                    ];
+
+                    const activeNoteIndex = notes.findIndex(note => note.statusKey === data.status.toLowerCase());
+
+                    const historyMap = {};
+                    const stepKeys = notes.map(n => n.statusKey);
+                    let reachedIndex = stepKeys.indexOf(data.status.toLowerCase());
+
+                    data.history.forEach(h => {
+                        const key = h.status.toLowerCase();
+                        const idx = stepKeys.indexOf(key);
+                        if (idx !== -1 && idx <= reachedIndex) {
+                            historyMap[key] = {
+                                desc: h.catatan || "",
+                                timestamp: h.created_at || ""
+                            };
+                        }
+                    });
+
+                    let notesHTML = '';
+                    notes.forEach((note, index) => {
+                        const status = note.statusKey;
+                        const isActive = index === activeNoteIndex;
+                        const isCompleted = index < activeNoteIndex;
+
+                        const historyData = historyMap[status] || {};
+                        const desc = historyData.desc || "-";
+                        const timestamp = historyData.timestamp || "";
+
+                        let icon = "";
+                        if (isCompleted || (data.status.toLowerCase() === "selesai" && status === "selesai")) {
+                            icon = '<i class="fas fa-check text-success ms-2"></i>';
+                        } else if (isActive) {
+                            icon = '<i class="fas fa-clock text-primary ms-2"></i>';
+                        }
+
+                        notesHTML += `
+                            <div class="note mb-3 ${isActive ? 'active' : ''}">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="fw-bold">${note.title}</h5>
+                                        ${timestamp !== "" ? `<span class="text-muted">${timestamp}</span>` : ''}
+                                        <p class="text-muted">${desc}</p>
+                                    </div>
+                                    ${icon}
+                                </div>
+                            </div>
+                        `;
+                    });
+
                     document.getElementById('resiList').innerHTML = `
                             // <h5 class="fw-bold mb-2">Search Result:</h5>
                             <div class="container padding-bottom-3x mb-4">
@@ -102,71 +240,10 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between padding-top-2x padding-bottom-1x">
-                                            <div class="step completed">
-                                            <div class="step-icon-wrap">
-                                                <div class="step-icon"><i class="fas fa-check-circle"></i></div>
-                                            </div>
-                                            <h4 class="step-title">Confirmed Order</h4>
-                                        </div>
-                                        <div class="step">
-                                            <div class="step-icon-wrap">
-                                                <div class="step-icon"><i class="fas fa-shopping-basket"></i></div>
-                                            </div>
-                                            <h4 class="step-title">Processing Order</h4>
-                                        </div>
-                                        <div class="step">
-                                            <div class="step-icon-wrap">
-                                                <div class="step-icon"><i class="fas fa-search"></i></div>
-                                            </div>
-                                            <h4 class="step-title">Quality Check</h4>
-                                        </div>
-                                        <div class="step">
-                                            <div class="step-icon-wrap">
-                                                <div class="step-icon"><i class="fas fa-tshirt"></i></div>
-                                            </div>
-                                            <h4 class="step-title">Laundry In Progress</h4>
-                                        </div>
-                                        <div class="step">
-                                            <div class="step-icon-wrap">
-                                                <div class="step-icon"><i class="fas fa-store"></i></div>
-                                            </div>
-                                            <h4 class="step-title">Ready for Pickup</h4>
-                                        </div>
+                                            ${stepsHTML}
                                         </div>
                                         <div class="notes-section mt-4">
-                                            <!-- Note for Step 1 -->
-                                            <div class="note mb-3 active">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h5 class="fw-bold">Confirmed Order</h5>
-                                                        <span class="text-muted">${data.updated_at}</span>
-                                                        <p class="text-muted">Pesanan Anda telah diterima dan dikonfirmasi oleh sistem.</p>
-                                                    </div>
-                                                    <div>
-                                                        <i class="fas fa-clock text-muted"></i> <!-- Icon Jam untuk Progress -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Note for Step 2 -->
-                                            <div class="note mb-3">
-                                                <h5 class="fw-bold">Processing Order</h5>
-                                                <p class="text-muted">Pesanan sedang diproses di gudang kami.</p>
-                                            </div>
-                                            <!-- Note for Step 3 -->
-                                            <div class="note mb-3">
-                                                <h5 class="fw-bold">Quality Check</h5>
-                                                <p class="text-muted">Barang sedang melalui pemeriksaan kualitas.</p>
-                                            </div>
-                                            <!-- Note for Step 4 -->
-                                            <div class="note mb-3">
-                                                <h5 class="fw-bold">Product Dispatched</h5>
-                                                <p class="text-muted">Barang telah dikirim dan sedang dalam perjalanan ke alamat Anda.</p>
-                                            </div>
-                                            <!-- Note for Step 5 -->
-                                            <div class="note">
-                                                <h5 class="fw-bold">Product Delivered</h5>
-                                                <p class="text-muted">Barang telah sampai di tujuan. Terima kasih telah berbelanja bersama kami!</p>
-                                            </div>
+                                            ${notesHTML}
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +251,7 @@
                         `;
                 } else {
                     document.getElementById('resiList').innerHTML = `
-                            <div class="alert alert-warning">
+                            <div class="alert alert-info">
                                 ${result.message}
                             </div>
                         `;

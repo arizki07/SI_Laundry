@@ -36,14 +36,26 @@ class ResiController extends Controller
 
         $existingResi = ResiHistoryModel::findOrFail($id);
 
-        ResiHistoryModel::create([
-            'no_cust' => $existingResi->no_cust,
-            'no_resi' => $existingResi->no_resi,
-            'status' => $request->input('status'),
-            'catatan' => $request->input('catatan'),
-            'foto_final' => $existingResi->foto_final,
-            'created_by' => Auth::user()->name,
-        ]);
+        $resi = ResiHistoryModel::where('no_resi', $existingResi->no_resi)->where('status', $request->input('status'))->first();
+        // dd($resi);
+        if ($resi) {
+            // Jika ada, update catatan dan created_by
+            $resi->update([
+                'catatan' => $request->input('catatan'),
+                'created_by' => Auth::user()->name,
+            ]);
+            $resi->touch();
+        } else {
+            // Jika tidak ada, buat data baru
+            ResiHistoryModel::create([
+                'no_cust' => $existingResi->no_cust,
+                'no_resi' => $existingResi->no_resi,
+                'status' => $request->input('status'),
+                'catatan' => $request->input('catatan'),
+                'foto_final' => $existingResi->foto_final,
+                'created_by' => Auth::user()->name,
+            ]);
+        }
 
         // if ($request->input('status') === 'success') {
         //     $this->sendWhatsApp($newResi);
@@ -83,7 +95,7 @@ class ResiController extends Controller
 
     // Sekali lagi, terima kasih telah memilih Indah Laundry. Kami berharap dapat melayani Anda kembali di masa mendatang. 😊
 
-    // Salam hangat,  
+    // Salam hangat,
     // *Indah Laundry*
     // ";
 

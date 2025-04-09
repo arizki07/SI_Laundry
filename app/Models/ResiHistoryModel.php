@@ -17,4 +17,5 @@ class ResiHistoryModel extends Model
         'foto_final',
         'created_by'
     ];
+    public $timestamps = true;
 }
