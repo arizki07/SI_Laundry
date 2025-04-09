@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\_00_Datatables;
 
-use App\Http\Controllers\Controller;
-use App\Models\ResiHistoryModel;
 use App\Models\SalesModel;
 use Illuminate\Http\Request;
+use App\Models\ResiHistoryModel;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class ResiList extends Controller
@@ -13,7 +14,18 @@ class ResiList extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = ResiHistoryModel::all();
+            $data = DB::table('resi_historys as r1')
+                    ->select('r1.*')
+                    ->join(DB::raw('(
+                        SELECT no_resi, MAX(updated_at) as max_created
+                        FROM resi_historys
+                        GROUP BY no_resi
+                    ) as r2'), function ($join) {
+                        $join->on('r1.no_resi', '=', 'r2.no_resi')
+                            ->on('r1.updated_at', '=', 'r2.max_created');
+                    })
+                    ->orderBy('r1.updated_at', 'desc')
+                    ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {

@@ -30,12 +30,20 @@
                                 <label class="form-label">Status</label>
                                 <select class="form-select" name="status" required>
                                     <option selected disabled>--Pilih Status--</option>
-                                    <option value="proses pembayaran">Proses Pembayaran</option>
-                                    <option value="diterima">Diterima</option>
-                                    <option value="proses pencucian">Proses Pencucian</option>
-                                    <option value="pengeringan">Pengeringan</option>
-                                    <option value="siap ambil">Siap Ambil</option>
-                                    <option value="selesai">Selesai</option>
+                                    <option value="proses pembayaran"
+                                        {{ $item->status === 'proses pembayaran' ? 'selected' : '' }}>Proses Pembayaran
+                                    </option>
+                                    <option value="diterima" {{ $item->status === 'diterima' ? 'selected' : '' }}>Diterima
+                                    </option>
+                                    <option value="proses pencucian"
+                                        {{ $item->status === 'proses pencucian' ? 'selected' : '' }}>Proses Pencucian
+                                    </option>
+                                    <option value="pengeringan" {{ $item->status === 'pengeringan' ? 'selected' : '' }}>
+                                        Pengeringan</option>
+                                    <option value="siap ambil" {{ $item->status === 'siap ambil' ? 'selected' : '' }}>Siap
+                                        Ambil</option>
+                                    <option value="selesai" {{ $item->status === 'selesai' ? 'selected' : '' }}>Selesai
+                                    </option>
                                 </select>
                             </div>
 

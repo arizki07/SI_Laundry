@@ -13,6 +13,7 @@ class ProductController extends Controller
     {
         $categori = CategoriesModel::all();
         $products = ProductModel::all();
+        // dd($categori);
         return view('products._01_Produk.produk', [
             'judul' => 'Produk',
             'active' => 'Product',
@@ -63,7 +64,7 @@ class ProductController extends Controller
             'category' => 'required',
             'nama_produk' => 'required',
             'harga' => 'required',
-            'type' => 'nullable',
+            'type' => 'required',
             'flag' => 'required',
             'foto_produk' => 'nullable|mimes:png,jpg,jpeg|max:2048',
             'deskripsi' => 'required',
