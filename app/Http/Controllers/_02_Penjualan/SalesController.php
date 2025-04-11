@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\_02_Penjualan;
 
-use App\Http\Controllers\Controller;
-use App\Models\CustomerModel;
+use App\Models\SalesModel;
 use App\Models\KontakModel;
 use App\Models\ProductModel;
-use App\Models\ResiHistoryModel;
-use App\Models\SalesItemModel;
-use App\Models\SalesModel;
-// use App\Models\StatusModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\CustomerModel;
+use App\Models\SalesItemModel;
+// use App\Models\StatusModel;
+use App\Models\ResiHistoryModel;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SalesController extends Controller
@@ -22,6 +22,7 @@ class SalesController extends Controller
     {
         $kontak = KontakModel::all();
         $sales = SalesModel::with(['customer', 'items.product'])->get();
+        // return response()->json($sales);
         return view('products._02_Penjualan.sales', [
             'judul' => 'Sales',
             'active' => 'sales',

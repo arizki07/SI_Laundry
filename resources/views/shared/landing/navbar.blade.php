@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-    <img class="img-fluid m-0 px-4 px-lg-5" src="{{ $logo }}" alt="Logo-Website">
+    <img class="img-fluid m-0 px-4 px-lg-5" src="{{ $logo }}" alt="Logo-Website"
+        style="max-width: 200px; height: auto;">
     <button type="button" class="navbar-toggler me-2" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -13,7 +14,8 @@
                 class="nav-item nav-link {{ $act == 'testimoni' ? 'active' : '' }}">Testimoni</a>
             <a href="{{ route('landing.daftar-harga') }}"
                 class="nav-item nav-link {{ $act == 'services' ? 'active' : '' }}">Layanan</a>
-            <a href="{{ route('landing.cek-resi') }}" class="nav-item nav-link {{ $act == 'resi' ? 'active' : '' }}">Kode Pemesanan</a>
+            <a href="{{ route('landing.cek-resi') }}"
+                class="nav-item nav-link {{ $act == 'resi' ? 'active' : '' }}">Kode Pemesanan</a>
             <div class="nav-item dropdown">
                 <a href="{{ route('landing.home') }}" class="nav-link dropdown-toggle"
                     data-bs-toggle="dropdown">Lainnya</a>

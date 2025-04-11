@@ -17,7 +17,7 @@
                                 <div class="col-lg-8">
                                     <h1 class="display-1 text-white mb-5 animated slideInDown">Cuci Pakaian Anda Dengan
                                         Perawatan Terbaik</h1>
-                                    <a href="javascript:void(0)" class="btn btn-primary py-sm-3 px-sm-4">Jelajahi Layanan Kami</a>
+                                    <a type="button" href="{{ route('landing.daftar-harga') }}" class="btn btn-primary py-sm-3 px-sm-4">Jelajahi Layanan Kami</a>
                                 </div>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <div class="col-lg-7">
                                     <h1 class="display-1 text-white mb-5 animated slideInDown">Layanan Laundry Cepat dan
                                         Berkualitas</h1>
-                                    <a href="javascript:void(0)" class="btn btn-primary py-sm-3 px-sm-4">Jelajahi Layanan Kami</a>
+                                    <a type="button" href="{{ route('landing.daftar-harga') }}" class="btn btn-primary py-sm-3 px-sm-4">Jelajahi Layanan Kami</a>
                                 </div>
                             </div>
                         </div>
@@ -49,6 +49,10 @@
         </div>
     </div>
     <!-- Carousel End -->
+
+    {{-- @php
+        dd($kontak);
+    @endphp --}}
 
 
     <!-- Top Feature Start -->
@@ -114,7 +118,7 @@
                     <p class="mb-4">Dengan pengalaman lebih dari 25 tahun, kami memberikan layanan laundry terbaik dengan
                         hasil yang memuaskan. Dari cuci, setrika, hingga dry cleaning, semuanya kami lakukan dengan kualitas
                         terbaik.</p>
-                    <a class="btn btn-primary py-3 px-4" href="javascript:void(0)">Jelajahi Lebih Lanjut</a>
+                    <a class="btn btn-primary py-3 px-4" type="button" href="{{ route('landing.daftar-harga') }}">Jelajahi Lebih Lanjut</a>
                 </div>
                 <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="row g-5">
@@ -177,7 +181,7 @@
                     <h1 class="display-5 mb-4">Beberapa Alasan Mengapa Orang Memilih Kami!</h1>
                     <p class="mb-4">Kami menyediakan layanan laundry terbaik dengan kualitas yang terjamin. Dari cuci
                         hingga setrika, kami selalu berusaha memberikan hasil terbaik untuk pakaian Anda.</p>
-                    <a class="btn btn-primary py-3 px-4" href="javascript:void(0)">Jelajahi Layanan Kami</a>
+                    <a class="btn btn-primary py-3 px-4" type="button" href="{{ route('landing.daftar-harga') }}">Jelajahi Layanan Kami</a>
                 </div>
                 <div class="col-lg-6">
                     <div class="row g-4 align-items-center">
@@ -234,7 +238,7 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="assets/landing/img/service-1.jpg" alt="Cuci Pakaian">
+                            <img class="img-fluid" src="{{ asset('assets/landing/img/carousel-2.jpg') }}" alt="Cuci Pakaian">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
@@ -243,7 +247,7 @@
                             <h4 class="mb-3">Cuci Pakaian</h4>
                             <p class="mb-4">Layanan cuci pakaian kami memastikan pakaian Anda dicuci dengan sempurna dan
                                 penuh perhatian.</p>
-                            <a class="btn btn-sm" href="javascript:void(0)"><i
+                            <a class="btn btn-sm" type="button" href="{{ route('landing.daftar-harga') }}"><i
                                     class="fa fa-plus text-primary me-2"></i>Selengkapnya</a>
                         </div>
                     </div>
@@ -252,7 +256,7 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="assets/landing/img/service-2.jpg" alt="Dry Cleaning">
+                            <img class="img-fluid" src="{{ asset('assets/landing/img/carousel-1.jpg') }}" alt="Dry Cleaning">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
@@ -261,7 +265,7 @@
                             <h4 class="mb-3">Dry Cleaning</h4>
                             <p class="mb-4">Layanan dry cleaning kami memberikan perawatan terbaik untuk pakaian yang
                                 membutuhkan perlakuan khusus.</p>
-                            <a class="btn btn-sm" href="javascript:void(0)"><i
+                            <a class="btn btn-sm" type="button" href="{{ route('landing.daftar-harga') }}"><i
                                     class="fa fa-plus text-primary me-2"></i>Selengkapnya</a>
                         </div>
                     </div>
@@ -270,7 +274,7 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="assets/landing/img/service-3.jpg" alt="Setrika Pakaian">
+                            <img class="img-fluid" src="{{ asset('assets/landing/img/carousel-3.jpg') }}" alt="Setrika Pakaian">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
@@ -279,7 +283,7 @@
                             <h4 class="mb-3">Setrika Pakaian</h4>
                             <p class="mb-4">Kami juga menyediakan layanan setrika untuk pakaian yang rapi dan siap
                                 dipakai.</p>
-                            <a class="btn btn-sm" href="javascript:void(0)"><i
+                            <a class="btn btn-sm" type="button" href="{{ route('landing.daftar-harga') }}"><i
                                     class="fa fa-plus text-primary me-2"></i>Selengkapnya</a>
                         </div>
                     </div>
@@ -288,7 +292,7 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="assets/landing/img/service-4.jpg" alt="Cuci Sepatu">
+                            <img class="img-fluid" src="{{ asset('assets/landing/img/carousel-1.jpg') }}" alt="Cuci Sepatu">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
@@ -297,7 +301,7 @@
                             <h4 class="mb-3">Cuci Sepatu</h4>
                             <p class="mb-4">Kami juga menyediakan layanan cuci sepatu dengan teknik yang menjaga kualitas
                                 dan kebersihannya.</p>
-                            <a class="btn btn-sm" href="javascript:void(0)"><i
+                            <a class="btn btn-sm" type="button" href="{{ route('landing.daftar-harga') }}"><i
                                     class="fa fa-plus text-primary me-2"></i>Selengkapnya</a>
                         </div>
                     </div>
@@ -306,7 +310,7 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="assets/landing/img/service-5.jpg" alt="Pembersihan Karpet">
+                            <img class="img-fluid" src="{{ asset('assets/landing/img/carousel-3.jpg') }}" alt="Pembersihan Karpet">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
@@ -315,7 +319,7 @@
                             <h4 class="mb-3">Pembersihan Karpet</h4>
                             <p class="mb-4">Pembersihan karpet dengan teknik terbaik, menghilangkan kotoran dan menjaga
                                 kelembutannya.</p>
-                            <a class="btn btn-sm" href="javascript:void(0)"><i
+                            <a class="btn btn-sm" type="button" href="{{ route('landing.daftar-harga') }}"><i
                                     class="fa fa-plus text-primary me-2"></i>Selengkapnya</a>
                         </div>
                     </div>
@@ -324,7 +328,7 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="assets/landing/img/service-6.jpg" alt="Pembersihan Gorden">
+                            <img class="img-fluid" src="{{ asset('assets/landing/img/carousel-2.jpg') }}" alt="Pembersihan Gorden">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
@@ -333,7 +337,7 @@
                             <h4 class="mb-3">Pembersihan Gorden</h4>
                             <p class="mb-4">Layanan cuci gorden dengan hasil yang bersih dan tanpa merusak bahan gorden
                                 Anda.</p>
-                            <a class="btn btn-sm" href="javascript:void(0)"><i
+                            <a class="btn btn-sm" type="button" href="{{ route('landing.daftar-harga') }}"><i
                                     class="fa fa-plus text-primary me-2"></i>Selengkapnya</a>
                         </div>
                     </div>
@@ -408,7 +412,7 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item rounded">
-                        <img class="img-fluid" src="assets/landing/img/carousel-1.jpg" alt="">
+                        <img class="img-fluid" src="{{ asset('assets/landing/img/carousel-1.jpg') }}" alt="">
                         <div class="team-text">
                             <h4 class="mb-0">Doris Jordan</h4>
                             <p class="text-primary">Spesialis Pencucian Kering</p>
@@ -425,7 +429,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item rounded">
-                        <img class="img-fluid" src="assets/landing/img/carousel-2.jpg" alt="">
+                        <img class="img-fluid" src="{{ asset('assets/landing/img/carousel-2.jpg') }}" alt="">
                         <div class="team-text">
                             <h4 class="mb-0">Johnny Ramirez</h4>
                             <p class="text-primary">Spesialis Laundry & Setrika</p>
@@ -442,7 +446,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item rounded">
-                        <img class="img-fluid" src="assets/landing/img/carousel-3.jpg" alt="">
+                        <img class="img-fluid" src="{{ asset('assets/landing/img/carousel-3.jpg') }}" alt="">
                         <div class="team-text">
                             <h4 class="mb-0">Diana Wagner</h4>
                             <p class="text-primary">Manajer Laundry</p>
@@ -476,22 +480,39 @@
                 </div>
                 <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="owl-carousel testimonial-carousel">
-                        <div class="testimonial-item">
-                            <img class="img-fluid rounded mb-3" src="assets/landing/img/carousel-1.jpg"
-                                alt="">
-                            <p class="fs-5">Pelayanan laundry yang cepat dan hasilnya sangat memuaskan. Pakaian saya
-                                selalu kembali bersih dan wangi.</p>
-                            <h4>Nama Pelanggan</h4>
-                            <span>Profesional</span>
-                        </div>
-                        <div class="testimonial-item">
-                            <img class="img-fluid rounded mb-3" src="assets/landing/img/carousel-2.jpg"
-                                alt="">
-                            <p class="fs-5">Saya sangat puas dengan layanan laundry ini. Pakaian saya tidak hanya bersih,
-                                tetapi juga terasa segar.</p>
-                            <h4>Nama Pelanggan</h4>
-                            <span>Pengusaha</span>
-                        </div>
+                        @if ($testimoni->isEmpty())
+                            <div class="container text-center">
+                                <div class="row justify-content-center wow fadeInUp" data-wow-delay="0.1s">
+                                    <div class="col-lg-6">
+                                        <p class="mb-4">Tidak ada data yang ditemukan</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            @foreach ($testimoni as $item)
+                                <div class="testimonial-item">
+                                    <img class="img-fluid rounded mb-3"
+                                        src="{{ asset('assets/landing/img/testimonial-1.jpg') }}" alt="">
+                                    <p class="fs-5">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $item->rating)
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                            @else
+                                                <i class="bi bi-star text-warning"></i>
+                                            @endif
+                                        @endfor
+                                    </p>
+                                    <h4>
+                                        @foreach (\App\models\CustomerModel::all() as $cust)
+                                            @if ($cust->no_hp == $item->no_hp_cust)
+                                                {{ $cust->nama }}
+                                            @endif
+                                        @endforeach
+                                    </h4>
+                                    <span>{{ $item->komentar }}</span>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

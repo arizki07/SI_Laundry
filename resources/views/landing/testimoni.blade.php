@@ -34,29 +34,39 @@
                 <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="owl-carousel testimonial-carousel">
 
-                        @foreach ($testimoni as $item)
-                            <div class="testimonial-item">
-                                <img class="img-fluid rounded mb-3"
-                                    src="{{ asset('assets/landing/img/testimonial-1.jpg') }}" alt="">
-                                <p class="fs-4">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        @if ($i <= $item->rating)
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                        @else
-                                            <i class="bi bi-star text-warning"></i>
-                                        @endif
-                                    @endfor
-                                </p>
-                                <h4>
-                                    @foreach (\App\models\CustomerModel::all() as $cust)
-                                        @if ($cust->no_hp == $item->no_hp_cust)
-                                            {{ $cust->nama }}
-                                        @endif
-                                    @endforeach
-                                </h4>
-                                <span>{{ $item->komentar }}</span>
+                        @if ($testimoni->isEmpty())
+                            <div class="container text-center">
+                                <div class="row justify-content-center wow fadeInUp" data-wow-delay="0.1s">
+                                    <div class="col-lg-6">
+                                        <p class="mb-4">Tidak ada data yang ditemukan</p>
+                                    </div>
+                                </div>
                             </div>
-                        @endforeach
+                        @else
+                            @foreach ($testimoni as $item)
+                                <div class="testimonial-item">
+                                    <img class="img-fluid rounded mb-3"
+                                        src="{{ asset('assets/landing/img/testimonial-1.jpg') }}" alt="">
+                                    <p class="fs-4">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $item->rating)
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                            @else
+                                                <i class="bi bi-star text-warning"></i>
+                                            @endif
+                                        @endfor
+                                    </p>
+                                    <h4>
+                                        @foreach (\App\models\CustomerModel::all() as $cust)
+                                            @if ($cust->no_hp == $item->no_hp_cust)
+                                                {{ $cust->nama }}
+                                            @endif
+                                        @endforeach
+                                    </h4>
+                                    <span>{{ $item->komentar }}</span>
+                                </div>
+                            @endforeach
+                        @endif
 
                     </div>
                 </div>

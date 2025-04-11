@@ -14,27 +14,25 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-white mb-4">Services</h4>
-                <a class="btn btn-link" href="javascript:void(0)">Landscaping</a>
-                <a class="btn btn-link" href="javascript:void(0)">Pruning plants</a>
-                <a class="btn btn-link" href="javascript:void(0)">Urban Gardening</a>
-                <a class="btn btn-link" href="javascript:void(0)">Garden Maintenance</a>
-                <a class="btn btn-link" href="javascript:void(0)">Green Technology</a>
+                <h4 class="text-white mb-4">Menu</h4>
+                <a class="btn btn-link" href="{{ route('landing.home') }}">Home</a>
+                <a class="btn btn-link" href="{{ route('landing.tentang-kami') }}">Tentang</a>
+                <a class="btn btn-link" href="{{ route('landing.testimoni') }}">Testimoni</a>
+                <a class="btn btn-link" href="{{ route('landing.daftar-harga') }}">Layanan</a>
+                <a class="btn btn-link" href="{{ route('landing.cek-resi') }}">Cek Pemesanan</a>
             </div>
             <div class="col-lg-3 col-md-6">
                 <h4 class="text-white mb-4">Quick Links</h4>
-                <a class="btn btn-link" href="javascript:void(0)">About Us</a>
-                <a class="btn btn-link" href="javascript:void(0)">Contact Us</a>
-                <a class="btn btn-link" href="javascript:void(0)">Our Services</a>
-                <a class="btn btn-link" href="javascript:void(0)">Terms & Condition</a>
-                <a class="btn btn-link" href="javascript:void(0)">Support</a>
+                <a class="btn btn-link" href="{{ route('landing.syarat-ketentuan') }}">Syarat & Ketentuan</a>
+                <a class="btn btn-link" href="{{ route('landing.bantuan') }}">Bantuan</a>
+                <a class="btn btn-link" href="{{ route('landing.hubungi-kami') }}">Kontak</a>
             </div>
             <div class="col-lg-3 col-md-6">
                 <h4 class="text-white mb-4">Newsletter</h4>
                 <p>Dapatkan informasi promo dari L-Dry melalui Email.</p>
                 <div class="position-relative w-100">
                     <input class="form-control bg-light border-light w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                    <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    <button type="button" href="javascript:void(0)" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                 </div>
             </div>
         </div>

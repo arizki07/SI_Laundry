@@ -3,6 +3,26 @@
     <link
         href="{{ asset('assets/landing/css/invoice.css') }}?v={{ hash('sha512', filemtime(public_path('assets/landing/css/invoice.css'))) }}"
         rel="stylesheet">
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #invoice_wrapper,
+            #invoice_wrapper * {
+                visibility: visible;
+            }
+
+            #invoice_wrapper {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white;
+            }
+        }
+    </style>
 @endsection
 @section('content')
     @include('shared.table')
@@ -23,7 +43,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="invoice-inner clearfix shadow">
-                                            <div class="invoice-info clearfix" id="invoice_wrapper">
+                                            <div class="invoice-info clearfix" id="invoice_wrapper_{{ $item->id }}">
                                                 <div class="invoice-headar">
                                                     <div class="row g-0">
                                                         <div class="col-sm-6">
@@ -35,9 +55,16 @@
                                                         </div>
                                                         <div class="col-sm-6 invoice-id">
                                                             <div class="info">
-                                                                <h1 class="color-white inv-header-1">Invoice</h1>
+                                                                <h1 class="color-white inv-header-1"
+                                                                    style="font-size: 16px;">Bukti Transaksi</h1>
                                                                 <p class="color-white mb-1">Invoice
                                                                     <span>{{ $item->no_invoice }}</span>
+                                                                </p>
+                                                                <p class="color-white mb-1">Resi
+                                                                    <span>{{ $item->no_resi }}</span>
+                                                                </p>
+                                                                <p class="color-white mb-1">Status
+                                                                    <span><i><b>{{ strtoupper($item->status_pembayaran) }}</b></i></span>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -48,7 +75,8 @@
                                                         <div class="col-sm-6">
                                                             <div class="invoice-number mb-30">
                                                                 <h4 class="inv-title-1">Invoice To</h4>
-                                                                <h2 class="name mb-10">{{ Auth::user()->username }}
+                                                                <h2 class="name mb-10" style="font-size: 14px;">
+                                                                    {{ Auth::user()->username }}
                                                                 </h2>
                                                                 <p class="invo-addr-1">
                                                                     {{ Auth::user()->name }} <br />
@@ -60,7 +88,7 @@
                                                             <div class="invoice-number mb-30">
                                                                 <div class="invoice-number-inner">
                                                                     <h4 class="inv-title-1">Invoice From</h4>
-                                                                    <h2 class="name mb-10">
+                                                                    <h2 class="name mb-10" style="font-size: 14px;">
                                                                         {{ $item->customer->nama }}</h2>
                                                                     <p class="invo-addr-1">
                                                                         {{ $item->customer->no_hp }} <br />
@@ -90,24 +118,24 @@
                                                                     $index = 1;
                                                                 @endphp
 
-                                                                @foreach ($sales as $sale)
-                                                                    @foreach ($sale->items as $item)
-                                                                        <tr>
-                                                                            <td>{{ $index++ }}</td>
-                                                                            <td>{{ $item->product->nama_produk }}</td>
-                                                                            <td class="text-center">Rp.
-                                                                                {{ number_format($item->harga_per_qty, 2) }}
-                                                                            </td>
-                                                                            <td class="text-center">{{ $item->qty }}
-                                                                            </td>
-                                                                            <td class="text-end">Rp.
-                                                                                {{ number_format($item->total, 2) }}</td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                    @php
-                                                                        $grandTotal += $sale->total_harga;
-                                                                    @endphp
+                                                                {{-- @foreach ($sales as $sale) --}}
+                                                                @foreach ($item->items as $itm)
+                                                                    <tr>
+                                                                        <td>{{ $index++ }}</td>
+                                                                        <td>{{ $itm->product->nama_produk }}</td>
+                                                                        <td class="text-center">Rp.
+                                                                            {{ number_format($itm->harga_per_qty, 2) }}
+                                                                        </td>
+                                                                        <td class="text-center">{{ $itm->qty }}
+                                                                        </td>
+                                                                        <td class="text-end">Rp.
+                                                                            {{ number_format($itm->total, 2) }}</td>
+                                                                    </tr>
                                                                 @endforeach
+                                                                @php
+                                                                    $grandTotal += $item->total_harga;
+                                                                @endphp
+                                                                {{-- @endforeach --}}
 
                                                                 <tr>
                                                                     <td colspan="4" class="text-center">
@@ -156,14 +184,40 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="invoice-footer mx-6">
+                                                    <div class="row g-0">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="footer-info">
+                                                                <p>Copyright © {{ date('Y') }} Epon Laundry. All rights
+                                                                    reserved.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="invoice-btn-section clearfix d-print-none">
-                                                <a href="javascript:window.print()" class="btn btn-lg btn-print mb-3">
+
+                                            <div
+                                                class="invoice-btn-section clearfix d-print-none d-flex justify-content-center align-items-start flex-wrap gap-2 mb-3">
+                                                <a href="javascript:window.print()" class="btn btn-lg btn-print">
                                                     <i class="fa fa-print"></i> Print Invoice
                                                 </a>
-                                                <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme mb-3">
+                                                {{-- <a id="invoice_download_btn" class="btn btn-lg btn-download btn-theme">
                                                     <i class="fa fa-download"></i> Download Invoice
-                                                </a>
+                                                </a> --}}
+                                                <div class="dropdown">
+                                                    <button class="btn btn-lg btn-primary dropdown-toggle" type="button"
+                                                        id="downloadDropdown{{ $item->id }}" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        Download Invoice
+                                                    </button>
+                                                    <ul class="dropdown-menu"
+                                                        aria-labelledby="downloadDropdown{{ $item->id }}">
+                                                        <li><a class="dropdown-item btn-download-png" href="#"
+                                                                data-id="{{ $item->id }}">File Gambar</a></li>
+                                                        <li><a class="dropdown-item btn-download-pdf" href="#"
+                                                                data-id="{{ $item->id }}">File PDF</a></li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -220,6 +274,115 @@
 @endsection
 
 @section('scripts')
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        function generateFilename(id) {
+            const now = new Date();
+            const pad = n => n.toString().padStart(2, '0');
+            const dd = pad(now.getDate());
+            const mm = pad(now.getMonth() + 1);
+            const yy = now.getFullYear().toString().slice(-2);
+            const hh = pad(now.getHours());
+            const mi = pad(now.getMinutes());
+            const ss = pad(now.getSeconds());
+
+            return `Invoice_${id}_${dd}${mm}${yy}${hh}${mi}${ss}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Download PNG
+            document.querySelectorAll(".btn-download-png").forEach(button => {
+                button.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const id = this.getAttribute("data-id");
+                    const target = document.querySelector(`#invoice_wrapper_${id}`);
+
+                    html2canvas(target, {
+                        scale: 1.5,
+                        useCORS: true
+                    }).then(canvas => {
+                        const imgData = canvas.toDataURL("image/jpeg",
+                            0.8);
+                        const link = document.createElement("a");
+                        // link.download = `invoice_${id}.jpg`;
+                        link.download = `${generateFilename(id)}.jpg`;
+                        link.href = imgData;
+                        link.click();
+                    });
+                });
+            });
+
+            // Download PDF
+            document.querySelectorAll(".btn-download-pdf").forEach(button => {
+                button.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const id = this.getAttribute("data-id");
+                    const target = document.querySelector(`#invoice_wrapper_${id}`);
+
+                    html2canvas(target, {
+                        scale: 1.5,
+                        useCORS: true
+                    }).then(canvas => {
+                        const imgData = canvas.toDataURL("image/jpeg", 0.8);
+
+                        const imgWidth = canvas.width;
+                        const imgHeight = canvas.height;
+
+                        const pxToMm = 0.264583;
+                        const pdfWidth = imgWidth * pxToMm;
+                        const pdfHeight = imgHeight * pxToMm;
+
+                        const {
+                            jsPDF
+                        } = window.jspdf;
+                        const pdf = new jsPDF({
+                            orientation: imgWidth > imgHeight ? 'l' : 'p',
+                            unit: 'mm',
+                            format: [pdfWidth, pdfHeight]
+                        });
+
+                        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                        // pdf.save(`invoice_${id}.pdf`);
+                        pdf.save(`${generateFilename(id)}.pdf`);
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+        document.querySelectorAll('.btn-print').forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = button.closest('.modal');
+                const id = modal.querySelector('[id^="invoice_wrapper_"]').id; // contoh: invoice_wrapper_12
+                const target = document.getElementById(id);
+
+                // Clone the target and append to body as #invoice_wrapper
+                const clone = target.cloneNode(true);
+                clone.id = "invoice_wrapper";
+
+                // Remove existing if exists
+                const existing = document.getElementById("invoice_wrapper");
+                if (existing) existing.remove();
+
+                document.body.appendChild(clone);
+
+                // Wait a tick before printing
+                setTimeout(() => {
+                    window.print();
+
+                    // Clean up after print
+                    setTimeout(() => {
+                        clone.remove();
+                    }, 1000);
+                }, 500);
+            });
+        });
+    </script>
+
     <script type="text/javascript">
         var tableCustomer;
 

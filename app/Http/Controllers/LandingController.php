@@ -14,7 +14,7 @@ class LandingController extends Controller
 {
     public function index()
     {
-        return view('landing.index', ['title' => 'Laundry Instan dan Cepat', 'act' => 'home']);
+        return view('landing.index', ['title' => 'Laundry Instan dan Cepat', 'act' => 'home', 'testimoni' => RatingModel::all()]);
     }
 
     public function contact()
