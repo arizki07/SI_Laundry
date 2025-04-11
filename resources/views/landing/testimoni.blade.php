@@ -57,7 +57,7 @@
                                         @endfor
                                     </p>
                                     <h4>
-                                        @foreach (\App\models\CustomerModel::all() as $cust)
+                                        @foreach (\App\Models\CustomerModel::all() as $cust)
                                             @if ($cust->no_hp == $item->no_hp_cust)
                                                 {{ $cust->nama }}
                                             @endif
