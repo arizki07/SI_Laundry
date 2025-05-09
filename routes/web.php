@@ -52,6 +52,7 @@ Route::middleware(['data.kontak', 'logs'])->controller(LandingController::class)
     Route::get('bantuan', 'bantuan')->name('landing.bantuan');
     Route::get('syarat-ketentuan', 'syarat_ketentuan')->name('landing.syarat-ketentuan');
     Route::get('testimoni', 'testimoni')->name('landing.testimoni');
+    Route::post('/rating/post/testimoni', 'post_rating')->name('post.rating');
 });
 
 Route::middleware(['logs'])->group(function () {

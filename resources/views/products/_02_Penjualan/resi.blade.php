@@ -30,9 +30,6 @@
                                 <label class="form-label">Status</label>
                                 <select class="form-select" name="status" required>
                                     <option selected disabled>--Pilih Status--</option>
-                                    <option value="proses pembayaran"
-                                        {{ $item->status === 'proses pembayaran' ? 'selected' : '' }}>Proses Pembayaran
-                                    </option>
                                     <option value="diterima" {{ $item->status === 'diterima' ? 'selected' : '' }}>Diterima
                                     </option>
                                     <option value="proses pencucian"
@@ -42,6 +39,9 @@
                                         Pengeringan</option>
                                     <option value="siap ambil" {{ $item->status === 'siap ambil' ? 'selected' : '' }}>Siap
                                         Ambil</option>
+                                    <option value="proses pembayaran"
+                                        {{ $item->status === 'proses pembayaran' ? 'selected' : '' }}>Proses Pembayaran
+                                    </option>
                                     <option value="selesai" {{ $item->status === 'selesai' ? 'selected' : '' }}>Selesai
                                     </option>
                                 </select>

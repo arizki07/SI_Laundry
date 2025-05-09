@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\FaqsModel;
+use App\Models\SalesModel;
 use App\Models\RatingModel;
 use App\Models\ProductModel;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Models\ResiHistoryModel;
 use Illuminate\Support\Facades\DB;
 
@@ -102,5 +104,38 @@ class LandingController extends Controller
     {
         $testimoni = RatingModel::all();
         return view('landing.testimoni', ['title' => 'Testimoni Pelanggan', 'act' => 'testimoni', 'testimoni' => $testimoni]);
+    }
+
+    public function post_rating(Request $request)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'message' => 'required|string|max:255',
+            'resi' => [
+                'required',
+                'string',
+                'max:30',
+                Rule::exists('sales', 'no_resi'),
+            Rule::unique('ratings', 'no_resi'),
+            ],
+        ], [
+            'resi.exists' => 'Resi tidak ditemukan. Pastikan Anda memasukkan nomor resi yang valid.',
+            'resi.unique' => 'Resi ini sudah pernah diberi rating.',
+        ]);
+
+        $cari = SalesModel::join('customers', 'sales.customer_id', '=', 'customers.id')
+                ->where('sales.no_resi', $request->resi)
+                ->select('customers.no_hp')->first();
+        // dd($cari);
+
+        $rating = new RatingModel();
+        $rating->rating = $request->rating;
+        $rating->komentar = $request->message;
+        $rating->status = 1;
+        $rating->no_hp_cust = $cari->no_hp ?? '0';
+        $rating->no_resi = $request->resi;
+        $rating->save();
+
+        return redirect()->back()->with('success', 'Terima kasih atas testimoni Anda!');
     }
 }

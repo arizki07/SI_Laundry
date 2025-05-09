@@ -195,7 +195,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div
                                                 class="invoice-btn-section clearfix d-print-none d-flex justify-content-center align-items-start flex-wrap gap-2 mb-3">
                                                 <a href="javascript:window.print()" class="btn btn-lg btn-print">
@@ -360,21 +359,16 @@
                 const id = modal.querySelector('[id^="invoice_wrapper_"]').id; // contoh: invoice_wrapper_12
                 const target = document.getElementById(id);
 
-                // Clone the target and append to body as #invoice_wrapper
                 const clone = target.cloneNode(true);
                 clone.id = "invoice_wrapper";
 
-                // Remove existing if exists
                 const existing = document.getElementById("invoice_wrapper");
                 if (existing) existing.remove();
 
                 document.body.appendChild(clone);
 
-                // Wait a tick before printing
                 setTimeout(() => {
                     window.print();
-
-                    // Clean up after print
                     setTimeout(() => {
                         clone.remove();
                     }, 1000);

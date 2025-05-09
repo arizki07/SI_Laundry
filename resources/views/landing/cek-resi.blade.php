@@ -100,10 +100,7 @@
                 if (result.status === 'success') {
                     const data = result.data;
 
-                    const steps = [{
-                            title: "Proses Pembayaran",
-                            icon: "fas fa-credit-card"
-                        },
+                    const steps = [
                         {
                             title: "Diterima",
                             icon: "fas fa-inbox"
@@ -121,42 +118,43 @@
                             icon: "fas fa-box-open"
                         },
                         {
+                            title: "Proses Pembayaran",
+                            icon: "fas fa-credit-card"
+                        },
+                        {
                             title: "Selesai",
                             icon: "fas fa-check-circle"
                         }
                     ];
 
                     let lastStatusIndex = steps.findIndex(
-    step => step.title.toLowerCase() === data.status.toLowerCase()
-);
+                        step => step.title.toLowerCase() === data.status.toLowerCase()
+                    );
 
-// Jika status tidak ditemukan, tambahkan di paling kiri (index 0)
-if (lastStatusIndex === -1) {
-    steps.unshift({
-        title: data.status,
-        icon: "fas fa-info-circle" // default icon
-    });
-    lastStatusIndex = 0;
-}
+                    // Jika status tidak ditemukan, tambahkan di paling kiri (index 0)
+                    if (lastStatusIndex === -1) {
+                        steps.unshift({
+                            title: data.status,
+                            icon: "fas fa-info-circle"
+                        });
+                        lastStatusIndex = 0;
+                    }
 
-let stepsHTML = '';
-steps.forEach((step, index) => {
-    const isCompleted = index <= lastStatusIndex ? 'completed' : '';
-    stepsHTML += `
-        <div class="step ${isCompleted}">
-            <div class="step-icon-wrap">
-                <div class="step-icon"><i class="${step.icon}"></i></div>
-            </div>
-            <h4 class="step-title">${step.title}</h4>
-        </div>
-    `;
-});
+                    let stepsHTML = '';
+                    steps.forEach((step, index) => {
+                        const isCompleted = index <= lastStatusIndex ? 'completed' : '';
+                        stepsHTML += `
+                            <div class="step ${isCompleted}">
+                                <div class="step-icon-wrap">
+                                    <div class="step-icon"><i class="${step.icon}"></i></div>
+                                </div>
+                                <h4 class="step-title">${step.title}</h4>
+                            </div>
+                        `;
+                    });
 
                     // Notes data sesuai urutan
-                    const notes = [{
-                            title: "Proses Pembayaran",
-                            statusKey: "proses pembayaran"
-                        },
+                    const notes = [
                         {
                             title: "Diterima",
                             statusKey: "diterima"
@@ -172,6 +170,10 @@ steps.forEach((step, index) => {
                         {
                             title: "Siap Diambil",
                             statusKey: "siap ambil"
+                        },
+                        {
+                            title: "Proses Pembayaran",
+                            statusKey: "proses pembayaran"
                         },
                         {
                             title: "Selesai",
