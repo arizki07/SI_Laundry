@@ -12,7 +12,10 @@ class ProductList extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = ProductModel::all();
+            $data = ProductModel::join('kategori_layanans', 'products.id_kategori_layanan', '=', 'kategori_layanans.id')
+                    ->select('products.*', 'kategori_layanans.nama_kategori_layanan')
+                    ->get();
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {

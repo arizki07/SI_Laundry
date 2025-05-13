@@ -340,11 +340,17 @@
                         searchable: false,
                     },
                     {
-                        title: 'categori',
-                        data: 'category',
-                        name: 'category',
+                        title: 'layanan',
+                        data: 'nama_kategori_layanan',
+                        name: 'nama_kategori_layanan',
                         className: "cuspad0 cuspad1 text-center"
                     },
+                    // {
+                    //     title: 'categori',
+                    //     data: 'category',
+                    //     name: 'category',
+                    //     className: "cuspad0 cuspad1 text-center"
+                    // },
                     {
                         title: 'nama',
                         data: 'nama_produk',
