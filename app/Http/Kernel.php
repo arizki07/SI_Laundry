@@ -74,5 +74,6 @@ class Kernel extends HttpKernel
         'logs' => \App\Http\Middleware\ActivityLogMiddleware::class,
         'data.kontak' => \App\Http\Middleware\KontakMiddleware::class,
         'notification' => \App\Http\Middleware\NotificationMiddleware::class,
+        'role' => \App\Http\Middleware\RoleMiddleware::class,
     ];
 }

@@ -17,19 +17,21 @@ use App\Http\Controllers\_00_Datatables\CategoryList;
 use App\Http\Controllers\_00_Datatables\CustomerList;
 use App\Http\Controllers\_05_Setting\UsersController;
 use App\Http\Controllers\_00_Datatables\PemasukanList;
-use App\Http\Controllers\_00_Datatables\PengeluaranList;
 use App\Http\Controllers\_00_Datatables\ReferensiList;
 use App\Http\Controllers\_01_Produk\ProductController;
 use App\Http\Controllers\_02_Penjualan\ResiController;
 use App\Http\Controllers\_04_SetData\StatusController;
 use App\Http\Controllers\_05_Setting\KontakController;
 use App\Http\Controllers\_02_Penjualan\SalesController;
+use App\Http\Controllers\_00_Datatables\PengeluaranList;
 use App\Http\Controllers\_02_Penjualan\RatingController;
 use App\Http\Controllers\_04_SetData\CategoryController;
 use App\Http\Controllers\_04_SetData\ReferensiController;
 use App\Http\Controllers\_06_Finance\PemasukanController;
 use App\Http\Controllers\_02_Penjualan\CustomerController;
 use App\Http\Controllers\_06_Finance\PengeluaranController;
+use App\Http\Controllers\_00_Datatables\KategoriLayananList;
+use App\Http\Controllers\_04_SetData\KategoriLayananController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +66,7 @@ Route::middleware(['logs'])->group(function () {
 
     Route::middleware(['auth', 'notification'])->group(function () {
         Route::resource('getCategories', CategoryList::class);
+        Route::resource('getKategoriLayanan', KategoriLayananList::class);
         Route::resource('getProduk', ProductList::class);
         Route::resource('getCustomer', CustomerList::class);
         Route::resource('getReferensi', ReferensiList::class);
@@ -76,12 +79,12 @@ Route::middleware(['logs'])->group(function () {
         Route::resource('getRating', RatingList::class);
         Route::resource('getPengeluaran', PengeluaranList::class);
 
-        Route::controller(DashboardController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin,karyawan'])->controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'index');
         });
 
         //PRODUK
-        Route::controller(ProductController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin,karyawan'])->controller(ProductController::class)->group(function () {
             Route::get('produk', 'produk');
             Route::post('produk/store', 'store')->name('produk.store');
             Route::post('produk/update/{id}', 'update')->name('produk.update');
@@ -89,14 +92,14 @@ Route::middleware(['logs'])->group(function () {
         });
 
         //PENJUALAN
-        Route::controller(CustomerController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin,karyawan'])->controller(CustomerController::class)->group(function () {
             Route::get('customer', 'customer');
             Route::post('customer/store', 'store')->name('customer.store');
             Route::post('customer/update/{id}', 'update')->name('customer.update');
             Route::delete('customer/destroy/{id}', 'destroy');
         });
 
-        Route::controller(SalesController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin,karyawan'])->controller(SalesController::class)->group(function () {
             Route::get('sales', 'sales')->name('sales.index');
             Route::get('sales/create', 'create')->name('sales.create');
             Route::post('sales/store', 'store')->name('sales.store');
@@ -105,27 +108,35 @@ Route::middleware(['logs'])->group(function () {
             Route::delete('sales/destroy/{id}', 'destroy');
         });
 
-        Route::controller(ResiController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin,karyawan'])->controller(ResiController::class)->group(function () {
             Route::get('resi', 'resi');
             Route::post('update/resi/{id}', 'updateResi')->name('resi.update');
         });
 
         //SET DATA
-        Route::controller(CategoryController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin,karyawan'])->controller(CategoryController::class)->group(function () {
             Route::get('categories', 'Categories');
             Route::post('categories', 'store')->name('categories.store');
             Route::post('categories/update/{id}', 'update')->name('categories.update');
             Route::delete('categories/destroy/{id}', 'destroy');
         });
 
-        Route::controller(ReferensiController::class)->group(function () {
+        //SET DATA
+        Route::middleware(['auth', 'role:admin,karyawan'])->controller(KategoriLayananController::class)->group(function () {
+            Route::get('kategori-layanan', 'index')->name('kategori-layanan.index');
+            Route::post('kategori-layanan', 'store')->name('kategori-layanan.store');
+            Route::post('kategori-layanan/update/{id}', 'update')->name('kategori-layanan.update');
+            Route::delete('kategori-layanan/destroy/{id}', 'destroy');
+        });
+
+        Route::middleware(['auth', 'role:admin'])->controller(ReferensiController::class)->group(function () {
             Route::get('referensi', 'referensi');
             Route::post('referensi/store', 'store')->name('referensi.store');
             Route::post('referensi/update/{id}', 'update')->name('referensi.update');
             Route::delete('referensi/destroy/{id}', 'destroy');
         });
 
-        Route::controller(StatusController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin'])->controller(StatusController::class)->group(function () {
             Route::get('status', 'status')->name('status.index');
             Route::post('status/store', 'store')->name('status.store');
             Route::post('status/update/{id}', 'update')->name('status.update');
@@ -133,7 +144,7 @@ Route::middleware(['logs'])->group(function () {
         });
 
         //SETTING
-        Route::controller(UsersController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin'])->controller(UsersController::class)->group(function () {
             Route::get('user', 'users');
             Route::post('user/store', 'store')->name('user.store');
             Route::post('user/update/{id}', 'update')->name('user.update');
@@ -141,36 +152,36 @@ Route::middleware(['logs'])->group(function () {
             Route::delete('user/destroy/{id}', 'destroy');
         });
 
-        Route::controller(LogsController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin'])->controller(LogsController::class)->group(function () {
             Route::get('logs', 'logs')->name('logs.index');
             Route::delete('logs/destroy/{id}', 'destroy');
         });
 
-        Route::controller(KontakController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin'])->controller(KontakController::class)->group(function () {
             Route::get('kontak', 'index')->name('kontak.index');
             Route::post('kontak/update', 'update')->name('kontak.update');
             Route::post('karyawan/update', 'KaryawanUpdate')->name('karyawan.update');
         });
 
-        Route::controller(FaqsController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin'])->controller(FaqsController::class)->group(function () {
             Route::get('faqs', 'faqs')->name('faqs.index');
             Route::post('faqs', 'store')->name('faqs.store');
             Route::post('faqs/update/{id}', 'update')->name('faqs.update');
             Route::delete('faqs/destroy/{id}', 'destroy');
         });
 
-        Route::controller(PemasukanController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin'])->controller(PemasukanController::class)->group(function () {
             Route::get('pemasukan', 'pemasukan')->name('pemasukan.index');
         });
 
-        Route::controller(PengeluaranController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin'])->controller(PengeluaranController::class)->group(function () {
             Route::get('pengeluaran', 'pengeluaran');
             Route::post('pengeluaran/store', 'storePengeluaran')->name('store.pengeluaran');
             Route::post('pengeluaran/update/{id}', 'updatePengeluaran')->name('update.pengeluaran');
             Route::delete('pengeluaran/destroy/{id}', 'destroyPengeluaran');
         });
 
-        Route::controller(RatingController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin'])->controller(RatingController::class)->group(function () {
             Route::get('rating', 'index')->name('rating.index');
             Route::post('rating', 'store')->name('rating.store');
             Route::post('rating/update/{id}', 'update')->name('rating.update');

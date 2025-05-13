@@ -9,22 +9,30 @@
         <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header" style="background: blue;">
-                        <h5 class="modal-title text-white">Edit Resi History</h5>
+                    <div class="modal-header bg-blue-lt">
+                        <h5 class="modal-title">Perbaharui Status Resi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="{{ route('resi.update', $item->id) }}" method="POST">
                         @csrf
                         <div class="modal-body">
-                            <div class="mb-3">
-                                <label class="form-label">No Cust</label>
-                                <input type="text" name="no_cust" class="form-control cursor-not-allowed" required
-                                    placeholder="Masukkan nama produk" value="{{ $item->no_cust }}" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">No Resi</label>
-                                <input type="text" name="no_resi" class="form-control cursor-not-allowed" required
-                                    placeholder="Masukkan nama produk" value="{{ $item->no_resi }}" readonly>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">No Cust</label>
+                                        <input type="text" name="no_cust" class="form-control cursor-not-allowed"
+                                            required placeholder="Masukkan nama produk" value="{{ $item->no_cust }}"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">No Resi</label>
+                                        <input type="text" name="no_resi" class="form-control cursor-not-allowed"
+                                            required placeholder="Masukkan nama produk" value="{{ $item->no_resi }}"
+                                            readonly>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
@@ -208,11 +216,23 @@
                         searchable: false,
                     },
                     {
-                        title: 'no cust',
-                        data: 'no_cust',
-                        name: 'no_cust',
-                        className: "cuspad0 cuspad1 text-center"
+                        title: 'customer',
+                        data: 'nama_customer',
+                        name: 'nama_customer',
+                        className: "text-center",
+                        render: function(data, type, row) {
+                            return `
+                                <strong>${row.nama_customer}</strong><br>
+                                <span class="badge bg-blue-lt" style="font-style: italic; font-size: 10px; user-select: text;">No: ${row.no_cust}</span>    
+                            `;
+                        }
                     },
+                    // {
+                    //     title: 'no cust',
+                    //     data: 'no_cust',
+                    //     name: 'no_cust',
+                    //     className: "cuspad0 cuspad1 text-center"
+                    // },
                     {
                         title: 'no resi',
                         data: 'no_resi',

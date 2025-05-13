@@ -6,7 +6,7 @@
 
 @section('modals')
     <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-blue-lt">
                     <h5 class="modal-title text-blue">Tambah Produk</h5>
@@ -15,27 +15,48 @@
                 <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <div class="form-label">Categori</div>
-                            <select class="form-select" name="category" required>
-                                <option selected disabled>--Pilih Categori--</option>
-                                @foreach ($categori as $item)
-                                    <option value="{{ $item->nama }}">{{ $item->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Nama Produk</label>
-                            <input type="text" name="nama_produk" class="form-control" required
-                                placeholder="Masukkan nama produk">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Harga</label>
-                            <input type="text" name="harga" class="form-control" required
-                                placeholder="Masukkan harga produk">
-                        </div>
                         <div class="row">
-                            <div class="col lg-6">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-label">Kategori Produk</div>
+                                    <select class="form-select" name="category" required>
+                                        <option selected disabled>--Pilih Kategori Produk--</option>
+                                        @foreach ($categori as $item)
+                                            <option value="{{ $item->nama }}">{{ $item->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-label">Kategori Layanan</div>
+                                    <select class="form-select" name="id_kategori_layanan" id="kategoriLayananSelect"
+                                        required>
+                                        <option selected disabled>--Pilih Kategori Layanan--</option>
+                                        @foreach (App\Models\KategoriLayananModel::all() as $item)
+                                            <option value="{{ $item->id }}" data-harga="{{ $item->harga }}">
+                                                {{ $item->nama_kategori_layanan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Produk</label>
+                                    <input type="text" name="nama_produk" class="form-control" required
+                                        placeholder="Masukkan nama produk">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Harga <small class="text-danger fst-italic"
+                                            style="font-size: 10px;">*Mengambiil harga kategori layanan</small></label>
+                                    <input type="text" name="harga" class="form-control" id="hargaInput" required
+                                        placeholder="Masukkan harga produk">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="mb-3">
                                     <div class="form-label">Type</div>
                                     <select class="form-select" name="type">
@@ -45,7 +66,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col lg-6">
+                            <div class="col-md-3">
                                 <div class="mb-3">
                                     <div class="form-label">Flag</div>
                                     <select class="form-select" name="flag" required>
@@ -55,10 +76,12 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-label">Foto Produk</div>
-                            <input type="file" class="form-control" name="foto_produk" />
+                            <div class="col-md-6">
+                            <div class="mb-3">
+                                <div class="form-label">Foto Produk</div>
+                                <input type="file" class="form-control" name="foto_produk" />
+                            </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
@@ -115,8 +138,10 @@
                                         <div class="form-label">Type</div>
                                         <select class="form-select" name="type">
                                             <option selected disabled>--Pilih Type--</option>
-                                            <option value="KG" {{ $item->type == 'KG' ? 'selected' : '' }}>Kilogram</option>
-                                            <option value="PCS" {{ $item->type == 'PCS' ? 'selected' : '' }}>Satuan</option>
+                                            <option value="KG" {{ $item->type == 'KG' ? 'selected' : '' }}>Kilogram
+                                            </option>
+                                            <option value="PCS" {{ $item->type == 'PCS' ? 'selected' : '' }}>Satuan
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -125,8 +150,10 @@
                                         <div class="form-label">Flag</div>
                                         <select class="form-select" name="flag" required>
                                             <option selected disabled>--Pilih Flag--</option>
-                                            <option value="0" {{ $item->flag == '0' ? 'selected' : '' }}>InActive</option>
-                                            <option value="1" {{ $item->flag == '1' ? 'selected' : '' }}>Active</option>
+                                            <option value="0" {{ $item->flag == '0' ? 'selected' : '' }}>InActive
+                                            </option>
+                                            <option value="1" {{ $item->flag == '1' ? 'selected' : '' }}>Active
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -351,6 +378,23 @@
                 const button = event.relatedTarget;
                 const recordId = button.getAttribute('data-id');
                 deleteForm.action = `/produk/destroy/${recordId}`;
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const kategoriSelect = document.getElementById('kategoriLayananSelect');
+            const hargaInput = document.getElementById('hargaInput');
+
+            kategoriSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const harga = selectedOption.getAttribute('data-harga');
+
+                if (harga) {
+                    hargaInput.value = harga;
+                } else {
+                    hargaInput.value = '';
+                }
             });
         });
     </script>

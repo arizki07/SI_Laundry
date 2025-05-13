@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\CustomerModel;
+use App\Models\SalesItemModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SalesModel extends Model
 {
@@ -12,6 +14,7 @@ class SalesModel extends Model
     protected $fillable = [
         'customer_id',
         'no_resi',
+        'disc',
         'no_invoice',
         'total_harga',
         'pembayaran',

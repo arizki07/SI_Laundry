@@ -13,16 +13,14 @@ class KontakSeeder extends Seeder
      */
     public function run(): void
     {
-        // Periksa apakah $kontak sudah ada, atau buat data baru
-        $kontak = DB::table('kontaks')->first();
+        // $kontak = DB::table('kontaks')->first();
 
-        // Menambahkan data ke tabel kontaks
         DB::table('kontaks')->insert([
-            'head_first' => 'Welcome to Our Website',
-            'head_two' => 'Best Services for You',
-            'logo' => $kontak ? null : 'path_to_logo_image.jpg', // Jika $kontak ada, logo nullable
-            'alamat' => 'Jl. Raya No. 123, Jakarta, Indonesia',
-            'deskripsi' => 'Kami adalah perusahaan yang menawarkan layanan terbaik di bidang teknologi.',
+            'head_first' => 'head one',
+            'head_two' => 'head dua',
+            'logo' => 'path_to_logo_image.jpg',
+            'alamat' => 'Alamtmu disini',
+            'deskripsi' => '-.',
             'maps' => 'https://www.google.com/maps/place/123+Street,+Jakarta',
             'no_hp' => '081234567890',
             'email' => 'contact@ourwebsite.com',

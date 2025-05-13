@@ -102,6 +102,12 @@
                                                 </div>
                                                 <div class="invoice-center">
                                                     <div class="table-responsive">
+                                                        @php
+                                                            $grandTotal = $item->total_harga ?? 0;
+                                                            $diskon = $item->disc ?? 0;
+                                                            $totalBeforeDiscount = $grandTotal + $diskon;
+                                                        @endphp
+
                                                         <table class="table mb-0 table-striped invoice-table">
                                                             <thead class="bg-active">
                                                                 <tr class="tr">
@@ -113,41 +119,48 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @php
-                                                                    $grandTotal = 0;
-                                                                    $index = 1;
-                                                                @endphp
-
-                                                                {{-- @foreach ($sales as $sale) --}}
+                                                                @php $index = 1; @endphp
                                                                 @foreach ($item->items as $itm)
                                                                     <tr>
                                                                         <td>{{ $index++ }}</td>
                                                                         <td>{{ $itm->product->nama_produk }}</td>
-                                                                        <td class="text-center">Rp.
-                                                                            {{ number_format($itm->harga_per_qty, 2) }}
-                                                                        </td>
-                                                                        <td class="text-center">{{ $itm->qty }}
-                                                                        </td>
-                                                                        <td class="text-end">Rp.
-                                                                            {{ number_format($itm->total, 2) }}</td>
+                                                                        <td class="text-center">Rp. {{ number_format($itm->harga_per_qty, 2) }}</td>
+                                                                        <td class="text-center">{{ $itm->qty }}</td>
+                                                                        <td class="text-end">Rp. {{ number_format($itm->total, 2) }}</td>
                                                                     </tr>
                                                                 @endforeach
-                                                                @php
-                                                                    $grandTotal += $item->total_harga;
-                                                                @endphp
-                                                                {{-- @endforeach --}}
 
+                                                                {{-- Total sebelum diskon --}}
                                                                 <tr>
-                                                                    <td colspan="4" class="text-center">
+                                                                    <td colspan="4" class="text-end">
+                                                                        <strong>Total</strong>
+                                                                    </td>
+                                                                    <td class="text-end">
+                                                                        <strong>Rp. {{ number_format($totalBeforeDiscount, 2) }}</strong>
+                                                                    </td>
+                                                                </tr>
+
+                                                                {{-- Diskon --}}
+                                                                <tr>
+                                                                    <td colspan="4" class="text-end">
+                                                                        <strong>Diskon</strong>
+                                                                    </td>
+                                                                    <td class="text-end">
+                                                                        <strong>Rp. {{ number_format($diskon, 2) }}</strong>
+                                                                    </td>
+                                                                </tr>
+
+                                                                {{-- Subtotal (setelah diskon) --}}
+                                                                <tr>
+                                                                    <td colspan="4" class="text-end">
                                                                         <strong>SubTotal</strong>
                                                                     </td>
-                                                                    <td class="text-end"><strong>Rp.
-                                                                            {{ number_format($grandTotal, 2) }}</strong>
+                                                                    <td class="text-end">
+                                                                        <strong>Rp. {{ number_format($grandTotal, 2) }}</strong>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-
                                                     </div>
                                                 </div>
                                                 <div class="invoice-bottom">
