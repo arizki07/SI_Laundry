@@ -71,7 +71,9 @@
                                                     <select class="form-select" name="customer_id">
                                                         <option selected disabled>--Pilih Customer--</option>
                                                         @foreach ($cust as $cus)
-                                                            <option value="{{ $cus->id }}">{{ $cus->nama }}</option>
+                                                            <option value="{{ $cus->id }}"
+                                                                {{ old('customer_id') == $cus->id ? 'selected' : '' }}>
+                                                                {{ $cus->nama }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -80,15 +82,19 @@
                                                     <label class="form-label">Metode Pembayaran</label>
                                                     <select class="form-select" name="metode_pembayaran">
                                                         <option selected disabled>--Pilih Metode Pembayaran--</option>
-                                                        <option value="cash">Cash</option>
-                                                        <option value="transfer">Transfer</option>
+                                                        <option value="cash"
+                                                            {{ old('metode_pembayaran') == 'cash' ? 'selected' : '' }}>Cash
+                                                        </option>
+                                                        <option value="transfer"
+                                                            {{ old('metode_pembayaran') == 'transfer' ? 'selected' : '' }}>
+                                                            Transfer</option>
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label">File Bukti</label>
+                                                    <label class="form-label">File Bukti (Opsional)</label>
                                                     <input type="file" class="form-control" name="file_bukti">
                                                 </div>
 
@@ -96,10 +102,18 @@
                                                     <label class="form-label">Status Pembayaran</label>
                                                     <select class="form-select" name="status_pembayaran">
                                                         <option selected disabled>--Pilih Status Pembayaran--</option>
-                                                        <option value="pending">Pending</option>
-                                                        <option value="cancel">Cancel</option>
-                                                        <option value="dp">DP</option>
-                                                        <option value="lunas">Lunas</option>
+                                                        <option value="pending"
+                                                            {{ old('status_pembayaran') == 'pending' ? 'selected' : '' }}>
+                                                            Pending</option>
+                                                        <option value="cancel"
+                                                            {{ old('status_pembayaran') == 'cancel' ? 'selected' : '' }}>
+                                                            Cancel</option>
+                                                        <option value="dp"
+                                                            {{ old('status_pembayaran') == 'dp' ? 'selected' : '' }}>DP
+                                                        </option>
+                                                        <option value="lunas"
+                                                            {{ old('status_pembayaran') == 'lunas' ? 'selected' : '' }}>
+                                                            Lunas</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -113,54 +127,87 @@
                                                     </button>
                                                 </div>
                                                 <div id="sales-items-container" style="overflow-x: auto;">
-                                                    <div class="sales-item row mb-3" style="min-width: 600px;">
-                                                        <!-- Hapus button di sebelah kiri produk -->
-                                                        <div
-                                                            class="col-md-1 d-flex justify-content-center align-items-center">
-                                                            <button type="button" class="btn btn-danger btn-remove-item">
-                                                                <i class="fa-solid fa-trash"></i>
-                                                            </button>
-                                                        </div>
+                                                    @php
+                                                        $oldProducts = old('products', []);
+                                                        $oldQtys = old('qty', []);
+                                                        $oldPrices = old('harga_per_qty', []);
+                                                        $oldTotals = old('total', []);
+                                                        $oldRoundUps = old('round_up', []);
+                                                        $itemCount = max(count($oldProducts), 1);
+                                                    @endphp
 
-                                                        <div class="col-md-3">
-                                                            <label class="form-label">Product</label>
-                                                            <select class="form-select product-select" name="products[]">
-                                                                <option selected disabled>--Pilih Produk--</option>
-                                                                @foreach ($product as $pro)
-                                                                    <option value="{{ $pro->id }}"
-                                                                        data-price="{{ $pro->harga }}">
-                                                                        {{ $pro->nama_produk }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
+                                                    @for ($i = 0; $i < $itemCount; $i++)
+                                                        <div class="sales-item row mb-3" style="min-width: 600px;">
+                                                            <div
+                                                                class="col-md-1 d-flex justify-content-center align-items-center">
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-remove-item">
+                                                                    <i class="fa-solid fa-trash"></i>
+                                                                </button>
+                                                            </div>
 
-                                                        <div class="col-md-2">
-                                                            <label class="form-label">Quantity</label>
-                                                            <input type="number" class="form-control qty-input"
-                                                                name="qty[]" min="1" step="0.1"
-                                                                value="1">
-                                                        </div>
+                                                            <div class="col-md-3">
+                                                                <label class="form-label">Product</label>
+                                                                <select class="form-select product-select"
+                                                                    name="products[]">
+                                                                    <option disabled
+                                                                        {{ isset($oldProducts[$i]) ? '' : 'selected' }}>
+                                                                        --Pilih Produk--</option>
+                                                                    @foreach ($product as $pro)
+                                                                        <option value="{{ $pro->id }}"
+                                                                            data-price="{{ $pro->harga }}"
+                                                                            {{ isset($oldProducts[$i]) && $oldProducts[$i] == $pro->id ? 'selected' : '' }}>
+                                                                            {{ $pro->nama_produk }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
 
-                                                        <div class="col-md-2">
-                                                            <label class="form-label">Price</label>
-                                                            <input type="number" class="form-control price-input"
-                                                                name="harga_per_qty[]" readonly>
-                                                        </div>
+                                                            <div class="col-md-2">
+                                                                <label class="form-label">Quantity</label>
+                                                                <input type="number" class="form-control qty-input"
+                                                                    name="qty[]" min="1" step="0.1"
+                                                                    value="{{ $oldQtys[$i] ?? 1 }}">
+                                                            </div>
 
-                                                        <div class="col-md-2">
-                                                            <label class="form-label">Total</label>
-                                                            <input type="number" class="form-control total-input"
-                                                                name="total[]" readonly>
-                                                        </div>
+                                                            <div class="col-md-2">
+                                                                <label class="form-label">Price</label>
+                                                                <input type="number" class="form-control price-input"
+                                                                    name="harga_per_qty[]" readonly
+                                                                    value="{{ $oldPrices[$i] ?? '' }}">
+                                                            </div>
 
-                                                        <!-- Checkbox Bulatkan ke atas di sebelah kanan Total -->
-                                                        <div
-                                                            class="col-md-2 d-flex justify-content-start align-items-center">
-                                                            <input type="checkbox" class="round-up-checkbox"
-                                                                name="round_up[]" value="1">
-                                                            <label>Bulatkan</label>
+                                                            <div class="col-md-2">
+                                                                <label class="form-label">Total</label>
+                                                                <input type="number" class="form-control total-input"
+                                                                    name="total[]" readonly
+                                                                    value="{{ $oldTotals[$i] ?? '' }}">
+                                                            </div>
+
+                                                            <div
+                                                                class="col-md-2 d-flex justify-content-start align-items-center">
+                                                                <input type="hidden"
+                                                                    name="round_up[{{ $i }}]" value="0">
+                                                                <input type="checkbox" class="round-up-checkbox"
+                                                                    name="round_up[{{ $i }}]" value="1"
+                                                                    {{ isset($oldRoundUps[$i]) && $oldRoundUps[$i] == 1 ? 'checked' : '' }}>
+                                                                <label>Bulatkan</label>
+                                                            </div>
                                                         </div>
+                                                    @endfor
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-md-3 offset-md-9 mb-2">
+                                                        <label class="form-label fw-bold">Total</label>
+                                                        <input type="text" class="form-control text-end" id="total" name="total_two" readonly value="0">
+                                                    </div>
+                                                    <div class="col-md-3 offset-md-9 mb-2">
+                                                        <label class="form-label fw-bold">Diskon (Rp)</label>
+                                                        <input type="text" class="form-control text-end" id="diskon" name="disc" value="0">
+                                                    </div>
+                                                    <div class="col-md-3 offset-md-9">
+                                                        <label class="form-label fw-bold">Subtotal</label>
+                                                        <input type="text" class="form-control text-end" id="subtotal" name="subtotal" readonly value="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -185,83 +232,171 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.getElementById('sales-items-container');
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.getElementById('sales-items-container');
+        const totalField = document.getElementById('total');
+        const diskonInput = document.getElementById('diskon');
+        const subtotalField = document.getElementById('subtotal');
 
-            const calculateTotal = (row) => {
-                const price = parseFloat(row.querySelector('.price-input').value) || 0;
-                let qty = parseFloat(row.querySelector('.qty-input').value) || 0;
-                const roundUp = row.querySelector('.round-up-checkbox').checked;
+        const calculateTotal = (row) => {
+            const priceInput = row.querySelector('.price-input');
+            const qtyInput = row.querySelector('.qty-input');
+            const totalInput = row.querySelector('.total-input');
+            const roundUpCheckbox = row.querySelector('.round-up-checkbox');
 
-                if (roundUp) {
-                    qty = (Math.ceil(qty) % 2 === 0) ? Math.ceil(qty) : Math.ceil(qty + 1);
-                } else {
-                    qty = Math.floor(qty);
-                }
+            const price = parseFloat(priceInput.value) || 0;
+            let qty = parseFloat(qtyInput.value) || 0;
 
-                row.querySelector('.total-input').value = (qty * price).toFixed(2);
-            };
+            if (roundUpCheckbox.checked) {
+                qty = (Math.ceil(qty) % 2 === 0) ? Math.ceil(qty) : Math.ceil(qty + 1);
+            } else {
+                qty = Math.floor(qty);
+            }
 
-            container.addEventListener('change', function(event) {
-                if (event.target.classList.contains('product-select')) {
-                    const row = event.target.closest('.sales-item');
-                    const selectedOption = event.target.selectedOptions[0];
-                    const price = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+            totalInput.value = (qty * price).toFixed(2);
+            calculateGrandTotal();
+        };
 
-                    row.querySelector('.price-input').value = price;
-                    calculateTotal(row);
-                }
-
-                if (event.target.classList.contains('round-up-checkbox')) {
-                    const row = event.target.closest('.sales-item');
-                    calculateTotal(row);
-                }
-            });
-
-            container.addEventListener('input', function(event) {
-                if (event.target.classList.contains('qty-input')) {
-                    const row = event.target.closest('.sales-item');
-                    calculateTotal(row);
+        const calculateGrandTotal = () => {
+            let total = 0;
+            document.querySelectorAll('.total-input').forEach(input => {
+                const val = parseFloat(input.value);
+                if (!isNaN(val)) {
+                    total += val;
                 }
             });
 
-            document.getElementById('add-item-button').addEventListener('click', function() {
-                const itemTemplate = container.querySelector('.sales-item').cloneNode(true);
+            totalField.value = total.toFixed(2);
 
-                itemTemplate.querySelectorAll('input').forEach(input => {
-                    input.value = '';
-                    if (input.type === 'checkbox') input.checked = false;
-                });
-                itemTemplate.querySelector('.product-select').selectedIndex = 0;
+            // Ambil nilai diskon
+            let diskon = parseFloat(diskonInput.value.replace(/[^0-9.-]+/g, '')) || 0;
 
-                container.appendChild(itemTemplate);
-            });
+            const subtotal = total - diskon;
+            subtotalField.value = subtotal.toFixed(2);
+        };
 
-            container.addEventListener('click', function(event) {
-                if (event.target.classList.contains('btn-remove-item')) {
-                    const row = event.target.closest('.sales-item');
-                    if (container.querySelectorAll('.sales-item').length > 1) {
-                        row.remove();
+        // Event handler untuk produk berubah
+        container.addEventListener('change', async function (event) {
+            const row = event.target.closest('.sales-item');
+
+            if (event.target.classList.contains('product-select')) {
+                const selectedOption = event.target.selectedOptions[0];
+                const price = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+                row.querySelector('.price-input').value = price;
+                calculateTotal(row);
+            }
+
+            if (event.target.classList.contains('round-up-checkbox')) {
+                const checkbox = event.target;
+
+                if (checkbox.checked) {
+                    const result = await Swal.fire({
+                        title: 'Masukkan jumlah pembulatan',
+                        input: 'number',
+                        inputLabel: 'Jumlah pembulatan (total)',
+                        inputPlaceholder: 'Contoh: 15000',
+                        showCancelButton: true,
+                        confirmButtonText: 'OK',
+                        cancelButtonText: 'Batal',
+                        inputValidator: (value) => {
+                            if (!value || isNaN(value) || value <= 0) {
+                                return 'Masukkan angka valid lebih dari 0!';
+                            }
+                        }
+                    });
+
+                    if (result.isConfirmed) {
+                        const pembulatan = parseFloat(result.value);
+                        row.querySelector('.total-input').value = pembulatan.toFixed(2);
+
+                        row.querySelector('.qty-input').readOnly = true;
+                        row.querySelector('.price-input').readOnly = true;
+
+                        calculateGrandTotal();
                     } else {
-                        alert('At least one item is required.');
+                        checkbox.checked = false;
                     }
+                } else {
+                    row.querySelector('.qty-input').readOnly = false;
+                    row.querySelector('.price-input').readOnly = false;
+                    calculateTotal(row);
                 }
-            });
+            }
         });
-    </script>
+
+        // Qty/price berubah
+        container.addEventListener('input', function (event) {
+            if (event.target.classList.contains('qty-input') || event.target.classList.contains('price-input')) {
+                const row = event.target.closest('.sales-item');
+                calculateTotal(row);
+            }
+        });
+
+        // Diskon berubah
+        diskonInput.addEventListener('input', function () {
+            calculateGrandTotal();
+        });
+
+        // Tambah item
+        document.getElementById('add-item-button').addEventListener('click', function () {
+            const itemTemplate = container.querySelector('.sales-item').cloneNode(true);
+            const itemCount = container.querySelectorAll('.sales-item').length;
+
+            itemTemplate.querySelectorAll('input').forEach(input => {
+                if (input.type === 'checkbox') {
+                    input.checked = false;
+                } else if (input.type === 'hidden') {
+                    input.value = '0';
+                } else {
+                    input.value = '';
+                }
+                input.readOnly = false;
+            });
+
+            itemTemplate.querySelector('.product-select').selectedIndex = 0;
+            itemTemplate.querySelector('.price-input').readOnly = true;
+            itemTemplate.querySelector('.total-input').readOnly = true;
+            itemTemplate.querySelectorAll('[name^="round_up"]').forEach((input) => {
+                input.name = `round_up[${itemCount}]`;
+            });
+
+            container.appendChild(itemTemplate);
+        });
+
+        // Hapus item
+        container.addEventListener('click', function (event) {
+            if (event.target.classList.contains('btn-remove-item')) {
+                const row = event.target.closest('.sales-item');
+                if (container.querySelectorAll('.sales-item').length > 1) {
+                    row.remove();
+                    calculateGrandTotal();
+                } else {
+                    alert('Minimal satu item harus ada.');
+                }
+            }
+        });
+
+        // Hitung awal
+        calculateGrandTotal();
+    });
+</script>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const statusPembayaranSelect = document.querySelector('select[name="status_pembayaran"]');
             const pembayaranFieldContainer = document.createElement('div');
             pembayaranFieldContainer.classList.add('mb-3');
             pembayaranFieldContainer.innerHTML = `
-        <label class="form-label">Jumlah DP</label>
-        <input type="number" class="form-control" name="pembayaran" id="pembayaran" min="0" step="0.01">
-        <small id="dp-warning" class="text-danger" style="display: none;">
-            DP tidak boleh lebih besar dari total pembayaran!
-        </small>
-    `;
+                            <label class="form-label">Jumlah DP</label>
+                            <input type="number" class="form-control" name="pembayaran" id="pembayaran" min="0" step="0.01">
+                            <small id="dp-warning" class="text-danger" style="display: none;">
+                                DP tidak boleh lebih besar dari total pembayaran!
+                            </small>
+                        `;
             pembayaranFieldContainer.style.display = 'none';
 
             statusPembayaranSelect.closest('.mb-3').after(pembayaranFieldContainer);
@@ -273,7 +408,7 @@
                 if (this.value === 'dp') {
                     pembayaranFieldContainer.style.display = 'block';
                     pembayaranInput.setAttribute('required',
-                    'required'); // Menambahkan required saat DP dipilih
+                        'required'); // Menambahkan required saat DP dipilih
 
                     // Ambil total harga dari elemen hidden atau AJAX
                     let totalHarga = parseFloat(document.getElementById('total_harga').value) || 0;
@@ -300,4 +435,5 @@
             });
         });
     </script>
+
 @endsection

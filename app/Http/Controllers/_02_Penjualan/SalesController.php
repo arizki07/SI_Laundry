@@ -48,6 +48,7 @@ class SalesController extends Controller
     // PROSES TAMBAH DATA SALES
     public function store(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'products' => 'required|array',
@@ -58,6 +59,9 @@ class SalesController extends Controller
             'status_pembayaran' => 'required|string',
             'metode_pembayaran' => 'required|string',
             'pembayaran' => 'nullable',
+            'subtotal' => 'nullable|numeric|min:0',
+            'disc' => 'nullable|numeric|min:0',
+            'total' => 'nullable|array',
             'round_up' => 'nullable|array',
             'round_up.*' => 'boolean',
         ]);
@@ -80,6 +84,7 @@ class SalesController extends Controller
             'no_resi' => $noResi,
             'no_invoice' => $noInvoice,
             'total_harga' => 0,
+            'disc' => $validated['disc'] ?? 0,
             'status_pembayaran' => $validated['status_pembayaran'],
             'metode_pembayaran' => $validated['metode_pembayaran'],
             'file_bukti' => $fileName,
@@ -89,19 +94,36 @@ class SalesController extends Controller
 
         $totalHarga = 0;
 
+        // foreach ($validated['products'] as $index => $productId) {
+        //     $product = ProductModel::findOrFail($productId);
+        //     $qty = $validated['qty'][$index];
+
+        //     $roundUp = isset($validated['round_up'][$index]) && $validated['round_up'][$index];
+        //     $qtyRounded = $roundUp ? ceil($qty) : floor($qty);
+
+        //     $hargaPerQty = $product->harga;
+        //     $total = $qtyRounded * $hargaPerQty;
+
+        //     $sales->items()->create([
+        //         'product_id' => $productId,
+        //         'qty' => $qtyRounded,
+        //         'harga_per_qty' => $hargaPerQty,
+        //         'total' => $total,
+        //     ]);
+
+        //     $totalHarga += $total;
+        // }
+
         foreach ($validated['products'] as $index => $productId) {
             $product = ProductModel::findOrFail($productId);
+            
             $qty = $validated['qty'][$index];
-
-            $roundUp = isset($validated['round_up'][$index]) && $validated['round_up'][$index];
-            $qtyRounded = $roundUp ? ceil($qty) : floor($qty);
-
             $hargaPerQty = $product->harga;
-            $total = $qtyRounded * $hargaPerQty;
+            $total = $validated['total'][$index];
 
             $sales->items()->create([
                 'product_id' => $productId,
-                'qty' => $qtyRounded,
+                'qty' => $qty,
                 'harga_per_qty' => $hargaPerQty,
                 'total' => $total,
             ]);
@@ -110,7 +132,7 @@ class SalesController extends Controller
         }
 
         // Update total harga
-        $sales->update(['total_harga' => $totalHarga]);
+        $sales->update(['total_harga' => $validated['subtotal']]);
 
         // Cek jika pembayaran DP melebihi total harga
         if ($validated['status_pembayaran'] === 'dp' && $validated['pembayaran'] > $totalHarga) {
@@ -127,8 +149,8 @@ class SalesController extends Controller
         ResiHistoryModel::create([
             'no_cust' => $noCust,
             'no_resi' => $noResi,
-            'status' => $validated['status_pembayaran'],
-            'catatan' => null,
+            'status' => 'diterima',
+            'catatan' => 'Pesanan baru telah diterima dan sedang diproses',
             'foto_final' => null,
             'created_by' => Auth::user()->name,
         ]);
@@ -154,11 +176,14 @@ class SalesController extends Controller
 
         // Buat detail item pesanan
         $itemsDetail = $salesItems
-            ->map(function ($item) {
-                $totalItem = $item->qty * $item->harga_per_qty;
-                return "- Produk ID: {$item->product_id}, Qty: {$item->qty}, Harga: Rp. " . number_format($item->harga_per_qty, 0, ',', '.');
-            })
-            ->implode("\n");
+        ->map(function ($item) {
+            $namaProduk = $item->product->nama_produk ?? 'Produk Tidak Ditemukan';
+            return "- {$namaProduk}, Qty: {$item->qty}, Total: Rp. " . number_format($item->total, 0, ',', '.');
+        })
+        ->implode("\n");
+
+        $totalSebelumDiskon = $sales->total_harga + $sales->disc;
+        $urlCek = url('cek-resi');
 
         // Format pesan WhatsApp
         $message =
@@ -169,9 +194,9 @@ Terima kasih telah mempercayakan layanan cucian Anda kepada *Indah Laundry*. Sil
 
 $itemsDetail
 --------------------------------
-*Total Harga:* Rp. " .
-            number_format($sales->total_harga, 0, ',', '.') .
-            "
+*Total :* Rp. " . number_format($totalSebelumDiskon, 0, ',', '.') . "
+*Diskon :* Rp. " . number_format($sales->disc, 0, ',', '.') . "
+*Subtotal :* Rp. " . number_format($sales->total_harga, 0, ',', '.') . "
 
 *Alamat:*
 {$customer->alamat}
@@ -182,6 +207,8 @@ Terima kasih telah memilih *Indah Laundry*! 😊
 
 Salam hangat,
 *Indah Laundry*
+
+Cek resi : {$urlCek}
 ";
 
         // Kirim pesan via API Fonnte
@@ -242,6 +269,7 @@ Salam hangat,
     // PROSES UPDATE SALES
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'products' => 'required|array',
@@ -254,9 +282,13 @@ Salam hangat,
             'pembayaran' => 'nullable|numeric|min:0',
             'round_up' => 'nullable|array',
             'round_up.*' => 'boolean',
+            'subtotal' => 'nullable|numeric|min:0',
+            'disc' => 'nullable|numeric|min:0',
+            'total' => 'nullable|array',
         ]);
 
         $sales = SalesModel::findOrFail($id);
+        // $sales->update(['total_harga' => $validated['subtotal'], 'disc' => $validated['disc']]);
 
         // Cek apakah ada file bukti baru
         $fileName = $sales->file_bukti;
@@ -271,20 +303,37 @@ Salam hangat,
 
         $totalHarga = 0;
 
+        // foreach ($validated['products'] as $index => $productId) {
+        //     $product = ProductModel::findOrFail($productId);
+        //     $qty = $validated['qty'][$index];
+
+        //     // Cek apakah perlu pembulatan
+        //     $roundUp = isset($validated['round_up'][$index]) && $validated['round_up'][$index];
+        //     $qtyRounded = $roundUp ? ceil($qty) : floor($qty);
+
+        //     $hargaPerQty = $product->harga;
+        //     $total = $qtyRounded * $hargaPerQty;
+
+        //     $sales->items()->create([
+        //         'product_id' => $productId,
+        //         'qty' => $qtyRounded,
+        //         'harga_per_qty' => $hargaPerQty,
+        //         'total' => $total,
+        //     ]);
+
+        //     $totalHarga += $total;
+        // }
+
         foreach ($validated['products'] as $index => $productId) {
             $product = ProductModel::findOrFail($productId);
+            
             $qty = $validated['qty'][$index];
-
-            // Cek apakah perlu pembulatan
-            $roundUp = isset($validated['round_up'][$index]) && $validated['round_up'][$index];
-            $qtyRounded = $roundUp ? ceil($qty) : floor($qty);
-
             $hargaPerQty = $product->harga;
-            $total = $qtyRounded * $hargaPerQty;
+            $total = $validated['total'][$index];
 
             $sales->items()->create([
                 'product_id' => $productId,
-                'qty' => $qtyRounded,
+                'qty' => $qty,
                 'harga_per_qty' => $hargaPerQty,
                 'total' => $total,
             ]);
@@ -305,7 +354,8 @@ Salam hangat,
             'status_pembayaran' => $validated['status_pembayaran'],
             'metode_pembayaran' => $validated['metode_pembayaran'],
             'file_bukti' => $fileName,
-            'total_harga' => $totalHarga,
+            'total_harga' => $validated['subtotal'],
+            'disc' => $validated['disc'],
             'pembayaran' => $validated['status_pembayaran'] === 'dp' ? $validated['pembayaran'] : null,
         ]);
 
@@ -321,10 +371,15 @@ Salam hangat,
             Storage::disk('public')->delete('sales/bukti/' . $sales->file_bukti);
         }
 
+        // Hapus item terkait
         $sales->items()->delete();
 
+        // Hapus history resi yang terkait
+        ResiHistoryModel::where('no_resi', $sales->no_resi)->delete();
+
+        // Hapus data sales
         $sales->delete();
 
-        return redirect()->back()->with('success', 'Data penjualan dan item terkait berhasil dihapus.');
+        return redirect()->back()->with('success', 'Data penjualan, item terkait, dan histori resi berhasil dihapus.');
     }
 }

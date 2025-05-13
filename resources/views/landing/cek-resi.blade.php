@@ -216,18 +216,18 @@
                         }
 
                         notesHTML += `
-                            <div class="note mb-3 ${isActive ? 'active' : ''}">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="fw-bold">${note.title}</h5>
-                                        ${timestamp !== "" ? `<span class="text-muted">${timestamp}</span>` : ''}
-                                        <p class="text-muted">${desc}</p>
+                                <div class="note mb-3 ${isActive ? 'active' : ''}">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="fw-bold">${note.title}</h5>
+                                            ${timestamp !== "" ? `<span class="text-muted">${timestamp}</span>` : ''}
+                                            <p class="text-muted">${desc}</p>
+                                        </div>
+                                        ${icon}
                                     </div>
-                                    ${icon}
                                 </div>
-                            </div>
-                        `;
-                    });
+                            `;
+                        });
 
                     document.getElementById('resiList').innerHTML = `
                             // <h5 class="fw-bold mb-2">Search Result:</h5>

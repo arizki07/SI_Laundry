@@ -294,14 +294,23 @@
                             </span>
                         </a>
                         <div
-                            class="dropdown-menu mx-3 {{ $active == 'Referensi' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' ? 'show' : '' }}">
+                            class="dropdown-menu mx-3 {{ $active == 'Referensi' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' || $active == 'kategori_layanan' || $active == 'Product' ? 'show' : '' }}">
                             <a class="nav-link {{ $active == 'Kategori' ? 'text-azure fw-bold' : '' }}"
                                 href="{{ url('categories') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                                     <i class="fa-solid fa-code-commit"></i>
                                 </span>
                                 <span class="nav-link-title">
-                                    Kategori
+                                    Kategori Produk
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'kategori_layanan' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ route('kategori-layanan.index') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Kategori Layanan
                                 </span>
                             </a>
                             <a class="nav-link {{ $active == 'Product' ? 'text-azure fw-bold' : '' }}"
@@ -498,43 +507,75 @@
                     <div class="custom-hr">
                         <span>Fitur Karyawan</span>
                     </div>
-                    <li class="nav-item {{ $active == 'Kategori' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('categories') }}">
+                    <li class="nav-item {{ $active == 'Customer' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('customer') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-category">
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-square-rounded">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M4 4h6v6h-6z" />
-                                    <path d="M14 4h6v6h-6z" />
-                                    <path d="M4 14h6v6h-6z" />
-                                    <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                    <path d="M12 13a3 3 0 1 0 0 -6a3 3 0 0 0 0 6z" />
+                                    <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                    <path d="M6 20.05v-.05a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v.05" />
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                Kategori
+                                Customer
                             </span>
                         </a>
                     </li>
-                    <li class="nav-item {{ $active == 'Product' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('produk') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    <li
+                        class="nav-item dropdown {{ $active == 'Product' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
+                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-pointer-up">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M17 17h-11v-14h-2" />
-                                    <path d="M6 5l14 1l-1 7h-13" />
+                                    <path
+                                        d="M15.984 13.428l-1.206 -1.206l3.113 -2.09a1.2 1.2 0 0 0 -.309 -2.228l-13.582 -3.904l3.904 13.563a1.2 1.2 0 0 0 2.228 .308l2.09 -3.093l1.217 1.217" />
+                                    <path d="M19 22v-6" />
+                                    <path d="M22 19l-3 -3l-3 3" />
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                Product
+                                Master Produk
                             </span>
                         </a>
+                        <div
+                            class="dropdown-menu mx-3 {{ $active == 'Product' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' || $active == 'kategori_layanan' ? 'show' : '' }}">
+                            <a class="nav-link {{ $active == 'Kategori' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ url('categories') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Kategori Produk
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'kategori_layanan' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ route('kategori-layanan.index') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Kategori Layanan
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'Product' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ url('produk') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Produk
+                                </span>
+                            </a>
+                        </div>
                     </li>
                     <li class="nav-item {{ $active == 'sales' ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('sales') }}">

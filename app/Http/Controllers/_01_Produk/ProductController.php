@@ -25,6 +25,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'id_kategori_layanan' => 'required',
             'category' => 'required',
             'nama_produk' => 'required',
             'harga' => 'required',
@@ -42,6 +43,7 @@ class ProductController extends Controller
         }
 
         $produk = ProductModel::create([
+            'id_kategori_layanan' => $request->id_kategori_layanan,
             'category' => $request->category,
             'nama_produk' => $request->nama_produk,
             'harga' => $request->harga,
@@ -61,6 +63,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'id_kategori_layanan' => 'required',
             'category' => 'required',
             'nama_produk' => 'required',
             'harga' => 'required',
@@ -86,6 +89,7 @@ class ProductController extends Controller
         }
 
         $product->update([
+            'id_kategori_layanan' => $request->id_kategori_layanan,
             'category' => $request->category,
             'nama_produk' => $request->nama_produk,
             'harga' => $request->harga,
