@@ -23,29 +23,30 @@
                     <p class="fs-5 fw-bold text-primary">{{ $kontak->head_first ?? 'Data Belum Diatur' }}</p>
                     <h1 class="display-5 mb-5" style="font-size: 30px;">{{ $kontak->head_two ?? 'Data Belum Diatur' }}</h1>
                     <p class="mb-4">{{ $kontak->deskripsi ?? 'Data Belum Diatur' }}</p>
-                    <form>
+                    <form method="POST" action="{{ route('contact.send') }}">
+                        @csrf
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Nama Anda">
+                                    <input type="text" name="name" class="form-control" id="name" placeholder="Nama Anda">
                                     <label for="name">Nama Anda</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Email Anda">
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Email Anda">
                                     <label for="email">Email Anda</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subjek">
+                                    <input type="text" name="subject" class="form-control" id="subject" placeholder="Subjek">
                                     <label for="subject">Subjek</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Tulis pesan Anda di sini" id="message" style="height: 100px"></textarea>
+                                    <textarea name="message" class="form-control" placeholder="Tulis pesan Anda di sini" id="message" style="height: 100px"></textarea>
                                     <label for="message">Pesan</label>
                                 </div>
                             </div>

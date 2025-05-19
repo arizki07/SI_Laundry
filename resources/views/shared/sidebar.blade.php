@@ -636,7 +636,7 @@
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                Contact
+                                Profile
                             </span>
                         </a>
                     </li>

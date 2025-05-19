@@ -55,6 +55,7 @@ Route::middleware(['data.kontak', 'logs'])->controller(LandingController::class)
     Route::get('syarat-ketentuan', 'syarat_ketentuan')->name('landing.syarat-ketentuan');
     Route::get('testimoni', 'testimoni')->name('landing.testimoni');
     Route::post('/rating/post/testimoni', 'post_rating')->name('post.rating');
+    Route::post('/contact/send', 'send')->name('contact.send');
 });
 
 Route::middleware(['logs'])->group(function () {
@@ -157,7 +158,7 @@ Route::middleware(['logs'])->group(function () {
             Route::delete('logs/destroy/{id}', 'destroy');
         });
 
-        Route::middleware(['auth', 'role:admin'])->controller(KontakController::class)->group(function () {
+        Route::middleware(['auth', 'role:admin,karyawan'])->controller(KontakController::class)->group(function () {
             Route::get('kontak', 'index')->name('kontak.index');
             Route::post('kontak/update', 'update')->name('kontak.update');
             Route::post('karyawan/update', 'KaryawanUpdate')->name('karyawan.update');

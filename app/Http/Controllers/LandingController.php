@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\ResiHistoryModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class LandingController extends Controller
 {
@@ -137,5 +138,27 @@ class LandingController extends Controller
         $rating->save();
 
         return redirect()->back()->with('success', 'Terima kasih atas testimoni Anda!');
+    }
+    
+    public function send(Request $request)
+    {
+        $data = $request->validate([
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email',
+            'subject' => 'required|string',
+            'message' => 'required|string',
+        ]);
+
+        Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
+            $message->to('webcrafser@gmail.com')
+                    ->subject('Pesan Baru dari Kontak: ' . $data['subject']);
+        });
+
+        Mail::send('emails.confirmation', ['data' => $data], function ($message) use ($data) {
+            $message->to($data['email'])
+                    ->subject('Konfirmasi Pesan Anda: ' . $data['subject']);
+        });
+
+        return back()->with('success', 'Pesan berhasil dikirim!');
     }
 }

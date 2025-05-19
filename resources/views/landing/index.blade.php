@@ -374,7 +374,7 @@
     <!-- Service End -->
 
     <!-- Quote Start -->
-    <div class="container-fluid quote my-5 py-5" data-parallax="scroll"
+    {{-- <div class="container-fluid quote my-5 py-5" data-parallax="scroll"
         data-image-src="assets/landing/img/carousel-2.jpg">
         <div class="container py-5">
             <div class="row justify-content-center">
@@ -425,7 +425,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Quote End -->
 
     <!-- Tim Start -->
@@ -502,7 +502,7 @@
                     <h1 class="display-5 mb-5">Apa Kata Pelanggan Tentang Kami!</h1>
                     <p class="mb-4">Kami memberikan pelayanan laundry terbaik dengan hasil yang memuaskan. Kami selalu
                         menjaga kualitas layanan agar pakaian Anda tetap bersih dan wangi.</p>
-                    <a class="btn btn-primary py-3 px-4" href="javascript:void(0)">Lihat Selengkapnya</a>
+                    <a class="btn btn-primary py-3 px-4" href="{{ route('landing.testimoni') }}">Lihat Selengkapnya</a>
                 </div>
                 <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="owl-carousel testimonial-carousel">
