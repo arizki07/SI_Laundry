@@ -27,14 +27,6 @@
                 <a class="btn btn-link" href="{{ route('landing.bantuan') }}">Bantuan</a>
                 <a class="btn btn-link" href="{{ route('landing.hubungi-kami') }}">Kontak</a>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <h4 class="text-white mb-4">Newsletter</h4>
-                <p>Dapatkan informasi promo dari L-Dry melalui Email.</p>
-                <div class="position-relative w-100">
-                    <input class="form-control bg-light border-light w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                    <button type="button" href="javascript:void(0)" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                </div>
-            </div>
         </div>
     </div>
 </div>

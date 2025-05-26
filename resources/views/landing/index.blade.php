@@ -118,7 +118,7 @@
                     <p class="mb-4">Dengan pengalaman lebih dari 25 tahun, kami memberikan layanan laundry terbaik dengan
                         hasil yang memuaskan. Dari cuci, setrika, hingga dry cleaning, semuanya kami lakukan dengan kualitas
                         terbaik.</p>
-                    <a class="btn btn-primary py-3 px-4" type="button" href="{{ route('landing.daftar-harga') }}">Jelajahi Lebih Lanjut</a>
+                    <a class="btn btn-primary py-3 px-4" type="button" href="{{ route('landing.tentang-kami') }}">Jelajahi Lebih Lanjut</a>
                 </div>
                 <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="row g-5">

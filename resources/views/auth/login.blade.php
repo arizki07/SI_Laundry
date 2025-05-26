@@ -152,7 +152,7 @@
                             </label>
                             <div class="input-group input-group-flat">
                                 <input type="password" name="password" class="form-control" placeholder="Your password"
-                                    autocomplete="off">
+                                    autocomplete="off" id="password">
                                 @if ($errors->has('password'))
                                     <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
@@ -240,6 +240,36 @@
             return false;
         });
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggle = document.getElementById('toggle-password');
+        const input = document.getElementById('password');
+
+        toggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            const isPassword = input.getAttribute('type') === 'password';
+            input.setAttribute('type', isPassword ? 'text' : 'password');
+
+            // Ganti title-nya juga (opsional)
+            this.setAttribute('title', isPassword ? 'Hide password' : 'Show password');
+
+            // Ganti ikon (opsional, jika kamu punya dua ikon)
+            const svg = this.querySelector('svg');
+            if (svg) {
+                svg.innerHTML = isPassword
+                    ? `<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                       <path d="M3 3l18 18" />
+                       <path d="M10.584 10.587a2 2 0 0 0 2.829 2.828" />
+                       <path d="M9.878 9.875c-.487 .488 -1.126 .833 -1.878 .94" />
+                       <path d="M4.623 4.624c-2.4 4 -2.4 8 0 12 2.4 4 5.4 6 9 6s6.6 -2 9 -6c2.4 -4 2.4 -8 0 -12" />`
+                    : `<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                       <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                       <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />`;
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

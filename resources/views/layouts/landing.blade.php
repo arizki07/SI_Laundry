@@ -38,9 +38,9 @@
     @if ($act != 'err') 
         @include('shared.landing.footer')
 
-        <a href="javascript:void(0)" class="whatsapp-btn">
+        {{-- <a href="javascript:void(0)" class="whatsapp-btn">
             <i class="fab fa-whatsapp" style="font-size: 25px;"></i>
-        </a>
+        </a> --}}
     @else
     
     <div class="container-fluid copyright py-4" style="background-color: #004753;">
