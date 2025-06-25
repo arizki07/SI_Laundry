@@ -271,7 +271,7 @@
                             </span>
                         </a>
                     </li>
-                    
+
                     <li
                         class="nav-item dropdown {{ $active == 'Referensi' || $active == 'Kategori' || $active == 'Payment' || $active == 'Status' ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
@@ -482,7 +482,8 @@
                                 Profile & Bantuan
                             </span>
                         </a>
-                        <div class="dropdown-menu {{ $active == 'kontak' || $active == 'faqs' ? 'show' : '' }} mx-3">
+                        <div
+                            class="dropdown-menu {{ $active == 'kontak' || $active == 'faqs' || $active == 'Pesan' ? 'show' : '' }} mx-3">
                             <a class="nav-link {{ $active == 'kontak' ? 'text-azure fw-bold' : '' }}"
                                 href="{{ route('kontak.index') }}">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -499,6 +500,15 @@
                                 </span>
                                 <span class="nav-link-title">
                                     Faqs
+                                </span>
+                            </a>
+                            <a class="nav-link {{ $active == 'Pesan' ? 'text-azure fw-bold' : '' }}"
+                                href="{{ route('pesan.index') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <i class="fa-solid fa-code-commit"></i>
+                                </span>
+                                <span class="nav-link-title">
+                                    Pesan
                                 </span>
                             </a>
                         </div>

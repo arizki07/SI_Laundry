@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\FaqsModel;
+use App\Models\PesanModel;
 use App\Models\SalesModel;
 use App\Models\RatingModel;
 use App\Models\ProductModel;
@@ -117,7 +118,7 @@ class LandingController extends Controller
                 'string',
                 'max:30',
                 Rule::exists('sales', 'no_resi'),
-            Rule::unique('ratings', 'no_resi'),
+                Rule::unique('ratings', 'no_resi'),
             ],
         ], [
             'resi.exists' => 'Resi tidak ditemukan. Pastikan Anda memasukkan nomor resi yang valid.',
@@ -125,8 +126,8 @@ class LandingController extends Controller
         ]);
 
         $cari = SalesModel::join('customers', 'sales.customer_id', '=', 'customers.id')
-                ->where('sales.no_resi', $request->resi)
-                ->select('customers.no_hp')->first();
+            ->where('sales.no_resi', $request->resi)
+            ->select('customers.no_hp')->first();
         // dd($cari);
 
         $rating = new RatingModel();
@@ -139,25 +140,32 @@ class LandingController extends Controller
 
         return redirect()->back()->with('success', 'Terima kasih atas testimoni Anda!');
     }
-    
+
     public function send(Request $request)
     {
-        $data = $request->validate([
-            'name'    => 'required|string|max:255',
+        $request->validate([
+            'nama'    => 'required|string|max:255',
             'email'   => 'required|email',
             'subject' => 'required|string',
             'message' => 'required|string',
         ]);
 
-        Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
-            $message->to('webcrafser@gmail.com')
-                    ->subject('Pesan Baru dari Kontak: ' . $data['subject']);
-        });
+        PesanModel::create([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ]);
 
-        Mail::send('emails.confirmation', ['data' => $data], function ($message) use ($data) {
-            $message->to($data['email'])
-                    ->subject('Konfirmasi Pesan Anda: ' . $data['subject']);
-        });
+        // Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
+        //     $message->to('webcrafser@gmail.com')
+        //             ->subject('Pesan Baru dari Kontak: ' . $data['subject']);
+        // });
+
+        // Mail::send('emails.confirmation', ['data' => $data], function ($message) use ($data) {
+        //     $message->to($data['email'])
+        //             ->subject('Konfirmasi Pesan Anda: ' . $data['subject']);
+        // });
 
         return back()->with('success', 'Pesan berhasil dikirim!');
     }

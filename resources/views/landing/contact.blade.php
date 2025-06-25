@@ -5,17 +5,17 @@
 @endsection
 
 @section('content')
-<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container text-center py-5">
-        <h1 class="display-3 text-white mb-4 animated slideInDown">Hubungi Kami</h1>
-        <nav aria-label="breadcrumb animated slideInDown">
-            <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('landing.home') }}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Bantuan</li>
-            </ol>
-        </nav>
+    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-5">
+            <h1 class="display-3 text-white mb-4 animated slideInDown">Hubungi Kami</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="{{ route('landing.home') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Bantuan</li>
+                </ol>
+            </nav>
+        </div>
     </div>
-</div>
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
@@ -28,25 +28,29 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Nama Anda">
+                                    <input type="text" name="nama" class="form-control" id="nama"
+                                        placeholder="Nama Anda">
                                     <label for="name">Nama Anda</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Email Anda">
+                                    <input type="email" name="email" class="form-control" id="email"
+                                        placeholder="Email Anda">
                                     <label for="email">Email Anda</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" name="subject" class="form-control" id="subject" placeholder="Subjek">
+                                    <input type="text" name="subject" class="form-control" id="subject"
+                                        placeholder="Subjek">
                                     <label for="subject">Subjek</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea name="message" class="form-control" placeholder="Tulis pesan Anda di sini" id="message" style="height: 100px"></textarea>
+                                    <textarea name="message" class="form-control" placeholder="Tulis pesan Anda di sini" id="message"
+                                        style="height: 100px"></textarea>
                                     <label for="message">Pesan</label>
                                 </div>
                             </div>

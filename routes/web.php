@@ -31,7 +31,9 @@ use App\Http\Controllers\_06_Finance\PemasukanController;
 use App\Http\Controllers\_02_Penjualan\CustomerController;
 use App\Http\Controllers\_06_Finance\PengeluaranController;
 use App\Http\Controllers\_00_Datatables\KategoriLayananList;
+use App\Http\Controllers\_00_Datatables\PesanList;
 use App\Http\Controllers\_04_SetData\KategoriLayananController;
+use App\Http\Controllers\_05_Setting\PesanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +81,7 @@ Route::middleware(['logs'])->group(function () {
         Route::resource('getPemasukan', PemasukanList::class);
         Route::resource('getRating', RatingList::class);
         Route::resource('getPengeluaran', PengeluaranList::class);
+        Route::resource('getPesan', PesanList::class);
 
         Route::middleware(['auth', 'role:admin,karyawan'])->controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'index');
@@ -169,6 +172,11 @@ Route::middleware(['logs'])->group(function () {
             Route::post('faqs', 'store')->name('faqs.store');
             Route::post('faqs/update/{id}', 'update')->name('faqs.update');
             Route::delete('faqs/destroy/{id}', 'destroy');
+        });
+
+        Route::middleware(['auth', 'role:admin'])->controller(PesanController::class)->group(function () {
+            Route::get('pesan', 'pesan')->name('pesan.index');
+            Route::delete('pesan/destroy/{id}', 'destroy');
         });
 
         Route::middleware(['auth', 'role:admin'])->controller(PemasukanController::class)->group(function () {
