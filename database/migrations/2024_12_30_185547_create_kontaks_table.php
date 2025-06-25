@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('logo');
             $table->string('alamat');
             $table->string('deskripsi');
-            $table->string('maps');
+            $table->text('maps');
             $table->string('no_hp');
             $table->string('email');
             $table->string('instagram');

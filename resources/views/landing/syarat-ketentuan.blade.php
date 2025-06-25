@@ -21,7 +21,7 @@
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="fs-5 fw-bold text-primary">Syarat & Ketentuan</p>
                 <h1 class="display-5 mb-5" style="font-size: 30px;">Ketentuan Layanan Laundry yang Perlu Anda Ketahui</h1>
-            </div>            
+            </div>
             <div class="row gx-0">
                 <div class="col-lg-6 wow fadeIn p-2" data-wow-delay="0.1s">
                     <div class="bg-white shadow d-flex align-items-center h-100 px-5" style="min-height: 160px;">
@@ -31,7 +31,8 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Layanan</h4>
-                                <span>Kami menyediakan layanan laundry dengan pencucian, pengeringan, dan penyetrikaan sesuai standar. Layanan meliputi laundry kiloan, satuan, atau dry cleaning.</span>
+                                <span>Kami menyediakan layanan laundry dengan pencucian, pengeringan, dan penyetrikaan
+                                    sesuai standar. Layanan meliputi laundry kiloan dan satuan.</span>
                             </div>
                         </div>
                     </div>
@@ -44,7 +45,8 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Waktu Penyelesaian</h4>
-                                <span>Waktu penyelesaian tergantung jenis layanan. Perubahan waktu akan diinformasikan kepada pelanggan jika diperlukan.</span>
+                                <span>Waktu penyelesaian tergantung jenis layanan. Perubahan waktu akan diinformasikan
+                                    kepada pelanggan jika diperlukan.</span>
                             </div>
                         </div>
                     </div>
@@ -56,8 +58,9 @@
                                 <i class="fa fa-truck text-primary"></i>
                             </div>
                             <div class="ps-3">
-                                <h4>Pengambilan & Pengantaran</h4>
-                                <span>Pengambilan dan pengantaran dilakukan sesuai jadwal yang disepakati. Pelanggan bertanggung jawab memastikan informasi yang benar.</span>
+                                <h4>Pengambilan</h4>
+                                <span>Pengambilan dilakukan sesuai jadwal yang disepakati. Pelanggan bertanggung jawab
+                                    memastikan informasi yang benar.</span>
                             </div>
                         </div>
                     </div>
@@ -70,7 +73,8 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Barang Hilang atau Rusak</h4>
-                                <span>Kami tidak bertanggung jawab atas barang rusak sebelum proses laundry. Penggantian maksimal 10x biaya laundry jika hilang/rusak karena kelalaian kami.</span>
+                                <span>Kami tidak bertanggung jawab atas barang rusak sebelum proses laundry. Penggantian
+                                    barang akan dilakukan jika hilang/rusak karena kelalaian kami.</span>
                             </div>
                         </div>
                     </div>
@@ -83,7 +87,8 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Barang Tidak Diizinkan</h4>
-                                <span>Barang berbahaya, mudah terbakar, atau bernilai tinggi tidak diperbolehkan. Jika ditemukan, barang dikembalikan tanpa proses.</span>
+                                <span>Barang berbahaya, mudah terbakar, atau bernilai tinggi tidak diperbolehkan. Jika
+                                    ditemukan, barang dikembalikan tanpa proses.</span>
                             </div>
                         </div>
                     </div>
@@ -96,7 +101,8 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Pembayaran</h4>
-                                <span>Pembayaran dilakukan setelah layanan selesai atau sesuai kesepakatan. Kami menerima metode pembayaran tunai atau transfer.</span>
+                                <span>Pembayaran dilakukan setelah layanan selesai atau sesuai kesepakatan. Kami menerima
+                                    metode pembayaran tunai.</span>
                             </div>
                         </div>
                     </div>
@@ -109,7 +115,7 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Kebijakan Pembatalan</h4>
-                                <span>Pembatalan dapat dilakukan sebelum proses dimulai. Jika setelah proses dimulai, biaya tetap dikenakan.</span>
+                                <span>Pembatalan dapat dilakukan sebelum proses dimulai.</span>
                             </div>
                         </div>
                     </div>
@@ -122,7 +128,8 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Kebijakan Privasi</h4>
-                                <span>Data pelanggan dijaga kerahasiaannya dan tidak akan disebarluaskan tanpa izin pelanggan.</span>
+                                <span>Data pelanggan dijaga kerahasiaannya dan tidak akan disebarluaskan tanpa izin
+                                    pelanggan.</span>
                             </div>
                         </div>
                     </div>
@@ -135,7 +142,8 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Perubahan Syarat & Ketentuan</h4>
-                                <span>Kami berhak mengubah syarat dan ketentuan kapan saja. Versi terbaru dapat ditemukan di website kami.</span>
+                                <span>Kami berhak mengubah syarat dan ketentuan kapan saja. Versi terbaru dapat ditemukan di
+                                    website kami.</span>
                             </div>
                         </div>
                     </div>
@@ -148,7 +156,8 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Keamanan Barang</h4>
-                                <span>Kami menjaga keamanan barang pelanggan dengan standar prosedur yang ketat selama proses laundry.</span>
+                                <span>Kami menjaga keamanan barang pelanggan dengan standar prosedur yang ketat selama
+                                    proses laundry.</span>
                             </div>
                         </div>
                     </div>
@@ -161,7 +170,8 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Garansi Kepuasan</h4>
-                                <span>Jika pelanggan merasa tidak puas, kami siap mengevaluasi ulang hasil laundry sesuai keluhan yang diajukan.</span>
+                                <span>Jika pelanggan merasa tidak puas, kami siap mengevaluasi ulang hasil laundry sesuai
+                                    keluhan yang diajukan.</span>
                             </div>
                         </div>
                     </div>
@@ -174,17 +184,19 @@
                             </div>
                             <div class="ps-3">
                                 <h4>Bantuan Pelanggan</h4>
-                                <span>Tim layanan pelanggan kami siap membantu dan memberikan informasi terkait layanan laundry.</span>
+                                <span>Tim layanan pelanggan kami siap membantu dan memberikan informasi terkait layanan
+                                    laundry.</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                
+
+
             </div>
         </div>
     </div>
-    <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="assets/landing/img/carousel-1.jpg">
+    <div class="container-fluid facts my-5 py-5" data-parallax="scroll"
+        data-image-src="assets/landing/img/carousel-1.jpg">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
@@ -197,14 +209,14 @@
                 </div>
                 <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
                     <h1 class="display-4 text-white" data-toggle="counter-up">
-                        {{ App\Models\ResiHistoryModel::whereNotIn('status', ['selesai', 'lunas', 'pending', 'dp', 'gagal'])
-                            ->distinct('no_resi')
-                            ->count('no_resi') }}
-                    </h1>                    
+                        {{ App\Models\ResiHistoryModel::whereNotIn('status', ['selesai', 'lunas', 'pending', 'dp', 'gagal'])->distinct('no_resi')->count('no_resi') }}
+                    </h1>
                     <span class="fs-5 fw-semi-bold text-light">Pesanan Sedang Diproses</span>
                 </div>
                 <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
-                    <h1 class="display-4 text-white" data-toggle="counter-up">{{ App\Models\ResiHistoryModel::where('status', 'selesai')->distinct('no_resi')->count('no_resi') }}</h1>
+                    <h1 class="display-4 text-white" data-toggle="counter-up">
+                        {{ App\Models\ResiHistoryModel::where('status', 'selesai')->distinct('no_resi')->count('no_resi') }}
+                    </h1>
                     <span class="fs-5 fw-semi-bold text-light">Pesanan Selesai</span>
                 </div>
             </div>

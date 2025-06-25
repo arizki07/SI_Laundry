@@ -28,14 +28,23 @@
                     <img class="img-fluid rounded" data-wow-delay="0.1s" src="assets/landing/img/about.jpg">
                 </div>
                 <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
-                    <h1 class="display-1 text-primary mb-0">25</h1>
+                    <h1 class="display-1 text-primary mb-0">10</h1>
                     <p class="text-primary mb-4">Tahun Pengalaman</p>
                     <h1 class="display-5 mb-4">Kami Membuat Pakaian Anda Bersih Seperti Baru</h1>
-                    <p class="mb-4">Dengan pengalaman lebih dari 25 tahun, kami telah melayani berbagai kebutuhan laundry Anda, mulai dari cuci biasa hingga dry cleaning. Kami berkomitmen untuk memberikan hasil yang memuaskan dengan menggunakan peralatan modern dan bahan pembersih berkualitas tinggi. Setiap pakaian yang Anda percayakan kepada kami akan diproses dengan penuh perhatian dan ketelitian, memastikan bahwa pakaian Anda kembali dalam kondisi terbaik seperti baru.</p>
-                    <p class="mb-4">Kami percaya bahwa kepuasan pelanggan adalah hal yang utama. Oleh karena itu, tim kami yang profesional selalu siap memberikan layanan terbaik untuk memenuhi kebutuhan laundry Anda. Dengan berbagai penghargaan yang telah kami raih, kami berusaha terus meningkatkan layanan kami agar tetap menjadi pilihan utama bagi Anda. Jelajahi lebih lanjut tentang layanan kami dan temukan bagaimana kami dapat membantu menjaga kebersihan pakaian Anda dengan sempurna.</p>
-                    <a class="btn btn-primary py-3 px-4" href="{{ route('landing.daftar-harga') }}">Jelajahi Lebih Lanjut</a>
+                    <p class="mb-4">Dengan pengalaman lebih dari 10 tahun, kami telah melayani berbagai kebutuhan laundry
+                        Anda. Kami berkomitmen untuk memberikan hasil yang memuaskan dengan menggunakan peralatan modern dan
+                        bahan pembersih berkualitas tinggi. Setiap pakaian yang Anda percayakan kepada kami akan diproses
+                        dengan penuh perhatian dan ketelitian, memastikan bahwa pakaian Anda kembali dalam kondisi terbaik
+                        seperti baru.</p>
+                    <p class="mb-4">Kami percaya bahwa kepuasan pelanggan adalah hal yang utama. Oleh karena itu, tim kami
+                        yang profesional selalu siap memberikan layanan terbaik untuk memenuhi kebutuhan laundry Anda.
+                        Dengan berbagai penghargaan yang telah kami raih, kami berusaha terus meningkatkan layanan kami agar
+                        tetap menjadi pilihan utama bagi Anda. Jelajahi lebih lanjut tentang layanan kami dan temukan
+                        bagaimana kami dapat membantu menjaga kebersihan pakaian Anda dengan sempurna.</p>
+                    <a class="btn btn-primary py-3 px-4" href="{{ route('landing.daftar-harga') }}">Jelajahi Lebih
+                        Lanjut</a>
                 </div>
-                <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
+                {{-- <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="row g-5">
                         <div class="col-12 col-sm-6 col-lg-12">
                             <div class="border-start ps-4">
@@ -54,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

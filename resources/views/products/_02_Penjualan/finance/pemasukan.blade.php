@@ -56,7 +56,6 @@
                                                                 <p class="invo-addr-1">
                                                                     {{ Auth::user()->name }} <br />
                                                                     {{ Auth::user()->email }} <br />
-                                                                    21-12 Green Street, Meherpur, Bangladesh <br />
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -135,7 +134,7 @@
                                                                     dilakukan sesuai harga yang tertera.</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6 col-md-4 col-sm-5">
+                                                        {{-- <div class="col-lg-6 col-md-4 col-sm-5">
                                                             <div class="mb-30 payment-method">
                                                                 <h3 class="inv-title-1">Payment Method</h3>
                                                                 <ul class="payment-method-list-1 text-14">
@@ -145,7 +144,7 @@
                                                                     <li><strong>Branch Name:</strong> xyz</li>
                                                                 </ul>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
                                                 @if ($kontak)
