@@ -107,19 +107,19 @@
                     </div>
                 </a>
                 @if (Auth::user()->role == 'admin')
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="{{ route('status.index') }}" class="dropdown-item">Status</a>
-                    <a href="{{ route('kontak.index') }}" class="dropdown-item">Profile</a>
-                    <a href="{{ route('rating.index') }}" class="dropdown-item">Rating</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="{{ route('logs.index') }}" class="dropdown-item">Settings</a>
-                    <a href="{{ url('logout') }}" class="dropdown-item">Logout</a>
-                </div>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        {{-- <a href="{{ route('status.index') }}" class="dropdown-item">Status</a> --}}
+                        <a href="{{ route('kontak.index') }}" class="dropdown-item">Profile</a>
+                        <a href="{{ route('rating.index') }}" class="dropdown-item">Rating</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ route('logs.index') }}" class="dropdown-item">Settings</a>
+                        <a href="{{ url('logout') }}" class="dropdown-item">Logout</a>
+                    </div>
                 @else
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="{{ route('logs.index') }}" class="dropdown-item">Settings</a>
-                    <a href="{{ url('logout') }}" class="dropdown-item">Logout</a>
-                </div>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <a href="{{ route('logs.index') }}" class="dropdown-item">Settings</a>
+                        <a href="{{ url('logout') }}" class="dropdown-item">Logout</a>
+                    </div>
                 @endif
             </div>
         </div>
