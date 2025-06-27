@@ -151,21 +151,28 @@ class LandingController extends Controller
         ]);
 
         PesanModel::create([
-            'nama' => $request->nama,
-            'email' => $request->email,
+            'nama'    => $request->nama,
+            'email'   => $request->email,
             'subject' => $request->subject,
             'message' => $request->message,
         ]);
 
-        // Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
-        //     $message->to('webcrafser@gmail.com')
-        //             ->subject('Pesan Baru dari Kontak: ' . $data['subject']);
-        // });
+        $data = [
+            'name'    => $request->nama,
+            'email'   => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ];
 
-        // Mail::send('emails.confirmation', ['data' => $data], function ($message) use ($data) {
-        //     $message->to($data['email'])
-        //             ->subject('Konfirmasi Pesan Anda: ' . $data['subject']);
-        // });
+        Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
+            $message->to('webcrafser@gmail.com')
+                    ->subject('Pesan Baru dari Kontak : ' . $data['subject']);
+        });
+
+        Mail::send('emails.confirmation', ['data' => $data], function ($message) use ($data) {
+            $message->to($data['email'])
+                    ->subject('Konfirmasi Pesan Anda : ' . $data['subject']);
+        });
 
         return back()->with('success', 'Pesan berhasil dikirim!');
     }

@@ -1,9 +1,27 @@
 <meta charset="utf-8">
-<title>{{ $title }} - Epon Laundry</title>
+<title>{{ $title ?? 'Indah Laundry' }} - Indah Laundry</title>
 <meta name="robots" content="noindex">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="" name="keywords">
-<meta content="" name="description">
+<meta name="keywords" content="{{ $keywords ?? 'Laundry, Cuci Baju, Jasa Laundry, Laundry Terdekat, Indah Laundry' }}">
+<meta name="description" content="{{ $description ?? 'Indah Laundry menyediakan layanan laundry profesional, cepat, dan terpercaya untuk kebutuhan Anda.' }}">
+<meta name="author" content="Epon">
+
+{{-- Canonical URL --}}
+<link rel="canonical" href="{{ url()->current() }}">
+
+{{-- Open Graph / Facebook --}}
+<meta property="og:title" content="{{ $title ?? 'Indah Laundry' }} - Indah Laundry" />
+<meta property="og:description" content="{{ $description ?? 'Indah Laundry menyediakan layanan laundry profesional, cepat, dan terpercaya untuk kebutuhan Anda.' }}" />
+<meta property="og:url" content="{{ url()->current() }}" />
+<meta property="og:site_name" content="Indah Laundry">
+<meta property="og:type" content="website" />
+<meta property="og:image" content="{{ asset('assets/landing/img/favicon.png') }}" />
+
+{{-- Twitter Card --}}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title ?? 'Indah Laundry' }} - Indah Laundry">
+<meta name="twitter:description" content="{{ $description ?? 'Indah Laundry menyediakan layanan laundry profesional, cepat, dan terpercaya untuk kebutuhan Anda.' }}">
+<meta name="twitter:image" content="{{ asset('assets/landing/img/favicon.png') }}">
 
 <!-- Favicon -->
 <link href="{{ asset('assets/landing/img/favicon.png') }}" rel="icon">
