@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\_00_Datatables\FaqsList;
 use App\Http\Controllers\_00_Datatables\LogsList;
 use App\Http\Controllers\_00_Datatables\ResiList;
+use App\Http\Controllers\_00_Datatables\PesanList;
 use App\Http\Controllers\_00_Datatables\SalesList;
 use App\Http\Controllers\_00_Datatables\RatingList;
 use App\Http\Controllers\_00_Datatables\StatusList;
@@ -15,6 +16,7 @@ use App\Http\Controllers\_05_Setting\FaqsController;
 use App\Http\Controllers\_05_Setting\LogsController;
 use App\Http\Controllers\_00_Datatables\CategoryList;
 use App\Http\Controllers\_00_Datatables\CustomerList;
+use App\Http\Controllers\_05_Setting\PesanController;
 use App\Http\Controllers\_05_Setting\UsersController;
 use App\Http\Controllers\_00_Datatables\PemasukanList;
 use App\Http\Controllers\_00_Datatables\ReferensiList;
@@ -22,6 +24,7 @@ use App\Http\Controllers\_01_Produk\ProductController;
 use App\Http\Controllers\_02_Penjualan\ResiController;
 use App\Http\Controllers\_04_SetData\StatusController;
 use App\Http\Controllers\_05_Setting\KontakController;
+use App\Http\Controllers\_06_Finance\ReportController;
 use App\Http\Controllers\_02_Penjualan\SalesController;
 use App\Http\Controllers\_00_Datatables\PengeluaranList;
 use App\Http\Controllers\_02_Penjualan\RatingController;
@@ -31,9 +34,7 @@ use App\Http\Controllers\_06_Finance\PemasukanController;
 use App\Http\Controllers\_02_Penjualan\CustomerController;
 use App\Http\Controllers\_06_Finance\PengeluaranController;
 use App\Http\Controllers\_00_Datatables\KategoriLayananList;
-use App\Http\Controllers\_00_Datatables\PesanList;
 use App\Http\Controllers\_04_SetData\KategoriLayananController;
-use App\Http\Controllers\_05_Setting\PesanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -195,6 +196,14 @@ Route::middleware(['logs'])->group(function () {
             Route::post('rating', 'store')->name('rating.store');
             Route::post('rating/update/{id}', 'update')->name('rating.update');
             Route::delete('rating/destroy/{id}', 'destroy');
+        });
+
+        Route::middleware(['auth', 'role:admin,karyawan'])->controller(ReportController::class)->group(function () {
+            Route::get('report', 'index')->name('report.index');
+            Route::get('report/export/pdf', 'exportPdf')->name('report.pdf');
+            Route::get('/report/check', 'show')->name('report.check');
+            Route::get('/report/detail/pemasukan', 'detailPemasukan')->name('report.detail.pemasukan');
+            Route::get('/report/detail/pengeluaran', 'detailPengeluaran')->name('report.detail.pengeluaran');
         });
     });
 });

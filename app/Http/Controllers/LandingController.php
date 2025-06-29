@@ -164,15 +164,15 @@ class LandingController extends Controller
             'message' => $request->message,
         ];
 
-        Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
-            $message->to('webcrafser@gmail.com')
-                    ->subject('Pesan Baru dari Kontak : ' . $data['subject']);
-        });
+        // Mail::send('emails.contact', ['data' => $data], function ($message) use ($data) {
+        //     $message->to('webcrafser@gmail.com')
+        //             ->subject('Pesan Baru dari Kontak : ' . $data['subject']);
+        // });
 
-        Mail::send('emails.confirmation', ['data' => $data], function ($message) use ($data) {
-            $message->to($data['email'])
-                    ->subject('Konfirmasi Pesan Anda : ' . $data['subject']);
-        });
+        // Mail::send('emails.confirmation', ['data' => $data], function ($message) use ($data) {
+        //     $message->to($data['email'])
+        //             ->subject('Konfirmasi Pesan Anda : ' . $data['subject']);
+        // });
 
         return back()->with('success', 'Pesan berhasil dikirim!');
     }
