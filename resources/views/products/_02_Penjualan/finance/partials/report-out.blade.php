@@ -8,6 +8,7 @@
                     <th>Kategori</th>
                     <th>Jumlah</th>
                     <th>Metode</th>
+                    <th>Status</th>
                     <th>Tanggal</th>
                 </tr>
             </thead>
@@ -20,6 +21,13 @@
                         <td>Rp{{ number_format($p->jumlah, 0, ',', '.') }}</td>
                         <td>
                             <span class="badge bg-red-lt">{{ $p->metode_pembayaran }}</span>
+                        </td>
+                        <td>
+                            @if ($p->status == '1')
+                                <span class="badge bg-green-lt">Lunas</span>
+                            @else
+                                <span class="badge bg-red-lt">Pending</span>
+                            @endif
                         </td>
                         <td>{{ \Carbon\Carbon::parse($p->tanggal_pengeluaran)->format('d/m/Y') }}</td>
                     </tr>
