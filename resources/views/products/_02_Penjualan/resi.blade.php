@@ -65,9 +65,11 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="button" class="btn btn-primary btn-submit-update"
+                                data-id="{{ $item->id }}">Update</button>
                         </div>
                     </form>
+
 
                 </div>
             </div>
@@ -276,19 +278,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Ambil semua elemen select dengan class .status-select
-            document.querySelectorAll('.status-select').forEach(function(selectElement) {
-                // Simpan status sebelumnya agar bisa dikembalikan jika batal
-                let previousValue = selectElement.value;
+            document.querySelectorAll('.btn-submit-update').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const form = document.getElementById('form-update-' + id);
+                    const statusSelect = form.querySelector('select[name="status"]');
+                    const selectedStatus = statusSelect.value;
 
-                selectElement.addEventListener('change', function(e) {
-                    const selectedValue = e.target.value;
-                    const formId = 'form-update-' + e.target.getAttribute('data-id');
-                    const form = document.getElementById(formId);
-
-                    // Jika status dipilih adalah "selesai"
-                    if (selectedValue === 'selesai') {
-                        // Tampilkan konfirmasi SweetAlert
+                    // Jika statusnya selesai, tampilkan SweetAlert
+                    if (selectedStatus === 'selesai') {
                         Swal.fire({
                             title: 'Yakin ingin menyelesaikan?',
                             text: "Status akan diubah menjadi SELESAI. Data akan terkunci!",
@@ -300,16 +298,12 @@
                             cancelButtonText: 'Batal'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                // Submit form jika disetujui
                                 form.submit();
-                            } else {
-                                // Jika dibatalkan, kembalikan ke nilai sebelumnya
-                                e.target.value = previousValue;
                             }
                         });
                     } else {
-                        // Jika bukan "selesai", update nilai sebelumnya
-                        previousValue = selectedValue;
+                        // Jika bukan selesai, langsung submit
+                        form.submit();
                     }
                 });
             });
