@@ -100,7 +100,7 @@ class DashboardController extends Controller
                 'total_pengeluaran' => (int) $cout->total_pengeluaran,
             ];
         });
-        dd($chart_out);
+        // dd($chart_out);
         $pengeluaran = $out->sum('total_pengeluaran');
         $bulan_lalu = Carbon::create($year, $month, 1)->subMonth();
         $pengeluaran_bulan_lalu = PengeluaranModel::whereYear('tanggal_pengeluaran', $bulan_lalu->year)

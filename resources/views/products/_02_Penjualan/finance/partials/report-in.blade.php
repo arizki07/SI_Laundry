@@ -8,6 +8,7 @@
                     <th>No Invoice</th>
                     <th>Total</th>
                     <th>Metode</th>
+                    <th>Status</th>
                     <th>Tanggal</th>
                 </tr>
             </thead>
@@ -19,6 +20,13 @@
                         <td>{{ $s->no_invoice }}</td>
                         <td>Rp{{ number_format($s->total_harga, 0, ',', '.') }}</td>
                         <td>{{ $s->metode_pembayaran }}</td>
+                        <td>
+                            @if ($s->status_pembayaran == 'lunas')
+                                <span class="badge bg-green-lt">Lunas</span>
+                            @else
+                                <span class="badge bg-red-lt">Pending</span>
+                            @endif
+                        </td>
                         <td>{{ \Carbon\Carbon::parse($s->created_at)->format('d/m/Y') }}</td>
                     </tr>
                 @endforeach

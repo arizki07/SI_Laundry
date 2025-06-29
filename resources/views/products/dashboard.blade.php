@@ -13,13 +13,25 @@
     <script src="{{ asset('assets/dist/libs/apexcharts/dist/apexcharts.min.js?1692870487') }}" defer></script>
     <script>
         // SALES
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const salesData = @json($sales);
             const chartOut = @json($chart_out);
 
-            const dates = salesData.map(sale => sale.date);
-            const salesTotals = salesData.map(sale => sale.total_sales);
-            const chartOutTotal = chartOut.map(pengeluaran => pengeluaran.total_pengeluaran);
+            const salesMap = {};
+            salesData.forEach(sale => {
+                salesMap[sale.date] = sale.total_sales;
+            });
+
+            const outMap = {};
+            chartOut.forEach(pengeluaran => {
+                outMap[pengeluaran.date] = pengeluaran.total_pengeluaran;
+            });
+
+            const allDates = Array.from(new Set([...Object.keys(salesMap), ...Object.keys(outMap)]))
+                .sort();
+
+            const salesTotals = allDates.map(date => salesMap[date] || 0);
+            const chartOutTotal = allDates.map(date => outMap[date] || 0);
 
             window.ApexCharts && (new ApexCharts(document.getElementById('chart-sales'), {
                 chart: {
@@ -43,14 +55,12 @@
                     curve: "smooth",
                 },
                 series: [{
-                        name: "Sales",
-                        data: salesTotals
-                    },
-                    {
-                        name: "Pengeluaran",
-                        data: chartOutTotal
-                    }
-                ],
+                    name: "Sales",
+                    data: salesTotals
+                }, {
+                    name: "Pengeluaran",
+                    data: chartOutTotal
+                }],
                 tooltip: {
                     theme: 'dark'
                 },
@@ -64,7 +74,7 @@
                     strokeDashArray: 4,
                 },
                 xaxis: {
-                    categories: dates,
+                    categories: allDates,
                     labels: {
                         padding: 0,
                     },
