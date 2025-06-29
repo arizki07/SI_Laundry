@@ -124,9 +124,12 @@
                                                                     <tr>
                                                                         <td>{{ $index++ }}</td>
                                                                         <td>{{ $itm->product->nama_produk }}</td>
-                                                                        <td class="text-center">Rp. {{ number_format($itm->harga_per_qty, 2) }}</td>
+                                                                        <td class="text-center">Rp.
+                                                                            {{ number_format($itm->harga_per_qty, 2) }}
+                                                                        </td>
                                                                         <td class="text-center">{{ $itm->qty }}</td>
-                                                                        <td class="text-end">Rp. {{ number_format($itm->total, 2) }}</td>
+                                                                        <td class="text-end">Rp.
+                                                                            {{ number_format($itm->total, 2) }}</td>
                                                                     </tr>
                                                                 @endforeach
 
@@ -136,7 +139,8 @@
                                                                         <strong>Total</strong>
                                                                     </td>
                                                                     <td class="text-end">
-                                                                        <strong>Rp. {{ number_format($totalBeforeDiscount, 2) }}</strong>
+                                                                        <strong>Rp.
+                                                                            {{ number_format($totalBeforeDiscount, 2) }}</strong>
                                                                     </td>
                                                                 </tr>
 
@@ -146,7 +150,8 @@
                                                                         <strong>Diskon</strong>
                                                                     </td>
                                                                     <td class="text-end">
-                                                                        <strong>Rp. {{ number_format($diskon, 2) }}</strong>
+                                                                        <strong>Rp.
+                                                                            {{ number_format($diskon, 2) }}</strong>
                                                                     </td>
                                                                 </tr>
 
@@ -156,7 +161,8 @@
                                                                         <strong>SubTotal</strong>
                                                                     </td>
                                                                     <td class="text-end">
-                                                                        <strong>Rp. {{ number_format($grandTotal, 2) }}</strong>
+                                                                        <strong>Rp.
+                                                                            {{ number_format($grandTotal, 2) }}</strong>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -218,8 +224,8 @@
                                                 </a> --}}
                                                 <div class="dropdown">
                                                     <button class="btn btn-lg btn-primary dropdown-toggle" type="button"
-                                                        id="downloadDropdown{{ $item->id }}" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
+                                                        id="downloadDropdown{{ $item->id }}"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
                                                         Download Invoice
                                                     </button>
                                                     <ul class="dropdown-menu"
@@ -500,6 +506,12 @@
                         className: "text-center",
                         orderable: false,
                         searchable: false,
+                    },
+                    {
+                        title: 'tanggal',
+                        data: 'created_at',
+                        name: 'created_at',
+                        className: "cuspad0 cuspad1 text-center"
                     },
                     {
                         title: 'customer',

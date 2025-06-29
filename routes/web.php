@@ -116,6 +116,7 @@ Route::middleware(['logs'])->group(function () {
         Route::middleware(['auth', 'role:admin,karyawan'])->controller(ResiController::class)->group(function () {
             Route::get('resi', 'resi');
             Route::post('update/resi/{id}', 'updateResi')->name('resi.update');
+            Route::get('/resi/unlock/{id}', 'unlock')->name('resi.unlock')->middleware('role:admin');
         });
 
         //SET DATA

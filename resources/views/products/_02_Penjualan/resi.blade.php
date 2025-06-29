@@ -13,7 +13,9 @@
                         <h5 class="modal-title">Perbaharui Status Resi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ route('resi.update', $item->id) }}" method="POST">
+                    <!-- Form dalam modal -->
+                    <form id="form-update-{{ $item->id }}" action="{{ route('resi.update', $item->id) }}"
+                        method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="row">
@@ -21,22 +23,22 @@
                                     <div class="mb-3">
                                         <label class="form-label">No Cust</label>
                                         <input type="text" name="no_cust" class="form-control cursor-not-allowed"
-                                            required placeholder="Masukkan nama produk" value="{{ $item->no_cust }}"
-                                            readonly>
+                                            required value="{{ $item->no_cust }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">No Resi</label>
                                         <input type="text" name="no_resi" class="form-control cursor-not-allowed"
-                                            required placeholder="Masukkan nama produk" value="{{ $item->no_resi }}"
-                                            readonly>
+                                            required value="{{ $item->no_resi }}" readonly>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="mb-3">
                                 <label class="form-label">Status</label>
-                                <select class="form-select" name="status" required>
+                                <select class="form-select status-select" name="status" data-id="{{ $item->id }}"
+                                    required>
                                     <option selected disabled>--Pilih Status--</option>
                                     <option value="diterima" {{ $item->status === 'diterima' ? 'selected' : '' }}>Diterima
                                     </option>
@@ -60,11 +62,13 @@
                                 <textarea class="form-control" name="catatan" rows="3" placeholder="Isi catatan">{{ $item->catatan }}</textarea>
                             </div>
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -216,6 +220,12 @@
                         searchable: false,
                     },
                     {
+                        title: 'tanggal',
+                        data: 'created_at',
+                        name: 'created_at',
+                        className: "cuspad0 cuspad1 text-center"
+                    },
+                    {
                         title: 'customer',
                         data: 'nama_customer',
                         name: 'nama_customer',
@@ -260,6 +270,48 @@
                 const button = event.relatedTarget;
                 const recordId = button.getAttribute('data-id');
                 deleteForm.action = `/produk/destroy/${recordId}`;
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ambil semua elemen select dengan class .status-select
+            document.querySelectorAll('.status-select').forEach(function(selectElement) {
+                // Simpan status sebelumnya agar bisa dikembalikan jika batal
+                let previousValue = selectElement.value;
+
+                selectElement.addEventListener('change', function(e) {
+                    const selectedValue = e.target.value;
+                    const formId = 'form-update-' + e.target.getAttribute('data-id');
+                    const form = document.getElementById(formId);
+
+                    // Jika status dipilih adalah "selesai"
+                    if (selectedValue === 'selesai') {
+                        // Tampilkan konfirmasi SweetAlert
+                        Swal.fire({
+                            title: 'Yakin ingin menyelesaikan?',
+                            text: "Status akan diubah menjadi SELESAI. Data akan terkunci!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya, lanjutkan!',
+                            cancelButtonText: 'Batal'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Submit form jika disetujui
+                                form.submit();
+                            } else {
+                                // Jika dibatalkan, kembalikan ke nilai sebelumnya
+                                e.target.value = previousValue;
+                            }
+                        });
+                    } else {
+                        // Jika bukan "selesai", update nilai sebelumnya
+                        previousValue = selectedValue;
+                    }
+                });
             });
         });
     </script>

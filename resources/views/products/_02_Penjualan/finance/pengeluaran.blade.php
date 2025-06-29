@@ -333,15 +333,15 @@
                         searchable: false,
                     },
                     {
-                        title: 'no Pengeluaran',
-                        data: 'no_pengeluaran',
-                        name: 'no_pengeluaran',
+                        title: 'tanggal',
+                        data: 'tanggal_pengeluaran',
+                        name: 'tanggal_pengeluaran',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'tgl',
-                        data: 'tanggal_pengeluaran',
-                        name: 'tanggal_pengeluaran',
+                        title: 'no Pengeluaran',
+                        data: 'no_pengeluaran',
+                        name: 'no_pengeluaran',
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {

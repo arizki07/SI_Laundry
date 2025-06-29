@@ -116,7 +116,7 @@ class SalesController extends Controller
 
         foreach ($validated['products'] as $index => $productId) {
             $product = ProductModel::findOrFail($productId);
-            
+
             $qty = $validated['qty'][$index];
             $hargaPerQty = $product->harga;
             $total = $validated['total'][$index];
@@ -152,6 +152,7 @@ class SalesController extends Controller
             'status' => 'diterima',
             'catatan' => 'Pesanan baru telah diterima dan sedang diproses',
             'foto_final' => null,
+            'locked' => 0,
             'created_by' => Auth::user()->name,
         ]);
 
@@ -176,11 +177,11 @@ class SalesController extends Controller
 
         // Buat detail item pesanan
         $itemsDetail = $salesItems
-        ->map(function ($item) {
-            $namaProduk = $item->product->nama_produk ?? 'Produk Tidak Ditemukan';
-            return "- {$namaProduk}, Qty: {$item->qty}, Total: Rp. " . number_format($item->total, 0, ',', '.');
-        })
-        ->implode("\n");
+            ->map(function ($item) {
+                $namaProduk = $item->product->nama_produk ?? 'Produk Tidak Ditemukan';
+                return "- {$namaProduk}, Qty: {$item->qty}, Total: Rp. " . number_format($item->total, 0, ',', '.');
+            })
+            ->implode("\n");
 
         $totalSebelumDiskon = $sales->total_harga + $sales->disc;
         $urlCek = url('cek-resi');
@@ -220,7 +221,7 @@ Cek resi : {$urlCek}
      */
     private function sendViaFonnte($to, $message)
     {
-        $token = 'vTpsx9SNM6F4JTAwgcEy'; // Ganti dengan token Fonnte asli
+        $token = 'hNWLVp9mNiQSiRg8H57Q'; // Ganti dengan token Fonnte asli
         $url = 'https://api.fonnte.com/send';
 
         $data = [
@@ -326,7 +327,7 @@ Cek resi : {$urlCek}
 
         foreach ($validated['products'] as $index => $productId) {
             $product = ProductModel::findOrFail($productId);
-            
+
             $qty = $validated['qty'][$index];
             $hargaPerQty = $product->harga;
             $total = $validated['total'][$index];

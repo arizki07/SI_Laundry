@@ -10,7 +10,7 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-blue-lt">
-                        <h5 class="modal-title text-blue">Detail Produk</h5>
+                        <h5 class="modal-title text-blue">Detail Pesan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Message</label>
-                                <textarea class="form-control" name="message" rows="6" placeholder="Isi deskripsi produk">value="{{ $item->message }}"</textarea>
+                                <textarea class="form-control" name="message" rows="6" placeholder="Isi deskripsi produk">{{ $item->message }}</textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -164,13 +164,6 @@
                         action: function(e, dt, node, config) {
                             dt.ajax.reload();
                         }
-                    },
-                    {
-                        className: 'btn bg-blue-lt btn-md',
-                        text: '<i class="fa fa-add"></i> Add Product',
-                        action: function(e, dt, node, config) {
-                            $('#modal-add').modal('show');
-                        },
                     },
                 ],
                 "language": {

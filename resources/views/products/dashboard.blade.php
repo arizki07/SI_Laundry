@@ -118,11 +118,9 @@
                     },
                     series: [
                         transactionStatus.pending,
-                        transactionStatus.gagal,
                         transactionStatus.lunas,
-                        transactionStatus.refund,
                     ],
-                    labels: ["Pending", "Gagal", "Success", "Refund"],
+                    labels: ["Pending", "Lunas"],
                     tooltip: {
                         theme: "dark",
                     },
@@ -130,10 +128,8 @@
                         strokeDashArray: 4,
                     },
                     colors: [
-                        tabler.getColor("warning"),
                         tabler.getColor("danger"),
-                        tabler.getColor("Success"),
-                        tabler.getColor("info"),
+                        tabler.getColor("green"),
                     ],
                     legend: {
                         show: true,

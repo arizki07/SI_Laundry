@@ -68,7 +68,8 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Customer</label>
-                                                    <select class="form-select" name="customer_id">
+                                                    {{-- Select disabled hanya untuk tampilan --}}
+                                                    <select class="form-select" disabled>
                                                         <option disabled>--Pilih Customer--</option>
                                                         @foreach ($customers as $customer)
                                                             <option value="{{ $customer->id }}"
@@ -77,31 +78,40 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
+
+                                                    {{-- Hidden input untuk tetap mengirim customer_id --}}
+                                                    <input type="hidden" name="customer_id"
+                                                        value="{{ $sales->customer_id }}">
                                                 </div>
 
-                                                <div class="mb-3">
+
+                                                {{-- <div class="mb-3">
                                                     <label class="form-label">File Bukti</label>
                                                     <input type="file" class="form-control" name="file_bukti">
                                                     @if ($sales->file_bukti)
                                                         <a href="{{ asset('storage/sales/bukti/' . $sales->file_bukti) }}"
                                                             target="_blank">Lihat File</a>
                                                     @endif
-                                                </div>
+                                                </div> --}}
                                             </div>
 
                                             <div class="col-lg-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Metode Pembayaran</label>
-                                                    <select class="form-select" name="metode_pembayaran">
+                                                    {{-- Select hanya untuk tampilan (disabled) --}}
+                                                    <select class="form-select" disabled>
                                                         <option disabled>--Pilih Metode Pembayaran--</option>
                                                         <option value="cash"
-                                                            {{ $sales->metode_pembayaran == 'cash' ? 'selected' : '' }}>Cash
+                                                            {{ $sales->metode_pembayaran == 'cash' ? 'selected' : '' }}>
+                                                            Cash
                                                         </option>
-                                                        <option value="transfer"
-                                                            {{ $sales->metode_pembayaran == 'transfer' ? 'selected' : '' }}>
-                                                            Transfer</option>
                                                     </select>
+
+                                                    {{-- Hidden input untuk tetap mengirim nilai metode pembayaran --}}
+                                                    <input type="hidden" name="metode_pembayaran"
+                                                        value="{{ $sales->metode_pembayaran }}">
                                                 </div>
+
 
                                                 <div class="mb-3">
                                                     <label class="form-label">Status Pembayaran</label>
@@ -111,12 +121,6 @@
                                                         <option value="pending"
                                                             {{ $sales->status_pembayaran == 'pending' ? 'selected' : '' }}>
                                                             Pending</option>
-                                                        <option value="cancel"
-                                                            {{ $sales->status_pembayaran == 'cancel' ? 'selected' : '' }}>
-                                                            Cancel</option>
-                                                        <option value="dp"
-                                                            {{ $sales->status_pembayaran == 'dp' ? 'selected' : '' }}>DP
-                                                        </option>
                                                         <option value="lunas"
                                                             {{ $sales->status_pembayaran == 'lunas' ? 'selected' : '' }}>
                                                             Lunas</option>

@@ -85,18 +85,15 @@
                                                         <option value="cash"
                                                             {{ old('metode_pembayaran') == 'cash' ? 'selected' : '' }}>Cash
                                                         </option>
-                                                        <option value="transfer"
-                                                            {{ old('metode_pembayaran') == 'transfer' ? 'selected' : '' }}>
-                                                            Transfer</option>
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="mb-3">
+                                                {{-- <div class="mb-3">
                                                     <label class="form-label">File Bukti (Opsional)</label>
                                                     <input type="file" class="form-control" name="file_bukti">
-                                                </div>
+                                                </div> --}}
 
                                                 <div class="mb-3">
                                                     <label class="form-label">Status Pembayaran</label>
@@ -105,12 +102,6 @@
                                                         <option value="pending"
                                                             {{ old('status_pembayaran') == 'pending' ? 'selected' : '' }}>
                                                             Pending</option>
-                                                        <option value="cancel"
-                                                            {{ old('status_pembayaran') == 'cancel' ? 'selected' : '' }}>
-                                                            Cancel</option>
-                                                        <option value="dp"
-                                                            {{ old('status_pembayaran') == 'dp' ? 'selected' : '' }}>DP
-                                                        </option>
                                                         <option value="lunas"
                                                             {{ old('status_pembayaran') == 'lunas' ? 'selected' : '' }}>
                                                             Lunas</option>
@@ -199,15 +190,18 @@
                                                 <div class="row mt-3">
                                                     <div class="col-md-3 offset-md-9 mb-2">
                                                         <label class="form-label fw-bold">Total</label>
-                                                        <input type="text" class="form-control text-end" id="total" name="total_two" readonly value="0">
+                                                        <input type="text" class="form-control text-end"
+                                                            id="total" name="total_two" readonly value="0">
                                                     </div>
                                                     <div class="col-md-3 offset-md-9 mb-2">
                                                         <label class="form-label fw-bold">Diskon (Rp)</label>
-                                                        <input type="text" class="form-control text-end" id="diskon" name="disc" value="0">
+                                                        <input type="text" class="form-control text-end"
+                                                            id="diskon" name="disc" value="0">
                                                     </div>
                                                     <div class="col-md-3 offset-md-9">
                                                         <label class="form-label fw-bold">Subtotal</label>
-                                                        <input type="text" class="form-control text-end" id="subtotal" name="subtotal" readonly value="0">
+                                                        <input type="text" class="form-control text-end"
+                                                            id="subtotal" name="subtotal" readonly value="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -235,154 +229,155 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const container = document.getElementById('sales-items-container');
-        const totalField = document.getElementById('total');
-        const diskonInput = document.getElementById('diskon');
-        const subtotalField = document.getElementById('subtotal');
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('sales-items-container');
+            const totalField = document.getElementById('total');
+            const diskonInput = document.getElementById('diskon');
+            const subtotalField = document.getElementById('subtotal');
 
-        const calculateTotal = (row) => {
-            const priceInput = row.querySelector('.price-input');
-            const qtyInput = row.querySelector('.qty-input');
-            const totalInput = row.querySelector('.total-input');
-            const roundUpCheckbox = row.querySelector('.round-up-checkbox');
+            const calculateTotal = (row) => {
+                const priceInput = row.querySelector('.price-input');
+                const qtyInput = row.querySelector('.qty-input');
+                const totalInput = row.querySelector('.total-input');
+                const roundUpCheckbox = row.querySelector('.round-up-checkbox');
 
-            const price = parseFloat(priceInput.value) || 0;
-            let qty = parseFloat(qtyInput.value) || 0;
+                const price = parseFloat(priceInput.value) || 0;
+                let qty = parseFloat(qtyInput.value) || 0;
 
-            if (roundUpCheckbox.checked) {
-                qty = (Math.ceil(qty) % 2 === 0) ? Math.ceil(qty) : Math.ceil(qty + 1);
-            } else {
-                qty = Math.floor(qty);
-            }
-
-            totalInput.value = (qty * price).toFixed(2);
-            calculateGrandTotal();
-        };
-
-        const calculateGrandTotal = () => {
-            let total = 0;
-            document.querySelectorAll('.total-input').forEach(input => {
-                const val = parseFloat(input.value);
-                if (!isNaN(val)) {
-                    total += val;
-                }
-            });
-
-            totalField.value = total.toFixed(2);
-
-            // Ambil nilai diskon
-            let diskon = parseFloat(diskonInput.value.replace(/[^0-9.-]+/g, '')) || 0;
-
-            const subtotal = total - diskon;
-            subtotalField.value = subtotal.toFixed(2);
-        };
-
-        // Event handler untuk produk berubah
-        container.addEventListener('change', async function (event) {
-            const row = event.target.closest('.sales-item');
-
-            if (event.target.classList.contains('product-select')) {
-                const selectedOption = event.target.selectedOptions[0];
-                const price = parseFloat(selectedOption.getAttribute('data-price')) || 0;
-                row.querySelector('.price-input').value = price;
-                calculateTotal(row);
-            }
-
-            if (event.target.classList.contains('round-up-checkbox')) {
-                const checkbox = event.target;
-
-                if (checkbox.checked) {
-                    const result = await Swal.fire({
-                        title: 'Masukkan jumlah pembulatan',
-                        input: 'number',
-                        inputLabel: 'Jumlah pembulatan (total)',
-                        inputPlaceholder: 'Contoh: 15000',
-                        showCancelButton: true,
-                        confirmButtonText: 'OK',
-                        cancelButtonText: 'Batal',
-                        inputValidator: (value) => {
-                            if (!value || isNaN(value) || value <= 0) {
-                                return 'Masukkan angka valid lebih dari 0!';
-                            }
-                        }
-                    });
-
-                    if (result.isConfirmed) {
-                        const pembulatan = parseFloat(result.value);
-                        row.querySelector('.total-input').value = pembulatan.toFixed(2);
-
-                        row.querySelector('.qty-input').readOnly = true;
-                        row.querySelector('.price-input').readOnly = true;
-
-                        calculateGrandTotal();
-                    } else {
-                        checkbox.checked = false;
-                    }
+                if (roundUpCheckbox.checked) {
+                    qty = (Math.ceil(qty) % 2 === 0) ? Math.ceil(qty) : Math.ceil(qty + 1);
                 } else {
-                    row.querySelector('.qty-input').readOnly = false;
-                    row.querySelector('.price-input').readOnly = false;
+                    qty = Math.floor(qty);
+                }
+
+                totalInput.value = (qty * price).toFixed(2);
+                calculateGrandTotal();
+            };
+
+            const calculateGrandTotal = () => {
+                let total = 0;
+                document.querySelectorAll('.total-input').forEach(input => {
+                    const val = parseFloat(input.value);
+                    if (!isNaN(val)) {
+                        total += val;
+                    }
+                });
+
+                totalField.value = total.toFixed(2);
+
+                // Ambil nilai diskon
+                let diskon = parseFloat(diskonInput.value.replace(/[^0-9.-]+/g, '')) || 0;
+
+                const subtotal = total - diskon;
+                subtotalField.value = subtotal.toFixed(2);
+            };
+
+            // Event handler untuk produk berubah
+            container.addEventListener('change', async function(event) {
+                const row = event.target.closest('.sales-item');
+
+                if (event.target.classList.contains('product-select')) {
+                    const selectedOption = event.target.selectedOptions[0];
+                    const price = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+                    row.querySelector('.price-input').value = price;
                     calculateTotal(row);
                 }
-            }
-        });
 
-        // Qty/price berubah
-        container.addEventListener('input', function (event) {
-            if (event.target.classList.contains('qty-input') || event.target.classList.contains('price-input')) {
-                const row = event.target.closest('.sales-item');
-                calculateTotal(row);
-            }
-        });
+                if (event.target.classList.contains('round-up-checkbox')) {
+                    const checkbox = event.target;
 
-        // Diskon berubah
-        diskonInput.addEventListener('input', function () {
+                    if (checkbox.checked) {
+                        const result = await Swal.fire({
+                            title: 'Masukkan jumlah pembulatan',
+                            input: 'number',
+                            inputLabel: 'Jumlah pembulatan (total)',
+                            inputPlaceholder: 'Contoh: 15000',
+                            showCancelButton: true,
+                            confirmButtonText: 'OK',
+                            cancelButtonText: 'Batal',
+                            inputValidator: (value) => {
+                                if (!value || isNaN(value) || value <= 0) {
+                                    return 'Masukkan angka valid lebih dari 0!';
+                                }
+                            }
+                        });
+
+                        if (result.isConfirmed) {
+                            const pembulatan = parseFloat(result.value);
+                            row.querySelector('.total-input').value = pembulatan.toFixed(2);
+
+                            row.querySelector('.qty-input').readOnly = true;
+                            row.querySelector('.price-input').readOnly = true;
+
+                            calculateGrandTotal();
+                        } else {
+                            checkbox.checked = false;
+                        }
+                    } else {
+                        row.querySelector('.qty-input').readOnly = false;
+                        row.querySelector('.price-input').readOnly = false;
+                        calculateTotal(row);
+                    }
+                }
+            });
+
+            // Qty/price berubah
+            container.addEventListener('input', function(event) {
+                if (event.target.classList.contains('qty-input') || event.target.classList.contains(
+                        'price-input')) {
+                    const row = event.target.closest('.sales-item');
+                    calculateTotal(row);
+                }
+            });
+
+            // Diskon berubah
+            diskonInput.addEventListener('input', function() {
+                calculateGrandTotal();
+            });
+
+            // Tambah item
+            document.getElementById('add-item-button').addEventListener('click', function() {
+                const itemTemplate = container.querySelector('.sales-item').cloneNode(true);
+                const itemCount = container.querySelectorAll('.sales-item').length;
+
+                itemTemplate.querySelectorAll('input').forEach(input => {
+                    if (input.type === 'checkbox') {
+                        input.checked = false;
+                    } else if (input.type === 'hidden') {
+                        input.value = '0';
+                    } else {
+                        input.value = '';
+                    }
+                    input.readOnly = false;
+                });
+
+                itemTemplate.querySelector('.product-select').selectedIndex = 0;
+                itemTemplate.querySelector('.price-input').readOnly = true;
+                itemTemplate.querySelector('.total-input').readOnly = true;
+                itemTemplate.querySelectorAll('[name^="round_up"]').forEach((input) => {
+                    input.name = `round_up[${itemCount}]`;
+                });
+
+                container.appendChild(itemTemplate);
+            });
+
+            // Hapus item
+            container.addEventListener('click', function(event) {
+                if (event.target.classList.contains('btn-remove-item')) {
+                    const row = event.target.closest('.sales-item');
+                    if (container.querySelectorAll('.sales-item').length > 1) {
+                        row.remove();
+                        calculateGrandTotal();
+                    } else {
+                        alert('Minimal satu item harus ada.');
+                    }
+                }
+            });
+
+            // Hitung awal
             calculateGrandTotal();
         });
-
-        // Tambah item
-        document.getElementById('add-item-button').addEventListener('click', function () {
-            const itemTemplate = container.querySelector('.sales-item').cloneNode(true);
-            const itemCount = container.querySelectorAll('.sales-item').length;
-
-            itemTemplate.querySelectorAll('input').forEach(input => {
-                if (input.type === 'checkbox') {
-                    input.checked = false;
-                } else if (input.type === 'hidden') {
-                    input.value = '0';
-                } else {
-                    input.value = '';
-                }
-                input.readOnly = false;
-            });
-
-            itemTemplate.querySelector('.product-select').selectedIndex = 0;
-            itemTemplate.querySelector('.price-input').readOnly = true;
-            itemTemplate.querySelector('.total-input').readOnly = true;
-            itemTemplate.querySelectorAll('[name^="round_up"]').forEach((input) => {
-                input.name = `round_up[${itemCount}]`;
-            });
-
-            container.appendChild(itemTemplate);
-        });
-
-        // Hapus item
-        container.addEventListener('click', function (event) {
-            if (event.target.classList.contains('btn-remove-item')) {
-                const row = event.target.closest('.sales-item');
-                if (container.querySelectorAll('.sales-item').length > 1) {
-                    row.remove();
-                    calculateGrandTotal();
-                } else {
-                    alert('Minimal satu item harus ada.');
-                }
-            }
-        });
-
-        // Hitung awal
-        calculateGrandTotal();
-    });
-</script>
+    </script>
 
 
     <script>

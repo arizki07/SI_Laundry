@@ -10,6 +10,7 @@ use App\Models\SalesModel;
 use App\Models\StatusModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ResiController extends Controller
 {
@@ -43,6 +44,7 @@ class ResiController extends Controller
             $resi->update([
                 'catatan' => $request->input('catatan'),
                 'created_by' => Auth::user()->name,
+                'locked' => $request->input('status') === 'selesai' ? 1 : $resi->locked,
             ]);
             $resi->touch();
         } else {
@@ -53,85 +55,101 @@ class ResiController extends Controller
                 'status' => $request->input('status'),
                 'catatan' => $request->input('catatan'),
                 'foto_final' => $existingResi->foto_final,
+                'locked' => $request->input('status') === 'selesai' ? 1 : 0,
                 'created_by' => Auth::user()->name,
             ]);
         }
 
-        // if ($request->input('status') === 'success') {
-        //     $this->sendWhatsApp($newResi);
-        // }
+        if ($request->input('status') === 'selesai' && $resi) {
+            $this->sendWhatsApp($resi);
+        }
 
         return redirect()->back()->with('success', 'Resi history berhasil diperbarui');
     }
 
-    //     private function sendWhatsApp($resi)
-    //     {
-    //         $sales = SalesModel::where('no_resi', $resi->no_resi)->first();
+    private function sendWhatsApp($resi)
+    {
+        $sales = SalesModel::where('no_resi', $resi->no_resi)->first();
 
-    //         if ($sales) {
-    //             $customer = CustomerModel::find($sales->customer_id);
-    //             $salesItems = SalesItemModel::where('sale_id', $sales->id)->get();
+        if ($sales) {
+            $customer = CustomerModel::find($sales->customer_id);
+            $salesItems = SalesItemModel::where('sale_id', $sales->id)->get();
 
-    //             $itemsDetail = $salesItems->map(function ($item) {
-    //                 $totalItem = $item->qty * $item->harga_per_qty;
-    //                 return "- Produk ID: {$item->product_id}, Qty: {$item->qty}, Harga: Rp. " . number_format($item->harga_per_qty, 0, ',', '.') . ", Total: Rp. " . number_format($totalItem, 0, ',', '.');
-    //             })->implode("\n");
+            $itemsDetail = $salesItems->map(function ($item) {
+                $totalItem = $item->qty * $item->harga_per_qty;
+                return "- Produk ID: {$item->product_id}, Qty: {$item->qty}, Harga: Rp. " . number_format($item->harga_per_qty, 0, ',', '.') . ", Total: Rp. " . number_format($totalItem, 0, ',', '.');
+            })->implode("\n");
 
-    //             $message = "
-    // Halo *{$customer->nama}*,
+            $message = "
+    Halo *{$customer->nama}*,
 
-    // Terima kasih telah mempercayakan layanan cucian Anda kepada *Indah Laundry*. Pesanan Anda dengan nomor resi *{$resi->no_resi}* telah selesai diproses dan siap untuk dikirimkan/dijemput. Berikut adalah detail pesanan Anda:
+    Terima kasih telah mempercayakan layanan cucian Anda kepada *Indah Laundry*. Pesanan Anda dengan nomor resi *{$resi->no_resi}* telah selesai diproses dan siap untuk dikirimkan/dijemput. Berikut adalah detail pesanan Anda:
 
-    // $itemsDetail
-    // --------------------------------
-    // *Sub Total:* Rp. " . number_format($sales->total_harga, 0, ',', '.') . "
+    $itemsDetail
+    --------------------------------
+    *Sub Total:* Rp. " . number_format($sales->total_harga, 0, ',', '.') . "
 
-    // *Alamat:*
-    // {$customer->alamat}
+    *Alamat:*
+    {$customer->alamat}
 
-    // Apabila ada pertanyaan lebih lanjut atau Anda membutuhkan bantuan, jangan ragu untuk menghubungi kami melalui nomor ini. Kami senantiasa berkomitmen memberikan pelayanan terbaik untuk Anda.
+    Apabila ada pertanyaan lebih lanjut atau Anda membutuhkan bantuan, jangan ragu untuk menghubungi kami melalui nomor ini. Kami senantiasa berkomitmen memberikan pelayanan terbaik untuk Anda.
 
-    // Jangan lupa untuk memberikan ulasan tentang layanan kami di aplikasi atau media sosial, ya! Pendapat Anda sangat berarti bagi kami untuk terus berkembang.
+    Jangan lupa untuk memberikan ulasan tentang layanan kami di aplikasi atau media sosial, ya! Pendapat Anda sangat berarti bagi kami untuk terus berkembang.
 
-    // Sekali lagi, terima kasih telah memilih Indah Laundry. Kami berharap dapat melayani Anda kembali di masa mendatang. 😊
+    Sekali lagi, terima kasih telah memilih Indah Laundry. Kami berharap dapat melayani Anda kembali di masa mendatang. 😊
 
-    // Salam hangat,
-    // *Indah Laundry*
-    // ";
+    Salam hangat,
+    *Indah Laundry*
+    ";
 
-    //             $this->sendViaFonnte($customer->no_hp, $message);
-    //         }
-    //     }
+            $this->sendViaFonnte($customer->no_hp, $message);
+        }
+    }
 
-    //     private function sendViaFonnte($to, $message)
-    //     {
-    //         $token = 'vTpsx9SNM6F4JTAwgcEy';
-    //         $url = 'https://api.fonnte.com/send';
+    private function sendViaFonnte($to, $message)
+    {
+        $token = 'hNWLVp9mNiQSiRg8H57Q';
+        $url = 'https://api.fonnte.com/send';
 
-    //         $data = [
-    //             'target' => $to,
-    //             'message' => $message,
-    //             'countryCode' => '62',
-    //         ];
+        $data = [
+            'target' => $to,
+            'message' => $message,
+            'countryCode' => '62',
+        ];
 
-    //         $curl = curl_init();
-    //         curl_setopt_array($curl, [
-    //             CURLOPT_URL => $url,
-    //             CURLOPT_RETURNTRANSFER => true,
-    //             CURLOPT_POST => true,
-    //             CURLOPT_POSTFIELDS => http_build_query($data),
-    //             CURLOPT_HTTPHEADER => [
-    //                 "Authorization: $token",
-    //             ],
-    //         ]);
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => http_build_query($data),
+            CURLOPT_HTTPHEADER => [
+                "Authorization: $token",
+            ],
+        ]);
 
-    //         $response = curl_exec($curl);
-    //         curl_close($curl);
+        $response = curl_exec($curl);
+        curl_close($curl);
 
-    //         if (!$response) {
-    //             \Log::error("Failed to send WhatsApp message via Fonnte.");
-    //         } else {
-    //             \Log::info("WhatsApp message sent via Fonnte: $response");
-    //         }
-    //     }
+        if (!$response) {
+            \Log::error("Failed to send WhatsApp message via Fonnte.");
+        } else {
+            \Log::info("WhatsApp message sent via Fonnte: $response");
+        }
+    }
+
+    public function unlock($id)
+    {
+        $resi = DB::table('resi_historys')->where('id', $id)->first();
+
+        if (!$resi) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
+
+        DB::table('resi_historys')->where('id', $id)->update([
+            'locked' => 0
+        ]);
+
+        return redirect()->back()->with('success', 'Kunci berhasil dibuka.');
+    }
 }

@@ -34,9 +34,7 @@ class DashboardController extends Controller
             $transaction_status = SalesModel::selectRaw(
                 '
                 COUNT(CASE WHEN status_pembayaran = "pending" THEN 1 END) as pending,
-                COUNT(CASE WHEN status_pembayaran = "gagal" THEN 1 END) as gagal,
-                COUNT(CASE WHEN status_pembayaran = "lunas" THEN 1 END) as lunas,
-                COUNT(CASE WHEN status_pembayaran = "refund" THEN 1 END) as refund
+                COUNT(CASE WHEN status_pembayaran = "lunas" THEN 1 END) as lunas
             ',
             )
                 ->whereYear('created_at', $year)
@@ -78,7 +76,7 @@ class DashboardController extends Controller
         $bulan_lalu = Carbon::create($year, $month, 1)->subMonth();
         $sales_bulan_lalu = SalesModel::whereYear('created_at', $bulan_lalu->year)
             ->whereMonth('created_at', $bulan_lalu->month)
-            ->where('status_pembayaran', 'berhasil')
+            ->where('status_pembayaran', 'lunas')
             ->sum('total_harga');
 
         $persentase = ($sales_bulan_lalu > 0)
@@ -102,7 +100,7 @@ class DashboardController extends Controller
                 'total_pengeluaran' => (int) $cout->total_pengeluaran,
             ];
         });
-
+        dd($chart_out);
         $pengeluaran = $out->sum('total_pengeluaran');
         $bulan_lalu = Carbon::create($year, $month, 1)->subMonth();
         $pengeluaran_bulan_lalu = PengeluaranModel::whereYear('tanggal_pengeluaran', $bulan_lalu->year)

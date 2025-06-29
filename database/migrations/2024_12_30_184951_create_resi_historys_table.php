@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('catatan')->nullable();
             $table->string('foto_final')->nullable();
+            $table->string('locked')->default(0);
             $table->string('created_by');
             $table->timestamps();
         });

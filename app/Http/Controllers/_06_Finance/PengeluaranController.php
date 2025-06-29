@@ -46,7 +46,7 @@ class PengeluaranController extends Controller
             'jumlah' => $request->jumlah,
             'bukti_pengeluaran' => $fileName,
             'deskripsi' => $request->deskripsi,
-            'status' => 'Pending',
+            'status' => 1,
             'created_by' => Auth::user()->username,
         ]);
 

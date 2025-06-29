@@ -28,7 +28,7 @@
                             d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
                     </svg>
                 </a>
-                <div class="nav-item dropdown d-none d-md-flex me-3">
+                {{-- <div class="nav-item dropdown d-none d-md-flex me-3">
                     <a href="javascript:void()" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
                         aria-label="Show notifications">
                         <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
@@ -94,7 +94,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="nav-item dropdown">
                 <a href="javascript:void()" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"

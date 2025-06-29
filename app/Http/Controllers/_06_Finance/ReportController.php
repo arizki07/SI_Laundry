@@ -46,11 +46,11 @@ class ReportController extends Controller
         $start = Carbon::parse($request->tanggal_mulai)->startOfDay();
         $end = Carbon::parse($request->tanggal_sampai)->endOfDay();
 
-        $jumlahPemasukan = SalesModel::whereBetween('created_at', [$start, $end])->count();
-        $totalPemasukan = SalesModel::whereBetween('created_at', [$start, $end])->sum('total_harga');
+        $jumlahPemasukan = SalesModel::whereBetween('created_at', [$start, $end])->where('status_pembayaran', 'lunas')->count();
+        $totalPemasukan = SalesModel::whereBetween('created_at', [$start, $end])->where('status_pembayaran', 'lunas')->sum('total_harga');
 
-        $jumlahPengeluaran = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->count();
-        $totalPengeluaran = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->sum('jumlah');
+        $jumlahPengeluaran = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->where('status', 1)->count();
+        $totalPengeluaran = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->where('status', 1)->sum('jumlah');
 
         $keuntungan = max($totalPemasukan - $totalPengeluaran, 0);
         $kerugian = max($totalPengeluaran - $totalPemasukan, 0);
@@ -71,7 +71,7 @@ class ReportController extends Controller
     {
         $start = Carbon::parse($request->tanggal_mulai)->startOfDay();
         $end = Carbon::parse($request->tanggal_sampai)->endOfDay();
-        $sales = SalesModel::whereBetween('created_at', [$start, $end])->get();
+        $sales = SalesModel::whereBetween('created_at', [$start, $end])->where('status_pembayaran', 'lunas')->get();
 
         if ($sales->isEmpty()) {
             return '<div class="alert alert-warning text-center">Tidak ada data pemasukan ditemukan.</div>';
@@ -85,7 +85,7 @@ class ReportController extends Controller
         $start = Carbon::parse($request->tanggal_mulai)->startOfDay();
         $end = Carbon::parse($request->tanggal_sampai)->endOfDay();
 
-        $pengeluarans = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->get();
+        $pengeluarans = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->where('status', 1)->get();
 
         if ($pengeluarans->isEmpty()) {
             return '<div class="alert alert-warning text-center">Tidak ada data pengeluaran ditemukan.</div>';
@@ -124,21 +124,26 @@ class ReportController extends Controller
         $start = Carbon::parse($request->tanggal_mulai)->startOfDay();
         $end = Carbon::parse($request->tanggal_sampai)->endOfDay();
 
-        $jumlahPemasukan = SalesModel::whereBetween('created_at', [$start, $end])->count();
-        $totalPemasukan = SalesModel::whereBetween('created_at', [$start, $end])->sum('total_harga');
+        $jumlahPemasukan = SalesModel::whereBetween('created_at', [$start, $end])->where('status_pembayaran', 'lunas')->count();
+        $totalPemasukan = SalesModel::whereBetween('created_at', [$start, $end])->where('status_pembayaran', 'lunas')->sum('total_harga');
 
-        $jumlahPengeluaran = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->count();
-        $totalPengeluaran = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->sum('jumlah');
+        $jumlahPengeluaran = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->where('status', 1)->count();
+        $totalPengeluaran = PengeluaranModel::whereBetween('tanggal_pengeluaran', [$start, $end])->where('status', 1)->sum('jumlah');
 
         $keuntungan = max($totalPemasukan - $totalPengeluaran, 0);
         $kerugian = max($totalPengeluaran - $totalPemasukan, 0);
         $totalAkhir = $totalPemasukan - $totalPengeluaran;
 
         $pdf = Pdf::loadView('products._02_Penjualan.finance.partials.report-export', compact(
-            'jumlahPemasukan', 'totalPemasukan',
-            'jumlahPengeluaran', 'totalPengeluaran',
-            'keuntungan', 'kerugian', 'totalAkhir',
-            'start', 'end'
+            'jumlahPemasukan',
+            'totalPemasukan',
+            'jumlahPengeluaran',
+            'totalPengeluaran',
+            'keuntungan',
+            'kerugian',
+            'totalAkhir',
+            'start',
+            'end'
         ));
 
         $filename = 'laporan-keuangan_' . $start->format('dmy') . '_sampai_' . $end->format('dmy') . '.pdf';

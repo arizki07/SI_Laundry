@@ -9,7 +9,7 @@
 @endsection
 
 @section('modals')
-    <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
+    {{-- <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-blue-lt">
@@ -67,11 +67,10 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     @foreach ($rating as $item)
-        <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog"
-            aria-hidden="true">
+        <div class="modal modal-blur fade" id="modal-edit{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-blue-lt">
@@ -97,11 +96,16 @@
                                     <label class="form-label">Penilaian</label>
                                     <select id="rating-edit" name="rating">
                                         <option value="">Select a rating</option>
-                                        <option value="{{ $item->rating }}" {{ $item->rating == 5 ? 'selected' : '' }}></option>
-                                        <option value="{{ $item->rating }}" {{ $item->rating == 5 ? 'selected' : '' }} selected></option>
-                                        <option value="{{ $item->rating }}" {{ $item->rating == 3 ? 'selected' : '' }}></option>
-                                        <option value="{{ $item->rating }}" {{ $item->rating == 2 ? 'selected' : '' }}></option>
-                                        <option value="{{ $item->rating }}" {{ $item->rating == 1 ? 'selected' : '' }}></option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 5 ? 'selected' : '' }}>
+                                        </option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 5 ? 'selected' : '' }}
+                                            selected></option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 3 ? 'selected' : '' }}>
+                                        </option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 2 ? 'selected' : '' }}>
+                                        </option>
+                                        <option value="{{ $item->rating }}" {{ $item->rating == 1 ? 'selected' : '' }}>
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-md-8 mb-3">
@@ -250,13 +254,13 @@
                             dt.ajax.reload();
                         }
                     },
-                    {
-                        className: 'btn bg-blue-lt btn-md',
-                        text: '<i class="fa fa-add"></i> Add Rating',
-                        action: function(e, dt, node, config) {
-                            $('#modal-add').modal('show');
-                        },
-                    },
+                    // {
+                    //     className: 'btn bg-blue-lt btn-md',
+                    //     text: '<i class="fa fa-add"></i> Add Rating',
+                    //     action: function(e, dt, node, config) {
+                    //         $('#modal-add').modal('show');
+                    //     },
+                    // },
                 ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",

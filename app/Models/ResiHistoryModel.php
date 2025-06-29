@@ -15,6 +15,7 @@ class ResiHistoryModel extends Model
         'status',
         'catatan',
         'foto_final',
+        'locked',
         'created_by'
     ];
     public $timestamps = true;

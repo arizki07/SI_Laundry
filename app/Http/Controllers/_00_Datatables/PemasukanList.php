@@ -6,6 +6,7 @@ use App\Models\SalesModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 
 class PemasukanList extends Controller
@@ -14,12 +15,12 @@ class PemasukanList extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('sales')
-            ->join('customers', 'sales.customer_id', '=', 'customers.id')
-            ->select('sales.*', 'customers.nama as nama_customer', 'customers.no_cust')
-            // ->where('sales.status_pembayaran', 'lunas')
-            ->get();
+                ->join('customers', 'sales.customer_id', '=', 'customers.id')
+                ->select('sales.*', 'customers.nama as nama_customer', 'customers.no_cust')
+                // ->where('sales.status_pembayaran', 'lunas')
+                ->get();
             // dd($data);
-        
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -38,16 +39,19 @@ class PemasukanList extends Controller
                 })
                 ->addColumn('status_pembayaran', function ($row) {
                     if ($row->status_pembayaran == 'lunas') {
-                        return '<span class="badge bg-green-lt" style="font-size:11px"><i class="fa-solid fa-check me-2"></i>'.$row->status_pembayaran.'</span>';
+                        return '<span class="badge bg-green-lt" style="font-size:11px"><i class="fa-solid fa-check me-2"></i>' . $row->status_pembayaran . '</span>';
                     } elseif ($row->status_pembayaran == 'pending') {
-                        return '<span class="badge bg-orange-lt" style="font-size:11px"><i class="fa-solid fa-clock me-2"></i>'.$row->status_pembayaran.'</span>';
+                        return '<span class="badge bg-orange-lt" style="font-size:11px"><i class="fa-solid fa-clock me-2"></i>' . $row->status_pembayaran . '</span>';
                     } elseif ($row->status_pembayaran == 'cancel') {
-                        return '<span class="badge bg-danger-lt" style="font-size:11px"><i class="fa-solid fa-xmark me-2"></i>'.$row->status_pembayaran.'</span>';
+                        return '<span class="badge bg-danger-lt" style="font-size:11px"><i class="fa-solid fa-xmark me-2"></i>' . $row->status_pembayaran . '</span>';
                     } elseif ($row->status_pembayaran == 'dp') {
-                        return '<span class="badge bg-blue-lt" style="font-size:11px"><i class="fa-solid fa-rotate me-2"></i>'.$row->status_pembayaran.'</span>';
+                        return '<span class="badge bg-blue-lt" style="font-size:11px"><i class="fa-solid fa-rotate me-2"></i>' . $row->status_pembayaran . '</span>';
                     } else {
-                        return '<span class="badge bg-secondary-lt" style="font-size:11px"><i class="fa-solid fa-xmark me-2"></i>'.$row->status_pembayaran.'</span>';
+                        return '<span class="badge bg-secondary-lt" style="font-size:11px"><i class="fa-solid fa-xmark me-2"></i>' . $row->status_pembayaran . '</span>';
                     }
+                })
+                ->editColumn('created_at', function ($row) {
+                    return Carbon::parse($row->created_at)->locale('id')->translatedFormat('d F Y H:i');
                 })
                 ->rawColumns(['action', 'status_pembayaran'])
                 ->make(true);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\_00_Datatables;
 
 use App\Http\Controllers\Controller;
 use App\Models\PengeluaranModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -33,10 +34,11 @@ class PengeluaranList extends Controller
                     ';
                     return $btn;
                 })
+                ->editColumn('tanggal_pengeluaran', function ($row) {
+                    return Carbon::parse($row->tanggal_pengeluaran)->translatedFormat('d F Y');
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
-        return view('products._02_penjualan.finance.pengeluaran');
     }
 }
