@@ -357,17 +357,14 @@
                         className: "cuspad0 cuspad1 text-center"
                     },
                     {
-                        title: 'jumlah',
+                        title: 'Jumlah',
                         data: 'jumlah',
                         name: 'jumlah',
-                        className: "cuspad0 cuspad1 text-center"
-                    },
-                    {
-                        title: 'status',
-                        data: 'status',
-                        name: 'status',
-                        className: "cuspad0 cuspad1 text-center"
-                    },
+                        className: "cuspad0 cuspad1 text-center",
+                        render: function(data, type, row) {
+                            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data);
+                        }
+                    }
                 ],
             });
             const modal = document.getElementById('modal-hapus');
