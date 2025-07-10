@@ -38,7 +38,6 @@ class ResiController extends Controller
         $existingResi = ResiHistoryModel::findOrFail($id);
 
         $resi = ResiHistoryModel::where('no_resi', $existingResi->no_resi)->where('status', $request->input('status'))->first();
-        // dd($resi);
         if ($resi) {
             // Jika ada, update catatan dan created_by
             $resi->update([
