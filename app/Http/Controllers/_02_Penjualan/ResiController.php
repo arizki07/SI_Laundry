@@ -48,7 +48,7 @@ class ResiController extends Controller
             $resi->touch();
         } else {
             // Jika tidak ada, buat data baru
-            ResiHistoryModel::create([
+            $resi = ResiHistoryModel::create([
                 'no_cust' => $existingResi->no_cust,
                 'no_resi' => $existingResi->no_resi,
                 'status' => $request->input('status'),
